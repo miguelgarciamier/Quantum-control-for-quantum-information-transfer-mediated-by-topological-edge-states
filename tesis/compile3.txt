@@ -1,0 +1,839 @@
+﻿This is pdfTeX, Version 3.141592653-2.6-1.40.28 (MiKTeX 25.12) (preloaded format=pdflatex.fmt)
+ restricted \write18 enabled.
+entering extended mode
+(thesis_part1.tex
+LaTeX2e <2025-11-01>
+L3 programming layer <2025-12-24>
+(C:\Users\miigu\AppData\Local\Programs\MiKTeX\tex/latex/revtex\revtex4-2.cls
+Document Class: revtex4-2 2022/06/05 4.2f (https://journals.aps.org/revtex/ for
+ documentation)
+ltxutil[2022/06/05 4.2f utilities package (portions licensed from W. E. Baxter 
+web at superscript.com)]
+ltxfront[2022/06/05 4.2f frontmatter package (AO,DPC,MD)]
+ltxgrid[2022/06/05 4.2f page grid package (portions licensed from W. E. Baxter 
+web at superscript.com)]
+(C:\Users\miigu\AppData\Local\Programs\MiKTeX\tex/latex/revtex\aps4-2.rtx)
+(C:\Users\miigu\AppData\Local\Programs\MiKTeX\tex/latex/revtex\aps10pt4-2.rtx)
+(C:\Users\miigu\AppData\Local\Programs\MiKTeX\tex/latex/textcase\textcase.sty)
+(C:\Users\miigu\AppData\Local\Programs\MiKTeX\tex/latex/amsfonts\amssymb.sty
+(C:\Users\miigu\AppData\Local\Programs\MiKTeX\tex/latex/amsfonts\amsfonts.sty))
+ (C:\Users\miigu\AppData\Local\Programs\MiKTeX\tex/latex/amsmath\amsmath.sty
+For additional information on amsmath, use the `?' option.
+(C:\Users\miigu\AppData\Local\Programs\MiKTeX\tex/latex/amsmath\amstext.sty
+(C:\Users\miigu\AppData\Local\Programs\MiKTeX\tex/latex/amsmath\amsgen.sty))
+(C:\Users\miigu\AppData\Local\Programs\MiKTeX\tex/latex/amsmath\amsbsy.sty)
+(C:\Users\miigu\AppData\Local\Programs\MiKTeX\tex/latex/amsmath\amsopn.sty))
+(C:\Users\miigu\AppData\Local\Programs\MiKTeX\tex/latex/url\url.sty)
+(C:\Users\miigu\AppData\Local\Programs\MiKTeX\tex/latex/natbib\natbib.sty)
+(C:\Users\miigu\AppData\Local\Programs\MiKTeX\tex/latex/revtex\revsymb4-2.sty))
+ (C:\Users\miigu\AppData\Local\Programs\MiKTeX\tex/latex/graphics\graphicx.sty
+(C:\Users\miigu\AppData\Local\Programs\MiKTeX\tex/latex/graphics\keyval.sty)
+(C:\Users\miigu\AppData\Local\Programs\MiKTeX\tex/latex/graphics\graphics.sty
+(C:\Users\miigu\AppData\Local\Programs\MiKTeX\tex/latex/graphics\trig.sty)
+(C:\Users\miigu\AppData\Local\Programs\MiKTeX\tex/latex/graphics-cfg\graphics.c
+fg)
+(C:\Users\miigu\AppData\Local\Programs\MiKTeX\tex/latex/graphics-def\pdftex.def
+))) (C:\Users\miigu\AppData\Local\Programs\MiKTeX\tex/latex/tools\dcolumn.sty
+(C:\Users\miigu\AppData\Local\Programs\MiKTeX\tex/latex/tools\array.sty))
+(C:\Users\miigu\AppData\Local\Programs\MiKTeX\tex/latex/tools\bm.sty)
+(C:\Users\miigu\AppData\Local\Programs\MiKTeX\tex/latex/hyperref\hyperref.sty
+(C:\Users\miigu\AppData\Local\Programs\MiKTeX\tex/generic/iftex\iftex.sty)
+(C:\Users\miigu\AppData\Local\Programs\MiKTeX\tex/latex/kvsetkeys\kvsetkeys.sty
+)
+(C:\Users\miigu\AppData\Local\Programs\MiKTeX\tex/generic/kvdefinekeys\kvdefine
+keys.sty)
+(C:\Users\miigu\AppData\Local\Programs\MiKTeX\tex/generic/pdfescape\pdfescape.s
+ty
+(C:\Users\miigu\AppData\Local\Programs\MiKTeX\tex/generic/ltxcmds\ltxcmds.sty)
+(C:\Users\miigu\AppData\Local\Programs\MiKTeX\tex/generic/pdftexcmds\pdftexcmds
+.sty
+(C:\Users\miigu\AppData\Local\Programs\MiKTeX\tex/generic/infwarerr\infwarerr.s
+ty)))
+(C:\Users\miigu\AppData\Local\Programs\MiKTeX\tex/latex/hycolor\hycolor.sty)
+(C:\Users\miigu\AppData\Local\Programs\MiKTeX\tex/latex/hyperref\nameref.sty
+(C:\Users\miigu\AppData\Local\Programs\MiKTeX\tex/latex/refcount\refcount.sty)
+(C:\Users\miigu\AppData\Local\Programs\MiKTeX\tex/generic/gettitlestring\gettit
+lestring.sty
+(C:\Users\miigu\AppData\Local\Programs\MiKTeX\tex/latex/kvoptions\kvoptions.sty
+))
+
+Package nameref Warning: The definition of \label has changed! 
+(nameref)                Check your packages! 
+(nameref)                Replacing it with the kernel definition on input line 
+149.
+
+) (C:\Users\miigu\AppData\Local\Programs\MiKTeX\tex/latex/etoolbox\etoolbox.sty
+)
+(C:\Users\miigu\AppData\Local\Programs\MiKTeX\tex/generic/stringenc\stringenc.s
+ty) (C:\Users\miigu\AppData\Local\Programs\MiKTeX\tex/latex/hyperref\pd1enc.def
+) (C:\Users\miigu\AppData\Local\Programs\MiKTeX\tex/generic/intcalc\intcalc.sty
+) (C:\Users\miigu\AppData\Local\Programs\MiKTeX\tex/latex/hyperref\puenc.def)
+(C:\Users\miigu\AppData\Local\Programs\MiKTeX\tex/generic/bitset\bitset.sty
+(C:\Users\miigu\AppData\Local\Programs\MiKTeX\tex/generic/bigintcalc\bigintcalc
+.sty)))
+(C:\Users\miigu\AppData\Local\Programs\MiKTeX\tex/latex/hyperref\hpdftex.def
+(C:\Users\miigu\AppData\Local\Programs\MiKTeX\tex/latex/rerunfilecheck\rerunfil
+echeck.sty
+(C:\Users\miigu\AppData\Local\Programs\MiKTeX\tex/generic/uniquecounter\uniquec
+ounter.sty)))
+(C:\Users\miigu\AppData\Local\Programs\MiKTeX\tex/latex/xcolor\xcolor.sty
+(C:\Users\miigu\AppData\Local\Programs\MiKTeX\tex/latex/graphics-cfg\color.cfg)
+(C:\Users\miigu\AppData\Local\Programs\MiKTeX\tex/latex/graphics\mathcolor.ltx)
+) (C:\Users\miigu\AppData\Local\Programs\MiKTeX\tex/latex/braket\braket.sty)
+(C:\Users\miigu\AppData\Local\Programs\MiKTeX\tex/latex/booktabs\booktabs.sty)
+(C:\Users\miigu\AppData\Local\Programs\MiKTeX\tex/latex/siunitx\siunitx.sty
+(C:\Users\miigu\AppData\Local\Programs\MiKTeX\tex/latex/translations\translatio
+ns.sty))
+(C:\Users\miigu\AppData\Local\Programs\MiKTeX\tex/latex/float\float.sty)
+
+Class revtex4-2 Warning: Repair the float package.
+
+
+(C:\Users\miigu\AppData\Local\Programs\MiKTeX\tex/latex/l3backend\l3backend-pdf
+tex.def) (thesis_part1.aux)
+(C:\Users\miigu\AppData\Local\Programs\MiKTeX\tex/context/base/mkii\supp-pdf.mk
+ii
+[Loading MPS to PDF converter (version 2006.09.02).]
+)
+(C:\Users\miigu\AppData\Local\Programs\MiKTeX\tex/latex/epstopdf-pkg\epstopdf-b
+ase.sty
+(C:\Users\miigu\AppData\Local\Programs\MiKTeX\tex/latex/00miktex\epstopdf-sys.c
+fg)) (thesis_part1.out) (thesis_part1.out)
+(C:\Users\miigu\AppData\Local\Programs\MiKTeX\tex/latex/translations/dicts\tran
+slations-basic-dictionary-english.trsl)
+(C:\Users\miigu\AppData\Local\Programs\MiKTeX\tex/latex/amsfonts\umsa.fd)
+(C:\Users\miigu\AppData\Local\Programs\MiKTeX\tex/latex/amsfonts\umsb.fd)
+
+Package natbib Warning: Citation `Bose2003' on page 1 undefined on input line 8
+2.
+
+
+Package natbib Warning: Citation `Christandl2004' on page 1 undefined on input 
+line 82.
+
+
+Package natbib Warning: Citation `Nikolopoulos2014' on page 1 undefined on inpu
+t line 82.
+
+
+Package natbib Warning: Citation `Hasan2010' on page 1 undefined on input line 
+88.
+
+
+Package natbib Warning: Citation `Asboth2016' on page 1 undefined on input line
+ 88.
+
+
+Package natbib Warning: Citation `SSH1979' on page 1 undefined on input line 89
+.
+
+
+Package natbib Warning: Citation `SSH1980' on page 1 undefined on input line 89
+.
+
+
+Package natbib Warning: Citation `Ryu2010' on page 1 undefined on input line 90
+.
+
+
+Package natbib Warning: Citation `Zurita2023' on page 1 undefined on input line
+ 96.
+
+
+Package natbib Warning: Citation `Zurita2023' on page 1 undefined on input line
+ 111.
+
+
+Package natbib Warning: Citation `Demirplak2003' on page 1 undefined on input l
+ine 116.
+
+
+Package natbib Warning: Citation `Berry2009' on page 1 undefined on input line 
+116.
+
+
+Package natbib Warning: Citation `GueryOdelin2019' on page 1 undefined on input
+ line 116.
+
+
+Package natbib Warning: Citation `Zurita2023' on page 1 undefined on input line
+ 124.
+
+
+Package natbib Warning: Citation `SSH1979' on page 1 undefined on input line 13
+8.
+
+
+Package natbib Warning: Citation `SSH1980' on page 1 undefined on input line 13
+8.
+
+[1{C:/Users/miigu/AppData/Local/MiKTeX/fonts/map/pdftex/pdftex.map}]
+
+Package natbib Warning: Citation `Zak1989' on page 2 undefined on input line 17
+6.
+
+
+Package natbib Warning: Citation `Asboth2016' on page 2 undefined on input line
+ 176.
+
+
+Package natbib Warning: Citation `Prodan2016' on page 2 undefined on input line
+ 182.
+
+! Undefined control sequence.
+l.269   \Heff = \JLS \ketS\!\braL
+                                  + \JSR \ketR\!\braS + \text{H.c.},
+! Undefined control sequence.
+l.269 ...f = \JLS \ketS\!\braL + \JSR \ketR\!\braS
+                                                   + \text{H.c.},
+[2
+pdfTeX warning (ext4): destination with the same identifier (name{figure.1}) ha
+s been already used, duplicate ignored
+<argument> ...shipout:D \box_use:N \l_shipout_box 
+                                                  \__shipout_drop_firstpage_...
+l.271 \end{equation}
+                     <./figures/fig1_dimer_spectrum.pdf>]
+
+LaTeX Warning: A float is stuck (cannot be placed); try class option [floatfix]
+ on input line 271.
+
+
+Package natbib Warning: Citation `Zurita2023' on page 3 undefined on input line
+ 275.
+
+
+Package natbib Warning: Citation `Zurita2023' on page 3 undefined on input line
+ 309.
+
+
+Package natbib Warning: Citation `Zurita2023' on page 3 undefined on input line
+ 325.
+
+
+Package natbib Warning: Citation `Zurita2023' on page 3 undefined on input line
+ 366.
+
+
+Package hyperref Warning: Token not allowed in a PDF string (Unicode):
+(hyperref)                removing `\begingroup' on input line 366.
+
+
+Package hyperref Warning: Token not allowed in a PDF string (Unicode):
+(hyperref)                removing `\<let>-command' on input line 366.
+
+
+Package hyperref Warning: Token not allowed in a PDF string (Unicode):
+(hyperref)                removing `\NAT@ctype' on input line 366.
+
+
+Package hyperref Warning: Token not allowed in a PDF string (Unicode):
+(hyperref)                removing `\z@' on input line 366.
+
+
+Package hyperref Warning: Token not allowed in a PDF string (Unicode):
+(hyperref)                removing `\let' on input line 366.
+
+
+Package hyperref Warning: Token not allowed in a PDF string (Unicode):
+(hyperref)                removing `\let' on input line 366.
+
+
+Package hyperref Warning: Token not allowed in a PDF string (Unicode):
+(hyperref)                removing `\new@ifnextchar' on input line 366.
+
+[3
+pdfTeX warning (ext4): destination with the same identifier (name{figure.2}) ha
+s been already used, duplicate ignored
+<argument> ...shipout:D \box_use:N \l_shipout_box 
+                                                  \__shipout_drop_firstpage_...
+l.373 
+       <./figures/fig2_domain_wall_states.pdf>]
+
+Package natbib Warning: Citation `Zurita2023' on page 4 undefined on input line
+ 393.
+
+
+Package natbib Warning: Citation `Knill2005' on page 4 undefined on input line 
+395.
+
+
+Package natbib Warning: Citation `Zurita2023' on page 4 undefined on input line
+ 404.
+
+
+Package natbib Warning: Citation `Zurita2023' on page 4 undefined on input line
+ 404.
+
+[4
+pdfTeX warning (ext4): destination with the same identifier (name{figure.3}) ha
+s been already used, duplicate ignored
+<argument> ...shipout:D \box_use:N \l_shipout_box 
+                                                  \__shipout_drop_firstpage_...
+l.483 
+      
+pdfTeX warning (ext4): destination with the same identifier (name{figure.4}) ha
+s been already used, duplicate ignored
+<argument> ...shipout:D \box_use:N \l_shipout_box 
+                                                  \__shipout_drop_firstpage_...
+l.483 
+      
+pdfTeX warning (ext4): destination with the same identifier (name{table.1}) has
+ been already used, duplicate ignored
+<argument> ...shipout:D \box_use:N \l_shipout_box 
+                                                  \__shipout_drop_firstpage_...
+l.483 
+       <./figures/fig3_transfer_protocol.pdf> <./figures/fig4_fidelity_scan.pdf
+>]
+
+LaTeX Warning: A float is stuck (cannot be placed); try class option [floatfix]
+ on input line 483.
+
+
+Package natbib Warning: Citation `Christandl2004' on page 5 undefined on input 
+line 512.
+
+[5
+pdfTeX warning (ext4): destination with the same identifier (name{figure.5}) ha
+s been already used, duplicate ignored
+<argument> ...shipout:D \box_use:N \l_shipout_box 
+                                                  \__shipout_drop_firstpage_...
+l.583 \begin{itemize}
+                     
+pdfTeX warning (ext4): destination with the same identifier (name{table.2}) has
+ been already used, duplicate ignored
+<argument> ...shipout:D \box_use:N \l_shipout_box 
+                                                  \__shipout_drop_firstpage_...
+l.583 \begin{itemize}
+                     
+pdfTeX warning (ext4): destination with the same identifier (name{figure.6}) ha
+s been already used, duplicate ignored
+<argument> ...shipout:D \box_use:N \l_shipout_box 
+                                                  \__shipout_drop_firstpage_...
+l.583 \begin{itemize}
+                     
+pdfTeX warning (ext4): destination with the same identifier (name{table.3}) has
+ been already used, duplicate ignored
+<argument> ...shipout:D \box_use:N \l_shipout_box 
+                                                  \__shipout_drop_firstpage_...
+l.583 \begin{itemize}
+                      <./figures/fig5_asymmetric_wall_states.pdf> <./figures/fi
+g8_effective_coupling.pdf>]
+
+LaTeX Warning: A float is stuck (cannot be placed); try class option [floatfix]
+ on input line 583.
+
+
+Package natbib Warning: Citation `Demirplak2003' on page 6 undefined on input l
+ine 619.
+
+
+Package natbib Warning: Citation `Berry2009' on page 6 undefined on input line 
+619.
+
+
+Package natbib Warning: Citation `Chen2010' on page 6 undefined on input line 6
+19.
+
+
+Package natbib Warning: Citation `GueryOdelin2019' on page 6 undefined on input
+ line 619.
+
+
+Package natbib Warning: Citation `Berry2009' on page 6 undefined on input line 
+623.
+
+
+Package natbib Warning: Citation `Zurita2023' on page 6 undefined on input line
+ 640.
+
+[6
+pdfTeX warning (ext4): destination with the same identifier (name{figure.7}) ha
+s been already used, duplicate ignored
+<argument> ...shipout:D \box_use:N \l_shipout_box 
+                                                  \__shipout_drop_firstpage_...
+l.645   \item \textbf
+                     {STA-global $\sin^2$}: A single smooth profile over the...
+
+pdfTeX warning (ext4): destination with the same identifier (name{figure.8}) ha
+s been already used, duplicate ignored
+<argument> ...shipout:D \box_use:N \l_shipout_box 
+                                                  \__shipout_drop_firstpage_...
+l.645   \item \textbf
+                     {STA-global $\sin^2$}: A single smooth profile over the...
+
+pdfTeX warning (ext4): destination with the same identifier (name{figure.9}) ha
+s been already used, duplicate ignored
+<argument> ...shipout:D \box_use:N \l_shipout_box 
+                                                  \__shipout_drop_firstpage_...
+l.645   \item \textbf
+                     {STA-global $\sin^2$}: A single smooth profile over the...
+ <./figures/fig6_asymmetric_transfer.pdf> <./figures/fig7_fidelity_comparison.p
+df> <./figures/fig12_systematic_wall_position.pdf>]
+
+Package natbib Warning: Citation `Zurita2023' on page 7 undefined on input line
+ 697.
+
+[7
+pdfTeX warning (ext4): destination with the same identifier (name{table.4}) has
+ been already used, duplicate ignored
+<argument> ...shipout:D \box_use:N \l_shipout_box 
+                                                  \__shipout_drop_firstpage_...
+l.737 
+      
+pdfTeX warning (ext4): destination with the same identifier (name{figure.10}) h
+as been already used, duplicate ignored
+<argument> ...shipout:D \box_use:N \l_shipout_box 
+                                                  \__shipout_drop_firstpage_...
+l.737 
+      
+pdfTeX warning (ext4): destination with the same identifier (name{figure.11}) h
+as been already used, duplicate ignored
+<argument> ...shipout:D \box_use:N \l_shipout_box 
+                                                  \__shipout_drop_firstpage_...
+l.737 
+       <./figures/fig9_sta_pulse_comparison.pdf> <./figures/fig10_tprep_depende
+nce.pdf>]
+
+Package natbib Warning: Citation `Zurita2023' on page 8 undefined on input line
+ 778.
+
+
+Package natbib Warning: Citation `Zurita2023' on page 8 undefined on input line
+ 785.
+
+
+Underfull \hbox (badness 1590) in paragraph at lines 783--788
+[]\OT1/cmr/bx/n/10 1. Faith-ful re-pro-duc-tion of the topo-log-i-cal
+
+Package natbib Warning: Citation `Zurita2023' on page 8 undefined on input line
+ 815.
+
+No file thesis_part1.bbl.
+
+Package natbib Warning: There were undefined citations.
+
+[8
+pdfTeX warning (ext4): destination with the same identifier (name{figure.12}) h
+as been already used, duplicate ignored
+<argument> ...shipout:D \box_use:N \l_shipout_box 
+                                                  \__shipout_drop_firstpage_...
+l.829 \end{document}
+                    
+pdfTeX warning (ext4): destination with the same identifier (name{table.5}) has
+ been already used, duplicate ignored
+<argument> ...shipout:D \box_use:N \l_shipout_box 
+                                                  \__shipout_drop_firstpage_...
+l.829 \end{document}
+                     <./figures/fig11_combined_asymmetric_sta.pdf>]
+(thesis_part1.aux
+! Text line contains an invalid character.
+l.1 ^^@
+       ^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@...
+
+! Text line contains an invalid character.
+l.1 ^^@^^@
+          ^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@...
+
+! Text line contains an invalid character.
+l.1 ^^@^^@^^@
+             ^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@...
+
+! Text line contains an invalid character.
+l.1 ^^@^^@^^@^^@
+                ^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@...
+
+! Text line contains an invalid character.
+l.1 ^^@^^@^^@^^@^^@
+                   ^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@...
+
+! Text line contains an invalid character.
+l.1 ^^@^^@^^@^^@^^@^^@
+                      ^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@...
+
+! Text line contains an invalid character.
+l.1 ^^@^^@^^@^^@^^@^^@^^@
+                         ^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@...
+
+! Text line contains an invalid character.
+l.1 ^^@^^@^^@^^@^^@^^@^^@^^@
+                            ^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@...
+
+! Text line contains an invalid character.
+l.1 ^^@^^@^^@^^@^^@^^@^^@^^@^^@
+                               ^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@...
+
+! Text line contains an invalid character.
+l.1 ^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@
+                                  ^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@...
+
+! Text line contains an invalid character.
+l.1 ^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@
+                                     ^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@...
+
+! Text line contains an invalid character.
+l.1 ^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@
+                                        ^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@...
+
+! Text line contains an invalid character.
+l.1 ^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@
+                                           ^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@...
+
+! Text line contains an invalid character.
+l.1 ^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@
+                                              ^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@...
+
+! Text line contains an invalid character.
+l.1 ^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@
+                                                 ^^@^^@^^@^^@^^@^^@^^@^^@^^@...
+
+! Text line contains an invalid character.
+l.1 ...@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@
+                                                  ^^@^^@^^@^^@^^@^^@^^@^^@^^...
+
+! Text line contains an invalid character.
+l.1 ...@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@
+                                                  ^^@^^@^^@^^@^^@^^@^^@^^@^^...
+
+! Text line contains an invalid character.
+l.1 ...@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@
+                                                  ^^@^^@^^@^^@^^@^^@^^@^^@^^...
+
+! Text line contains an invalid character.
+l.1 ...@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@
+                                                  ^^@^^@^^@^^@^^@^^@^^@^^@^^...
+
+! Text line contains an invalid character.
+l.1 ...@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@
+                                                  ^^@^^@^^@^^@^^@^^@^^@^^@^^...
+
+! Text line contains an invalid character.
+l.1 ...@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@
+                                                  ^^@^^@^^@^^@^^@^^@^^@^^@^^...
+
+! Text line contains an invalid character.
+l.1 ...@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@
+                                                  ^^@^^@^^@^^@^^@^^@^^@^^@^^...
+
+! Text line contains an invalid character.
+l.1 ...@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@
+                                                  ^^@^^@^^@^^@^^@^^@^^@^^@^^...
+
+! Text line contains an invalid character.
+l.1 ...@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@
+                                                  ^^@^^@^^@^^@^^@^^@^^@^^@^^...
+
+! Text line contains an invalid character.
+l.1 ...@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@
+                                                  ^^@^^@^^@^^@^^@^^@^^@^^@^^...
+
+! Text line contains an invalid character.
+l.1 ...@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@
+                                                  ^^@^^@^^@^^@^^@^^@^^@^^@^^...
+
+! Text line contains an invalid character.
+l.1 ...@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@
+                                                  ^^@^^@^^@^^@^^@^^@^^@^^@^^...
+
+! Text line contains an invalid character.
+l.1 ...@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@
+                                                  ^^@^^@^^@^^@^^@^^@^^@^^@^^...
+
+! Text line contains an invalid character.
+l.1 ...@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@
+                                                  ^^@^^@^^@^^@^^@^^@^^@^^@^^...
+
+! Text line contains an invalid character.
+l.1 ...@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@
+                                                  ^^@^^@^^@^^@^^@^^@^^@^^@^^...
+
+! Text line contains an invalid character.
+l.1 ...@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@
+                                                  ^^@^^@^^@^^@^^@^^@^^@^^@^^...
+
+! Text line contains an invalid character.
+l.1 ...@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@
+                                                  ^^@^^@^^@^^@^^@^^@^^@^^@^^...
+
+! Text line contains an invalid character.
+l.1 ...@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@
+                                                  ^^@^^@^^@^^@^^@^^@^^@^^@^^...
+
+! Text line contains an invalid character.
+l.1 ...@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@
+                                                  ^^@^^@^^@^^@^^@^^@^^@^^@^^...
+
+! Text line contains an invalid character.
+l.1 ...@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@
+                                                  ^^@^^@^^@^^@^^@^^@^^@^^@^^...
+
+! Text line contains an invalid character.
+l.1 ...@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@
+                                                  ^^@^^@^^@^^@^^@^^@^^@^^@^^...
+
+! Text line contains an invalid character.
+l.1 ...@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@
+                                                  ^^@^^@^^@^^@^^@^^@^^@^^@^^...
+
+! Text line contains an invalid character.
+l.1 ...@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@
+                                                  ^^@^^@^^@^^@^^@^^@^^@^^@^^...
+
+! Text line contains an invalid character.
+l.1 ...@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@
+                                                  ^^@^^@^^@^^@^^@^^@^^@^^@^^...
+
+! Text line contains an invalid character.
+l.1 ...@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@
+                                                  ^^@^^@^^@^^@^^@^^@^^@^^@^^...
+
+! Text line contains an invalid character.
+l.1 ...@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@
+                                                  ^^@^^@^^@^^@^^@^^@^^@^^@^^...
+
+! Text line contains an invalid character.
+l.1 ...@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@
+                                                  ^^@^^@^^@^^@^^@^^@^^@^^@^^...
+
+! Text line contains an invalid character.
+l.1 ...@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@
+                                                  ^^@^^@^^@^^@^^@^^@^^@^^@^^...
+
+! Text line contains an invalid character.
+l.1 ...@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@
+                                                  ^^@^^@^^@^^@^^@^^@^^@^^@^^...
+
+! Text line contains an invalid character.
+l.1 ...@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@
+                                                  ^^@^^@^^@^^@^^@^^@^^@^^@^^...
+
+! Text line contains an invalid character.
+l.1 ...@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@
+                                                  ^^@^^@^^@^^@^^@^^@^^@^^@^^...
+
+! Text line contains an invalid character.
+l.1 ...@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@
+                                                  ^^@^^@^^@^^@^^@^^@^^@^^@^^...
+
+! Text line contains an invalid character.
+l.1 ...@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@
+                                                  ^^@^^@^^@^^@^^@^^@^^@^^@^^...
+
+! Text line contains an invalid character.
+l.1 ...@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@
+                                                  ^^@^^@^^@^^@^^@^^@^^@^^@^^...
+
+! Text line contains an invalid character.
+l.1 ...@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@
+                                                  ^^@^^@^^@^^@^^@^^@^^@^^@^^...
+
+! Text line contains an invalid character.
+l.1 ...@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@
+                                                  ^^@^^@^^@^^@^^@^^@^^@^^@^^...
+
+! Text line contains an invalid character.
+l.1 ...@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@
+                                                  ^^@^^@^^@^^@^^@^^@^^@^^@^^...
+
+! Text line contains an invalid character.
+l.1 ...@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@
+                                                  ^^@^^@^^@^^@^^@^^@^^@^^@^^...
+
+! Text line contains an invalid character.
+l.1 ...@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@
+                                                  ^^@^^@^^@^^@^^@^^@^^@^^@^^...
+
+! Text line contains an invalid character.
+l.1 ...@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@
+                                                  ^^@^^@^^@^^@^^@^^@^^@^^@^^...
+
+! Text line contains an invalid character.
+l.1 ...@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@
+                                                  ^^@^^@^^@^^@^^@^^@^^@^^@^^...
+
+! Text line contains an invalid character.
+l.1 ...@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@
+                                                  ^^@^^@^^@^^@^^@^^@^^@^^@^^...
+
+! Text line contains an invalid character.
+l.1 ...@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@
+                                                  ^^@^^@^^@^^@^^@^^@^^@^^@^^...
+
+! Text line contains an invalid character.
+l.1 ...@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@
+                                                  ^^@^^@^^@^^@^^@^^@^^@^^@^^...
+
+! Text line contains an invalid character.
+l.1 ...@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@
+                                                  ^^@^^@^^@^^@^^@^^@^^@^^@^^...
+
+! Text line contains an invalid character.
+l.1 ...@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@
+                                                  ^^@^^@^^@^^@^^@^^@^^@^^@^^...
+
+! Text line contains an invalid character.
+l.1 ...@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@
+                                                  ^^@^^@^^@^^@^^@^^@^^@^^@^^...
+
+! Text line contains an invalid character.
+l.1 ...@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@
+                                                  ^^@^^@^^@^^@^^@^^@^^@^^@^^...
+
+! Text line contains an invalid character.
+l.1 ...@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@
+                                                  ^^@^^@^^@^^@^^@^^@^^@^^@^^...
+
+! Text line contains an invalid character.
+l.1 ...@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@
+                                                  ^^@^^@^^@^^@^^@^^@^^@^^@^^...
+
+! Text line contains an invalid character.
+l.1 ...@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@
+                                                  ^^@^^@^^@^^@^^@^^@^^@^^@^^...
+
+! Text line contains an invalid character.
+l.1 ...@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@
+                                                  ^^@^^@^^@^^@^^@^^@^^@^^@^^...
+
+! Text line contains an invalid character.
+l.1 ...@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@
+                                                  ^^@^^@^^@^^@^^@^^@^^@^^@^^...
+
+! Text line contains an invalid character.
+l.1 ...@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@
+                                                  ^^@^^@^^@^^@^^@^^@^^@^^@^^...
+
+! Text line contains an invalid character.
+l.1 ...@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@
+                                                  ^^@^^@^^@^^@^^@^^@^^@^^@^^...
+
+! Text line contains an invalid character.
+l.1 ...@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@
+                                                  ^^@^^@^^@^^@^^@^^@^^@^^@^^...
+
+! Text line contains an invalid character.
+l.1 ...@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@
+                                                  ^^@^^@^^@^^@^^@^^@^^@^^@^^...
+
+! Text line contains an invalid character.
+l.1 ...@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@
+                                                  ^^@^^@^^@^^@^^@^^@^^@^^@^^...
+
+! Text line contains an invalid character.
+l.1 ...@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@
+                                                  ^^@^^@^^@^^@^^@^^@^^@^^@^^...
+
+! Text line contains an invalid character.
+l.1 ...@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@
+                                                  ^^@^^@^^@^^@^^@^^@^^@^^@^^...
+
+! Text line contains an invalid character.
+l.1 ...@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@
+                                                  ^^@^^@^^@^^@^^@^^@^^@^^@^^...
+
+! Text line contains an invalid character.
+l.1 ...@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@
+                                                  ^^@^^@^^@^^@^^@^^@^^@^^@^^...
+
+! Text line contains an invalid character.
+l.1 ...@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@
+                                                  ^^@^^@^^@^^@^^@^^@^^@^^@^^...
+
+! Text line contains an invalid character.
+l.1 ...@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@
+                                                  ^^@^^@^^@^^@^^@^^@^^@^^@^^...
+
+! Text line contains an invalid character.
+l.1 ...@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@
+                                                  ^^@^^@^^@^^@^^@^^@^^@^^@^^...
+
+! Text line contains an invalid character.
+l.1 ...@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@
+                                                  ^^@^^@^^@^^@^^@^^@^^@^^@^^...
+
+! Text line contains an invalid character.
+l.1 ...@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@
+                                                  ^^@^^@^^@^^@^^@^^@^^@^^@^^...
+
+! Text line contains an invalid character.
+l.1 ...@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@
+                                                  ^^@^^@^^@^^@^^@^^@^^@^^@^^...
+
+! Text line contains an invalid character.
+l.1 ...@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@
+                                                  ^^@^^@^^@^^@^^@^^@^^@^^@^^...
+pdflatex.exe : pdflatex: major issue: So far, you have not checked for MiKTeX 
+updates.
+En línea: 1 Carácter: 448
++ ... oding utf8; & "$p\pdflatex.exe" -interaction=nonstopmode thesis_part1 ...
++                 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (pdflatex: major...MiKTeX updates. 
+   :String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+
+! Text line contains an invalid character.
+l.1 ...@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@
+                                                  ^^@^^@^^@^^@^^@^^@^^@^^@^^...
+
+! Text line contains an invalid character.
+l.1 ...@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@
+                                                  ^^@^^@^^@^^@^^@^^@^^@^^@^^...
+
+! Text line contains an invalid character.
+l.1 ...@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@
+                                                  ^^@^^@^^@^^@^^@^^@^^@^^@^^...
+
+! Text line contains an invalid character.
+l.1 ...@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@
+                                                  ^^@^^@^^@^^@^^@^^@^^@^^@^^...
+
+! Text line contains an invalid character.
+l.1 ...@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@
+                                                  ^^@^^@^^@^^@^^@^^@^^@^^@^^...
+
+! Text line contains an invalid character.
+l.1 ...@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@
+                                                  ^^@^^@^^@^^@^^@^^@^^@^^@^^...
+
+! Text line contains an invalid character.
+l.1 ...@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@
+                                                  ^^@^^@^^@^^@^^@^^@^^@^^@^^...
+
+! Text line contains an invalid character.
+l.1 ...@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@
+                                                  ^^@^^@^^@^^@^^@^^@^^@^^@^^...
+
+! Text line contains an invalid character.
+l.1 ...@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@
+                                                  ^^@^^@^^@^^@^^@^^@^^@^^@^^...
+
+! Text line contains an invalid character.
+l.1 ...@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@
+                                                  ^^@^^@^^@^^@^^@^^@^^@^^@^^...
+
+! Text line contains an invalid character.
+l.1 ...@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@
+                                                  ^^@^^@^^@^^@^^@^^@^^@^^@^^...
+
+! Text line contains an invalid character.
+l.1 ...@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@
+                                                  ^^@^^@^^@^^@^^@^^@^^@^^@^^...
+
+! Text line contains an invalid character.
+l.1 ...@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@
+                                                  ^^@^^@^^@^^@^^@^^@^^@^^@^^...
+
+! Text line contains an invalid character.
+l.1 ...@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@
+                                                  ^^@^^@^^@^^@^^@^^@^^@^^@^^...
+
+! Text line contains an invalid character.
+l.1 ...@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@
+                                                  ^^@^^@^^@^^@^^@^^@^^@^^@^^...
+
+! Text line contains an invalid character.
+l.1 ...@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@
+                                                  ^^@^^@^^@^^@^^@^^@^^@^^@^^...
+(That makes 100 errors; please try again.)
+!  ==> Fatal error occurred, no output PDF file produced!
+Transcript written on thesis_part1.log.

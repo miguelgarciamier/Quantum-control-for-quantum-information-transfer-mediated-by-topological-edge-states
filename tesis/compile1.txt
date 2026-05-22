@@ -1,0 +1,107 @@
+﻿This is pdfTeX, Version 3.141592653-2.6-1.40.28 (MiKTeX 25.12) (preloaded format=pdflatex.fmt)
+ restricted \write18 enabled.
+entering extended mode
+(thesis_part1.tex
+LaTeX2e <2025-11-01>
+L3 programming layer <2025-12-24>
+(C:\Users\miigu\AppData\Local\Programs\MiKTeX\tex/latex/revtex\revtex4-2.cls
+Document Class: revtex4-2 2022/06/05 4.2f (https://journals.aps.org/revtex/ for
+ documentation)
+ltxutil[2022/06/05 4.2f utilities package (portions licensed from W. E. Baxter 
+web at superscript.com)]
+ltxfront[2022/06/05 4.2f frontmatter package (AO,DPC,MD)]
+ltxgrid[2022/06/05 4.2f page grid package (portions licensed from W. E. Baxter 
+web at superscript.com)]
+(C:\Users\miigu\AppData\Local\Programs\MiKTeX\tex/latex/revtex\aps4-2.rtx)
+(C:\Users\miigu\AppData\Local\Programs\MiKTeX\tex/latex/revtex\aps10pt4-2.rtx)
+(C:\Users\miigu\AppData\Local\Programs\MiKTeX\tex/latex/textcase\textcase.sty)
+(C:\Users\miigu\AppData\Local\Programs\MiKTeX\tex/latex/amsfonts\amssymb.sty
+(C:\Users\miigu\AppData\Local\Programs\MiKTeX\tex/latex/amsfonts\amsfonts.sty))
+ (C:\Users\miigu\AppData\Local\Programs\MiKTeX\tex/latex/amsmath\amsmath.sty
+For additional information on amsmath, use the `?' option.
+(C:\Users\miigu\AppData\Local\Programs\MiKTeX\tex/latex/amsmath\amstext.sty
+(C:\Users\miigu\AppData\Local\Programs\MiKTeX\tex/latex/amsmath\amsgen.sty))
+(C:\Users\miigu\AppData\Local\Programs\MiKTeX\tex/latex/amsmath\amsbsy.sty)
+(C:\Users\miigu\AppData\Local\Programs\MiKTeX\tex/latex/amsmath\amsopn.sty))
+(C:\Users\miigu\AppData\Local\Programs\MiKTeX\tex/latex/url\url.sty)
+(C:\Users\miigu\AppData\Local\Programs\MiKTeX\tex/latex/natbib\natbib.sty)
+(C:\Users\miigu\AppData\Local\Programs\MiKTeX\tex/latex/revtex\revsymb4-2.sty))
+ (C:\Users\miigu\AppData\Local\Programs\MiKTeX\tex/latex/graphics\graphicx.sty
+(C:\Users\miigu\AppData\Local\Programs\MiKTeX\tex/latex/graphics\keyval.sty)
+(C:\Users\miigu\AppData\Local\Programs\MiKTeX\tex/latex/graphics\graphics.sty
+(C:\Users\miigu\AppData\Local\Programs\MiKTeX\tex/latex/graphics\trig.sty)
+(C:\Users\miigu\AppData\Local\Programs\MiKTeX\tex/latex/graphics-cfg\graphics.c
+fg)
+(C:\Users\miigu\AppData\Local\Programs\MiKTeX\tex/latex/graphics-def\pdftex.def
+))) (C:\Users\miigu\AppData\Local\Programs\MiKTeX\tex/latex/tools\dcolumn.sty
+(C:\Users\miigu\AppData\Local\Programs\MiKTeX\tex/latex/tools\array.sty))
+(C:\Users\miigu\AppData\Local\Programs\MiKTeX\tex/latex/tools\bm.sty)
+(C:\Users\miigu\AppData\Local\Programs\MiKTeX\tex/latex/hyperref\hyperref.sty
+(C:\Users\miigu\AppData\Local\Programs\MiKTeX\tex/generic/iftex\iftex.sty)
+(C:\Users\miigu\AppData\Local\Programs\MiKTeX\tex/latex/kvsetkeys\kvsetkeys.sty
+)
+(C:\Users\miigu\AppData\Local\Programs\MiKTeX\tex/generic/kvdefinekeys\kvdefine
+keys.sty)
+(C:\Users\miigu\AppData\Local\Programs\MiKTeX\tex/generic/pdfescape\pdfescape.s
+ty
+(C:\Users\miigu\AppData\Local\Programs\MiKTeX\tex/generic/ltxcmds\ltxcmds.sty)
+(C:\Users\miigu\AppData\Local\Programs\MiKTeX\tex/generic/pdftexcmds\pdftexcmds
+.sty
+(C:\Users\miigu\AppData\Local\Programs\MiKTeX\tex/generic/infwarerr\infwarerr.s
+ty)))
+(C:\Users\miigu\AppData\Local\Programs\MiKTeX\tex/latex/hycolor\hycolor.sty)
+(C:\Users\miigu\AppData\Local\Programs\MiKTeX\tex/latex/hyperref\nameref.sty
+(C:\Users\miigu\AppData\Local\Programs\MiKTeX\tex/latex/refcount\refcount.sty)
+(C:\Users\miigu\AppData\Local\Programs\MiKTeX\tex/generic/gettitlestring\gettit
+lestring.sty
+(C:\Users\miigu\AppData\Local\Programs\MiKTeX\tex/latex/kvoptions\kvoptions.sty
+))
+
+Package nameref Warning: The definition of \label has changed! 
+(nameref)                Check your packages! 
+(nameref)                Replacing it with the kernel definition on input line 
+149.
+
+) (C:\Users\miigu\AppData\Local\Programs\MiKTeX\tex/latex/etoolbox\etoolbox.sty
+)
+(C:\Users\miigu\AppData\Local\Programs\MiKTeX\tex/generic/stringenc\stringenc.s
+ty) (C:\Users\miigu\AppData\Local\Programs\MiKTeX\tex/latex/hyperref\pd1enc.def
+) (C:\Users\miigu\AppData\Local\Programs\MiKTeX\tex/generic/intcalc\intcalc.sty
+) (C:\Users\miigu\AppData\Local\Programs\MiKTeX\tex/latex/hyperref\puenc.def)
+(C:\Users\miigu\AppData\Local\Programs\MiKTeX\tex/generic/bitset\bitset.sty
+(C:\Users\miigu\AppData\Local\Programs\MiKTeX\tex/generic/bigintcalc\bigintcalc
+.sty)))
+(C:\Users\miigu\AppData\Local\Programs\MiKTeX\tex/latex/hyperref\hpdftex.def
+(C:\Users\miigu\AppData\Local\Programs\MiKTeX\tex/latex/rerunfilecheck\rerunfil
+echeck.sty
+(C:\Users\miigu\AppData\Local\Programs\MiKTeX\tex/generic/uniquecounter\uniquec
+ounter.sty)))
+(C:\Users\miigu\AppData\Local\Programs\MiKTeX\tex/latex/xcolor\xcolor.sty
+(C:\Users\miigu\AppData\Local\Programs\MiKTeX\tex/latex/graphics-cfg\color.cfg)
+(C:\Users\miigu\AppData\Local\Programs\MiKTeX\tex/latex/graphics\mathcolor.ltx)
+) (C:\Users\miigu\AppData\Local\Programs\MiKTeX\tex/latex/braket\braket.sty)
+(C:\Users\miigu\AppData\Local\Programs\MiKTeX\tex/latex/booktabs\booktabs.sty)
+(C:\Users\miigu\AppData\Local\Programs\MiKTeX\tex/latex/siunitx\siunitx.sty)
+
+! LaTeX Error: File `float.sty' not found.
+
+Type X to quit or <RETURN> to proceed,
+or enter new name. (Default extension: sty)
+
+Enter file name: 
+! Emergency stop.
+<read *> 
+         
+l.25 ^^M
+        
+!  ==> Fatal error occurred, no output PDF file produced!
+Transcript written on thesis_part1.log.
+pdflatex.exe : pdflatex: major issue: So far, you have not checked for MiKTeX 
+updates.
+En línea: 1 Carácter: 155
++ ... all\tesis"; & "$p\pdflatex.exe" -interaction=nonstopmode thesis_part1 ...
++                 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (pdflatex: major...MiKTeX updates. 
+   :String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 

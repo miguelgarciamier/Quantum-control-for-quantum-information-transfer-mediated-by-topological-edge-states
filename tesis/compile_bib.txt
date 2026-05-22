@@ -1,0 +1,10 @@
+﻿I couldn't open file name `thesis_part1.aux'
+bibtex.exe : bibtex: major issue: So far, you have not checked for MiKTeX 
+updates.
+En línea: 1 Carácter: 262
++ ... pile1.txt -Encoding utf8; & "$p\bibtex.exe" thesis_part1 2>&1 | Out-F ...
++                               ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (bibtex: major i...MiKTeX updates. 
+   :String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 

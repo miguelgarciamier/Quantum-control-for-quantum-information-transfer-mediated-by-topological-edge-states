@@ -1,0 +1,16 @@
+# Python
+.venv/
+__pycache__/
+*.pyc
+*.pyo
+
+# LaTeX compilation artifacts
+*.aux
+*.bbl
+*.blg
+*.log
+*.out
+*.Notes.bib
+*.synctex.gz
+*.fls
+*.fdb_latexmk
