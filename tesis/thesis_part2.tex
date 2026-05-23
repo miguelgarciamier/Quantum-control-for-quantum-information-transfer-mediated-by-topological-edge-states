@@ -20,6 +20,7 @@
   amssymb,
   aps,
   prb,
+  floatfix,
   longbibliography,
 ]{revtex4-2}
 
@@ -33,6 +34,7 @@
 \usepackage{siunitx}
 \usepackage{float}
 \usepackage{tikz}
+\usepackage{morefloats}
 \usetikzlibrary{calc,decorations.pathreplacing}
 
 \graphicspath{{figures/}}
@@ -218,16 +220,16 @@ $v = w$. For a chain with an odd number of sites ($L = 11$), a zero-energy edge
 state appears in the topological phase, manifesting the bulk-boundary
 correspondence~\cite{Prodan2016}.
 
-\begin{figure}[t]
+\begin{figure*}[!tp]
   \centering
-  \includegraphics[width=\columnwidth]{fig1_dimer_spectrum.pdf}
+  \includegraphics[width=\textwidth]{fig1_dimer_spectrum.pdf}
   \caption{Energy spectrum of the SSH dimer chain as a function of the hopping
   ratio $v/w$. \textbf{Left:} Even chain ($L = 10$). The bulk gap
   $\Delta = 2|w - v|$ closes at $v = w$. \textbf{Right:} Odd chain ($L = 11$).
   A zero-energy state (red) appears in the topological phase ($v/w < 1$),
   localized at the boundary.}
   \label{fig:spectrum}
-\end{figure}
+\end{figure*}
 
 % --- 2.3 Topology ---
 \subsection{Topological invariant}
@@ -286,16 +288,16 @@ where $r = v/w$ is the decay ratio, and $\ell_1$, $\ell_2$ are the lengths
 resides on a single sublattice and decays exponentially away from its localization
 center with characteristic length $\xi = -1/\ln r$.
 
-\begin{figure}[t]
+\begin{figure*}[!tp]
   \centering
-  \includegraphics[width=\columnwidth]{fig2_domain_wall_states.pdf}
+  \includegraphics[width=\textwidth]{fig2_domain_wall_states.pdf}
   \caption{Topologically protected states in a two-domain SSH chain ($L = 11$,
   $N = 2$, $\ell = 4$, $v = 0.5$, $w = 1.0$). The three states $\ketL$,
   $\ketS$, and $\ketR$ are localized at the left edge, the domain wall, and the
   right edge, respectively. Sublattice polarization (alternating signs) is
   clearly visible.}
   \label{fig:dw_states}
-\end{figure}
+\end{figure*}
 
 % --- 2.5 Effective Hamiltonian ---
 \subsection{Effective low-energy Hamiltonian}
@@ -499,16 +501,16 @@ the left edge, $\ketL$ becomes increasingly compressed into a shorter domain
 a longer domain. The state $\ketS$ develops an asymmetric envelope, decaying
 faster into the shorter domain.
 
-\begin{figure}[t]
+\begin{figure*}[!tp]
   \centering
-  \includegraphics[width=\columnwidth]{fig5_asymmetric_wall_states.pdf}
+  \includegraphics[width=\textwidth]{fig5_asymmetric_wall_states.pdf}
   \caption{Spatial profiles of the three protected states for different domain
   wall positions in an $L = 21$ chain. Top to bottom: $j_{\mathrm{DW}} = 11$
   (quasi-center), $j_{\mathrm{DW}} = 7$ (one-third), $j_{\mathrm{DW}} = 5$
   (one-quarter). The exponential localization and sublattice polarization are
   preserved in all cases.}
   \label{fig:asym_states}
-\end{figure}
+\end{figure*}
 
 \subsection{Effective couplings and the asymmetry mechanism}
 \label{sec:asym_couplings}
@@ -533,15 +535,15 @@ predicted by Eq.~(\ref{eq:coupling_ratio}):
   \end{ruledtabular}
 \end{table}
 
-\begin{figure}[t]
+\begin{figure*}[!tp]
   \centering
-  \includegraphics[width=\columnwidth]{fig8_effective_coupling.pdf}
+  \includegraphics[width=\textwidth]{fig8_effective_coupling.pdf}
   \caption{Effective couplings $\JLS$ (left--soliton) and $\JSR$
   (soliton--right) as a function of the domain wall position for $L = 21$.
   The coupling asymmetry grows exponentially with the displacement from the
   chain center, consistent with Eq.~(\ref{eq:coupling_ratio}).}
   \label{fig:coupling_asymmetry}
-\end{figure}
+\end{figure*}
 
 The coupling asymmetry has a direct and dramatic consequence for the transfer
 fidelity. In a three-site chain with unequal hoppings $J_1 \neq J_2$, the
@@ -579,14 +581,14 @@ scan over $\ttr \in [30, 600]$.
   \end{ruledtabular}
 \end{table}
 
-\begin{figure}[t]
+\begin{figure*}[!tp]
   \centering
-  \includegraphics[width=\columnwidth]{fig6_asymmetric_transfer.pdf}
+  \includegraphics[width=\textwidth]{fig6_asymmetric_transfer.pdf}
   \caption{Transfer dynamics for asymmetric domain wall configurations
   ($L = 21$). The fidelity degrades dramatically as the domain wall moves
   away from the chain center.}
   \label{fig:asym_transfer}
-\end{figure}
+\end{figure*}
 
 The quasi-centered case ($j_{\mathrm{DW}} = 11$) achieves $f = 0.637$, in
 quantitative agreement with the analytical bound $f_{\max} = 0.64$ from
@@ -600,14 +602,14 @@ fidelity-vs-$\ttr$ curves for all three wall positions. The oscillation
 frequencies and amplitudes differ markedly, reflecting the distinct
 effective coupling landscapes.
 
-\begin{figure}[t]
+\begin{figure*}[!tp]
   \centering
-  \includegraphics[width=\columnwidth]{fig7_fidelity_comparison.pdf}
+  \includegraphics[width=\textwidth]{fig7_fidelity_comparison.pdf}
   \caption{Transfer fidelity as a function of $\ttr$ for the three domain wall
   positions in the $L = 21$ chain. The first fidelity maximum (marked by dots)
   decreases exponentially with the displacement from the center.}
   \label{fig:fidelity_comparison}
-\end{figure}
+\end{figure*}
 
 \subsection{Systematic study: fidelity vs.~wall position}
 \label{sec:systematic}
@@ -626,9 +628,10 @@ that the fidelity profile is perfectly symmetric about the chain center
     $j_{\mathrm{DW}} = 3$.
 \end{itemize}
 
-\begin{figure}[t]
+\clearpage
+\begin{figure*}[!tp]
   \centering
-  \includegraphics[width=\columnwidth]{fig12_systematic_wall_position.pdf}
+  \includegraphics[width=\textwidth]{fig12_systematic_wall_position.pdf}
   \caption{Maximum transfer fidelity (left panel) and optimal transfer time
   $\ttr$ (right panel) as a function of the normalized domain wall position
   $j_\mathrm{DW}/(L-1)$, for chains of length $L = 11$ (blue) and $L = 15$
@@ -637,7 +640,7 @@ that the fidelity profile is perfectly symmetric about the chain center
   optimal transfer time its minimum. Only odd-index sites produce valid
   domain walls.}
   \label{fig:systematic}
-\end{figure}
+\end{figure*}
 
 The symmetric profiles confirm that the transfer fidelity depends only on the
 \emph{difference} $|\ell_1 - \ell_2|$ between domain lengths, not on their
@@ -719,16 +722,17 @@ performance of each pulse profile on the symmetric chain ($L = 11$, $\ell = 4$).
   \end{ruledtabular}
 \end{table}
 
-\begin{figure}[t]
+\clearpage
+\begin{figure*}[!tp]
   \centering
-  \includegraphics[width=\columnwidth]{fig9_sta_pulse_comparison.pdf}
+  \includegraphics[width=\textwidth]{fig9_sta_pulse_comparison.pdf}
   \caption{Comparison of transfer fidelity vs.~$\ttr$ for different pulse
   profiles in the symmetric chain ($L = 11$, $\ell = 4$). The standard
   $\sin^2$ pulse with $\tprep = 15$ achieves the best time--fidelity trade-off
   ($f = 0.9994$ at $\ttr = 45$). The STA-global $\sin^2$ achieves the highest
   absolute fidelity ($f = 0.99995$) but requires $\ttr = 75$.}
   \label{fig:sta_pulses}
-\end{figure}
+\end{figure*}
 
 The key findings are:
 \begin{itemize}
@@ -758,14 +762,14 @@ fidelity saturates near its maximum. The crossover occurs at
 $\tprep \sim 2/\Delta_{\min}$, where $\Delta_{\min}$ is the minimum spectral
 gap encountered during the ramp.
 
-\begin{figure}[t]
+\begin{figure*}[!tp]
   \centering
-  \includegraphics[width=\columnwidth]{fig10_tprep_dependence.pdf}
+  \includegraphics[width=\textwidth]{fig10_tprep_dependence.pdf}
   \caption{Optimal transfer fidelity as a function of preparation time $\tprep$
   for different pulse profiles. The fidelity saturates once $\tprep$ exceeds
   the adiabatic timescale $\tau \sim 2/\Delta_{\min}$.}
   \label{fig:tprep}
-\end{figure}
+\end{figure*}
 
 \subsection{Results: asymmetric chains with STA}
 \label{sec:sta_asymmetric}
@@ -791,14 +795,14 @@ configurations ($L = 21$, $j_{\mathrm{DW}} = 11, 7, 5$).
   \end{ruledtabular}
 \end{table}
 
-\begin{figure}[t]
+\begin{figure*}[!tp]
   \centering
-  \includegraphics[width=\columnwidth]{fig11_combined_study.pdf}
+  \includegraphics[width=\textwidth]{fig11_combined_study.pdf}
   \caption{Combined effect of asymmetry and STA pulses on the transfer fidelity
   ($L = 21$). No pulse optimization can overcome the fundamental coupling
   asymmetry that limits the maximum achievable fidelity.}
   \label{fig:combined_asym_sta}
-\end{figure}
+\end{figure*}
 
 The results (Table~\ref{tab:sta_asym} and Fig.~\ref{fig:combined_asym_sta})
 are unambiguous: \emph{no pulse protocol significantly improves the fidelity in
@@ -1557,7 +1561,7 @@ reads~\cite{Greentree2004}
 which can always be satisfied by making the pulses sufficiently long, regardless
 of the coupling asymmetry.
 
-\begin{figure*}[t]
+\begin{figure*}[!tp]
   \centering
   \includegraphics[width=0.48\textwidth]{fig13_ctap_pulses.pdf}%
   \hfill
@@ -1653,16 +1657,64 @@ protocol in the presence of coupling asymmetry:
 \begin{figure}[t]
   \centering
   \includegraphics[width=\columnwidth]{fig15_ctap_comparison.pdf}
-  \caption{Transfer fidelity versus domain wall position $j_{\mathrm{DW}}$
-  for $L = 21$ ($v = 0.5$, $w = 1.0$).  The static Rabi protocol (red
-  circles) peaks near $f \approx 0.64$ close to the chain quasi-centre and
-  collapses exponentially to $f \approx 0.004$ at $j_{\mathrm{DW}} = 5$, the
-  value computed in Sec.~\ref{sec:asym_fidelity}.  The CTAP protocol (blue
-  diamonds) maintains $f \approx 0.99$ at \emph{all} valid domain wall
-  positions, demonstrating complete immunity to the coupling asymmetry.  The
-  shaded region represents the fidelity gain obtained by switching from the
-  static to the dynamic protocol.}
+  \caption{Transfer fidelity versus domain-wall position $j_{\mathrm{DW}}$ for
+  $L = 21$ ($v = 0.5$, $w = 1.0$), obtained by numerical integration of the
+  effective three-level Hamiltonian~(\ref{eq:heff_time}). The static Rabi
+  protocol (red circles) peaks at $f \approx 0.64$ near the quasi-centre and
+  collapses to $f \lesssim 0.004$ for $j_{\mathrm{DW}} \le 5$. Bare CTAP (blue
+  squares), driven by the counter-intuitive Gaussian pulses
+  [Eqs.~(\ref{eq:ctap_jsr})--(\ref{eq:ctap_jls})], sustains $f > 0.99$ over a
+  broad central region and degrades only for extreme asymmetry. CD-assisted
+  CTAP (teal diamonds) widens the high-fidelity plateau by suppressing the
+  residual nonadiabatic error. The dotted line marks the fault-tolerance
+  threshold $f_0 = 0.995$.}
   \label{fig:ctap_comparison}
+\end{figure}
+
+\clearpage
+\subsection{Numerical verification and the physical limit}
+\label{sec:ctap_numerics}
+
+To substantiate the asymmetry-resilience of CTAP we integrate the effective
+three-level Hamiltonian~(\ref{eq:heff_time}) with the counter-intuitive
+Gaussian pulses [Eqs.~(\ref{eq:ctap_jsr})--(\ref{eq:ctap_jls})] for every valid
+domain-wall position of the $L = 21$ chain. The peak amplitude of the weaker
+pulse is set to $1/\rho$, where $\rho = (w/v)^{|\ell_1 - \ell_2|/2}$ is the
+geometric coupling ratio that also bounds the Rabi protocol
+[Eq.~(\ref{eq:fmax})]; the longer domain physically caps its coupling because
+the intracell hopping must satisfy $v < w$ to keep the bulk gap open.
+
+Figure~\ref{fig:ctap_comparison} reports the result. Bare CTAP recovers
+$f > 0.99$ wherever $\rho \lesssim 8$ ($|\ell_1 - \ell_2| \lesssim 6$) and
+reaches $f \approx 0.91$ at $\rho = 32$ ($j_{\mathrm{DW}} = 5$) for sufficiently
+long pulses---more than two orders of magnitude above the Rabi bound
+$f_{\max} = 0.004$. Adding the counterdiabatic term~(\ref{eq:hcd_effective})
+raises this to $f \approx 0.97$.
+
+Figure~\ref{fig:ctap_asymmetry} isolates the dependence on the peak ratio
+$\rho$. Both variants are essentially perfect for $\rho \lesssim 8$; the bare
+protocol degrades earlier and is partially rescued by longer protocol times,
+while CD assistance sustains $f > 0.99$ up to $\rho \approx 16$. For
+$\rho \gtrsim 10^{2}$ all variants fall, because the weaker coupling
+$J_{\min} \sim 1/\rho$ shrinks the instantaneous gap
+$\sqrt{\JLS^2 + \JSR^2}$ until the three protected levels become
+quasi-degenerate and the effective three-level description---not the CTAP
+mechanism itself---breaks down. This is the genuine physical limit of
+dark-state transfer in a single-domain-wall geometry: CTAP removes the
+asymmetry bottleneck of the static Rabi protocol across the entire
+experimentally relevant range, and CD driving extends it further, but it cannot
+manufacture coupling where the geometry forbids it.
+
+\begin{figure}[t]
+  \centering
+  \includegraphics[width=\columnwidth]{fig16_ctap_asymmetry.pdf}
+  \caption{Transfer fidelity as a function of the peak-coupling ratio
+  $\rho = J_{\max}^{L}/J_{\max}^{R}$ for the effective three-level system.
+  Bare CTAP at $T = 300$ (orange) and $T = 1500$ (blue), and CD-assisted CTAP
+  at $T = 300$ (teal). High fidelity is maintained up to $\rho \approx 16$;
+  beyond $\rho \sim 10^2$ the protected gap closes and the dark-state mechanism
+  ceases to apply. Dotted line: $f_0 = 0.995$.}
+  \label{fig:ctap_asymmetry}
 \end{figure}
 
 \subsection{Extension to two domain walls: even-state parity constraint}
@@ -1794,10 +1846,12 @@ $\ket{D_0(t)} = \cos\Theta(t)\ketL - \sin\Theta(t)\ketR$---a direct
 consequence of chiral symmetry---that mediates transfer from $\ketL$ to
 $\ketR$ without ever populating the soliton state $\ketS$. The counter-intuitive
 CTAP pulse sequence ($\JSR$ fires before $\JLS$) adiabatically rotates
-$\Theta(t)$ from $0$ to $\pi/2$, achieving near-perfect fidelity regardless
-of the coupling ratio. The fidelity is bounded only by the adiabaticity
-condition, which can always be satisfied by sufficiently slow pulses---even
-for highly asymmetric domain wall positions.
+$\Theta(t)$ from $0$ to $\pi/2$, achieving $f > 0.99$ across the
+experimentally relevant range of coupling ratios (numerically verified up to
+$\rho \approx 16$ with counterdiabatic assistance). The only residual limit is
+reached for extreme asymmetry ($\rho \gtrsim 10^2$), where the weaker
+effective coupling shrinks the protected gap and the three-level description
+breaks down---a geometric, not a protocol, limitation.
 
 \textbf{7.~CD driving on the effective three-level system accelerates CTAP.}
 The counterdiabatic correction to the three-level effective Hamiltonian

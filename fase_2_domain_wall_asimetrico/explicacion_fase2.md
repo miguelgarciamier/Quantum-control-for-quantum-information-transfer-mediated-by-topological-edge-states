@@ -153,7 +153,7 @@ donde $J_{LS}$ y $J_{SR}$ son los acoplamientos efectivos entre estados vecinos.
 
 De las ecuaciones (6-8) del paper, el acoplamiento efectivo escala como:
 
-$$J \sim v \cdot \mathcal{M}_i \cdot \mathcal{M}_j \cdot \left(\frac{w}{v}\right)^{\ell/2}$$
+$$J \sim v \cdot \mathcal{M}_i \cdot \mathcal{M}_j \cdot \left(\frac{v}{w}\right)^{\ell/2}$$
 
 donde $\ell$ es la longitud del dominio que separa los dos estados, y $\mathcal{M}_i$ son las constantes de normalización:
 $$\mathcal{M}_{\mathcal{L}} = \mathcal{M}_{\mathcal{R}} = \sqrt{\frac{w^2}{v^2} - 1}, \quad \mathcal{M}_{\mathcal{S}} = \sqrt{\frac{w^2 - v^2}{w^2 + v^2}}$$
@@ -162,7 +162,7 @@ $$\mathcal{M}_{\mathcal{L}} = \mathcal{M}_{\mathcal{R}} = \sqrt{\frac{w^2}{v^2} 
 
 Cuando $\ell_1 \neq \ell_2$:
 
-$$\frac{J_{LS}}{J_{SR}} \sim \left(\frac{w}{v}\right)^{(\ell_1 - \ell_2)/2}$$
+$$\frac{J_{LS}}{J_{SR}} \sim \left(\frac{w}{v}\right)^{(\ell_2 - \ell_1)/2}$$
 
 Para $w = 2v$ (nuestro caso):
 - Si $\ell_1 = \ell_2 = 10$: $J_{LS}/J_{SR} = 1$ (simétrico)

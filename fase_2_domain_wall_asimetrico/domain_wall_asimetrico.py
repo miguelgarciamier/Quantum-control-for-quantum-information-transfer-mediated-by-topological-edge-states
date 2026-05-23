@@ -19,6 +19,10 @@ import matplotlib.pyplot as plt
 import matplotlib.gridspec as gridspec
 from scipy.linalg import expm
 import os
+import sys
+sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+from thesis_style import apply_thesis_style, COL_W, FULL_W, COLORS
+apply_thesis_style()
 
 _SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
 FIGURES_DIR = os.path.join(_SCRIPT_DIR, '..', 'tesis', 'figures')
@@ -512,13 +516,13 @@ def plot_chain_diagram(ax, L_total, wall_pos, v, w, states_dict=None,
                 ap = state[pk] * scale
                 sg = np.sign(ap) if ap != 0 else 1
                 ax.text(pk, wave_y + ap + 0.12 * sg, sl.get(key, key),
-                        ha='center', fontsize=10, color=col, fontweight='bold')
+                        ha='center', fontsize=8, color=col, fontweight='bold')
 
     ax.axhline(y=wave_y, color='lightgray', lw=0.5, zorder=0)
     ax.set_xlim(-1, L_total)
     ax.set_ylim(chain_y - 0.55, wave_y + 1.8)
-    ax.set_xlabel('Site index $j$', fontsize=11)
-    ax.set_title(title, fontsize=11, fontweight='bold', pad=10)
+    ax.set_xlabel('Site index $j$')
+    ax.set_title(title, pad=10)
     ax.set_yticks([])
     for s in ['top', 'right', 'left']:
         ax.spines[s].set_visible(False)
@@ -528,9 +532,9 @@ def plot_transfer_heatmap(ax, times, occupation, L, title):
     """Plot site occupation vs time as a heatmap."""
     im = ax.pcolormesh(times, np.arange(L), occupation.T,
                        shading='auto', cmap='inferno', vmin=0, vmax=1)
-    ax.set_xlabel('Time $t$ ($\\hbar/J$)', fontsize=11)
-    ax.set_ylabel('Site $j$', fontsize=11)
-    ax.set_title(title, fontsize=11, fontweight='bold')
+    ax.set_xlabel('Time $t$ ($\\hbar/J$)')
+    ax.set_ylabel('Site $j$')
+    ax.set_title(title)
     ax.set_ylim(-0.5, L - 0.5)
     plt.colorbar(im, ax=ax, label='$\\langle n_j \\rangle$', shrink=0.8)
 
@@ -539,9 +543,9 @@ def plot_pulse(ax, times, v_values, title='Control pulse'):
     """Plot the control pulse v(t)."""
     ax.plot(times, v_values, '-', color='#009988', lw=2)
     ax.fill_between(times, v_values, alpha=0.2, color='#009988')
-    ax.set_xlabel('Time $t$ ($\\hbar/J$)', fontsize=11)
-    ax.set_ylabel('$v(t)$', fontsize=11)
-    ax.set_title(title, fontsize=11)
+    ax.set_xlabel('Time $t$ ($\\hbar/J$)')
+    ax.set_ylabel('$v(t)$')
+    ax.set_title(title)
     ax.set_xlim(times[0], times[-1])
 
 
@@ -575,7 +579,7 @@ def main():
         'Quarter (~1/4)': 5,
     }
 
-    fig1 = plt.figure(figsize=(18, 20))
+    fig1 = plt.figure(figsize=(FULL_W, 7.8))
     gs1 = gridspec.GridSpec(len(wall_positions), 2,
                            hspace=0.45, wspace=0.35,
                            width_ratios=[1.5, 1])
@@ -629,11 +633,10 @@ def main():
         ax_spec.plot(evals, np.zeros_like(evals), '|', color='#888', ms=12)
         ax_spec.plot(np.sort(E_prot), np.zeros(n_prot), 'o', color='#CC3311',
                      ms=10, zorder=5, label=f'{n_prot} protected')
-        ax_spec.set_xlabel('Energy $E$', fontsize=11)
-        ax_spec.set_title(f'Spectrum ({label})', fontsize=11,
-                          fontweight='bold')
+        ax_spec.set_xlabel('Energy $E$')
+        ax_spec.set_title(f'Spectrum ({label})')
         ax_spec.set_yticks([])
-        ax_spec.legend(fontsize=9)
+        ax_spec.legend()
         for s in ['top', 'right', 'left']:
             ax_spec.spines[s].set_visible(False)
 
@@ -644,11 +647,11 @@ def main():
               f"{(v_tr/w)**(ell_right//2):.6f}")
 
     fig1.suptitle('Effect of domain wall position\n'
-                  'on protected states', fontsize=14, fontweight='bold',
+                  'on protected states',
                   y=0.98)
 
     fig1.savefig(os.path.join(FIGURES_DIR, 'fig5_asymmetric_wall_states.pdf'),
-                 bbox_inches='tight', facecolor='white')
+                 bbox_inches='tight')
     print("\n  -> fig5_asymmetric_wall_states.pdf")
     plt.close(fig1)
 
@@ -661,7 +664,7 @@ def main():
 
     t_prep = 15.0
 
-    fig2 = plt.figure(figsize=(18, 22))
+    fig2 = plt.figure(figsize=(FULL_W, 8.4))
     gs2 = gridspec.GridSpec(len(wall_positions), 2,
                            hspace=0.4, wspace=0.3)
 
@@ -721,22 +724,21 @@ def main():
                  alpha=0.7, label=f'Site {wp} (DW)')
         ax2.plot(times, occ[:, L_total - 1], '--', color='#0077BB', lw=1.5,
                  alpha=0.7, label=f'Site {L_total - 1} (R)')
-        ax2.set_ylabel('Occupation', fontsize=10)
+        ax2.set_ylabel('Occupation')
         ax2.set_ylim(-0.05, 1.1)
         ax2.legend(fontsize=8, loc='center right')
 
-        ax_pulse.set_xlabel('Time $t$ ($\\hbar/J$)', fontsize=10)
-        ax_pulse.set_ylabel('$v(t)$', fontsize=10)
-        ax_pulse.set_title(f'Pulse and occupation ({label})',
-                           fontsize=11, fontweight='bold')
+        ax_pulse.set_xlabel('Time $t$ ($\\hbar/J$)')
+        ax_pulse.set_ylabel('$v(t)$')
+        ax_pulse.set_title(f'Pulse and occupation ({label})')
         ax_pulse.set_xlim(times[0], times[-1])
 
     fig2.suptitle('Transfer protocol with asymmetric domain wall\n'
                   f'$L={L_total}$, $v_{{tr}}={v_tr}$, $w={w}$',
-                  fontsize=14, fontweight='bold', y=0.99)
+                  y=0.99)
 
     fig2.savefig(os.path.join(FIGURES_DIR, 'fig6_asymmetric_transfer.pdf'),
-                 bbox_inches='tight', facecolor='white')
+                 bbox_inches='tight')
     print("\n  -> fig6_asymmetric_transfer.pdf")
     plt.close(fig2)
 
@@ -747,7 +749,7 @@ def main():
     print("EXPERIMENT 3: Fidelity vs Transfer Time — Different Wall Positions")
     print("=" * 72)
 
-    fig3, axes3 = plt.subplots(1, 2, figsize=(16, 6))
+    fig3, axes3 = plt.subplots(1, 2, figsize=(FULL_W, 2.63))
 
     colors = {'Center (~1/2)': '#0077BB', 'Third (~1/3)': '#EE7733',
               'Quarter (~1/4)': '#CC3311'}
@@ -764,12 +766,10 @@ def main():
 
     ax3a.axhline(y=0.995, color='gray', ls='--', lw=1, alpha=0.7,
                  label='$f_0 = 0.995$')
-    ax3a.set_xlabel('Transfer time $t_{tr}$ ($\\hbar/J$)',
-                    fontsize=12)
-    ax3a.set_ylabel('Fidelity $f$', fontsize=12)
-    ax3a.set_title('(a) Fidelity vs $t_{tr}$ for different DW positions',
-                   fontsize=11, fontweight='bold')
-    ax3a.legend(fontsize=9)
+    ax3a.set_xlabel('Transfer time $t_{tr}$ ($\\hbar/J$)')
+    ax3a.set_ylabel('Fidelity $f$')
+    ax3a.set_title('(a) Fidelity vs $t_{tr}$ for different DW positions')
+    ax3a.legend()
     ax3a.set_ylim(-0.05, 1.1)
 
     # (b) Summary: optimal fidelity and time vs wall position
@@ -796,12 +796,11 @@ def main():
     labels_short = [f'DW={wi}\n({pf:.2f})' for wi, pf in
                     zip(wall_idxs, positions_frac)]
     ax3b.set_xticks(np.arange(len(positions_frac)))
-    ax3b.set_xticklabels(labels_short, fontsize=9)
-    ax3b.set_ylabel('Maximum fidelity', fontsize=11, color='#0077BB')
-    ax3b_twin.set_ylabel('Optimal $t_{tr}$ ($\\hbar/J$)', fontsize=11,
+    ax3b.set_xticklabels(labels_short)
+    ax3b.set_ylabel('Maximum fidelity', color='#0077BB')
+    ax3b_twin.set_ylabel('Optimal $t_{tr}$ ($\\hbar/J$)',
                          color='#EE7733')
-    ax3b.set_title('(b) Summary: optimal fidelity and time',
-                   fontsize=11, fontweight='bold')
+    ax3b.set_title('(b) Summary: optimal fidelity and time')
     ax3b.set_ylim(0, 1.15)
 
     # Add value labels on bars
@@ -814,11 +813,10 @@ def main():
                        f'{val:.1f}', ha='center', fontsize=8, color='#EE7733')
 
     fig3.suptitle('Effect of domain wall position on fidelity\n'
-                  f'$L={L_total}$, $v_{{tr}}={v_tr}$, $w={w}$',
-                  fontsize=13, fontweight='bold')
+                  f'$L={L_total}$, $v_{{tr}}={v_tr}$, $w={w}$')
     fig3.tight_layout()
     fig3.savefig(os.path.join(FIGURES_DIR, 'fig7_fidelity_comparison.pdf'),
-                 bbox_inches='tight', facecolor='white')
+                 bbox_inches='tight')
     print("\n  -> fig7_fidelity_comparison.pdf")
     plt.close(fig3)
 
@@ -829,7 +827,7 @@ def main():
     print("EXPERIMENT 4: Effective Coupling Asymmetry")
     print("=" * 72)
 
-    fig4, axes4 = plt.subplots(1, 2, figsize=(16, 6))
+    fig4, axes4 = plt.subplots(1, 2, figsize=(FULL_W, 2.63))
 
     # (a) J_LS and J_SR vs wall position
     ax4a = axes4[0]
@@ -849,11 +847,10 @@ def main():
                   label='$J_{LS}$ (left-wall)')
     ax4a.semilogy(wp_range, J_SR, 's-', color='#0077BB', ms=6, lw=1.5,
                   label='$J_{SR}$ (wall-right)')
-    ax4a.set_xlabel('Wall position (site)', fontsize=12)
-    ax4a.set_ylabel('Effective coupling $|J|$', fontsize=12)
-    ax4a.set_title('(a) Effective couplings vs DW position',
-                   fontsize=11, fontweight='bold')
-    ax4a.legend(fontsize=10)
+    ax4a.set_xlabel('Wall position (site)')
+    ax4a.set_ylabel('Effective coupling $|J|$')
+    ax4a.set_title('(a) Effective couplings vs DW position')
+    ax4a.legend()
     ax4a.axvline(x=(L_total - 1) / 2, color='gray', ls='--', alpha=0.5)
     ax4a.text((L_total - 1) / 2 + 0.3, ax4a.get_ylim()[1] * 0.5,
               'Center', fontsize=9, color='gray')
@@ -863,21 +860,19 @@ def main():
     ax4b = axes4[1]
     ax4b.plot(wp_range, J_ratio, 'D-', color='#009988', ms=6, lw=1.5)
     ax4b.axhline(y=1.0, color='gray', ls='--', alpha=0.5)
-    ax4b.set_xlabel('Wall position (site)', fontsize=12)
-    ax4b.set_ylabel('$J_{LS} / J_{SR}$', fontsize=12)
-    ax4b.set_title('(b) Coupling asymmetry',
-                   fontsize=11, fontweight='bold')
+    ax4b.set_xlabel('Wall position (site)')
+    ax4b.set_ylabel('$J_{LS} / J_{SR}$')
+    ax4b.set_title('(b) Coupling asymmetry')
     ax4b.set_yscale('log')
     ax4b.grid(True, alpha=0.3)
     ax4b.text((L_total - 1) / 2 + 0.3, 1.3, 'Symmetric ($J_{LS}=J_{SR}$)',
               fontsize=9, color='gray')
 
     fig4.suptitle('Effective coupling analysis between protected states\n'
-                  f'$L={L_total}$, $v={v_tr}$, $w={w}$',
-                  fontsize=13, fontweight='bold')
+                  f'$L={L_total}$, $v={v_tr}$, $w={w}$')
     fig4.tight_layout()
     fig4.savefig(os.path.join(FIGURES_DIR, 'fig8_effective_coupling.pdf'),
-                 bbox_inches='tight', facecolor='white')
+                 bbox_inches='tight')
     print("\n  -> fig8_effective_coupling.pdf")
     plt.close(fig4)
 
@@ -934,7 +929,7 @@ def main():
     }
 
     # (a) Visualize pulse shapes
-    fig5 = plt.figure(figsize=(18, 14))
+    fig5 = plt.figure(figsize=(FULL_W, 5.44))
     gs5 = gridspec.GridSpec(2, 2, hspace=0.35, wspace=0.3)
 
     ax5a = fig5.add_subplot(gs5[0, 0])
@@ -944,10 +939,9 @@ def main():
                   for t in t_demo]
         ax5a.plot(t_demo, v_demo, cfg['ls'], color=cfg['color'], lw=2,
                   label=name)
-    ax5a.set_xlabel('Time $t$ ($\\hbar/J$)', fontsize=11)
-    ax5a.set_ylabel('$v(t)$', fontsize=11)
-    ax5a.set_title('(a) Pulse profile comparison ($t_{tr}=50$)',
-                   fontsize=11, fontweight='bold')
+    ax5a.set_xlabel('Time $t$ ($\\hbar/J$)')
+    ax5a.set_ylabel('$v(t)$')
+    ax5a.set_title('(a) Pulse profile comparison ($t_{tr}=50$)')
     ax5a.legend(fontsize=7, loc='upper right')
 
     # (b) Fidelity scan for each pulse type
@@ -977,10 +971,9 @@ def main():
 
     ax5b.axhline(y=0.995, color='gray', ls='--', lw=1, alpha=0.7,
                  label='$f_0 = 0.995$')
-    ax5b.set_xlabel('$t_{tr}$ ($\\hbar/J$)', fontsize=11)
-    ax5b.set_ylabel('Fidelity $f$', fontsize=11)
-    ax5b.set_title('(b) Fidelity vs $t_{tr}$ for different pulses',
-                   fontsize=11, fontweight='bold')
+    ax5b.set_xlabel('$t_{tr}$ ($\\hbar/J$)')
+    ax5b.set_ylabel('Fidelity $f$')
+    ax5b.set_title('(b) Fidelity vs $t_{tr}$ for different pulses')
     ax5b.legend(fontsize=6.5, loc='lower right')
     ax5b.set_ylim(-0.05, 1.1)
 
@@ -1015,10 +1008,10 @@ def main():
 
     fig5.suptitle('Transfer protocol comparison\n'
                   f'Symmetric chain $N={N_dom}$, $\\ell={ell}$, '
-                  f'$L={L_sym}$', fontsize=14, fontweight='bold', y=1.01)
+                  f'$L={L_sym}$', y=1.01)
 
     fig5.savefig(os.path.join(FIGURES_DIR, 'fig9_sta_pulse_comparison.pdf'),
-                 bbox_inches='tight', facecolor='white')
+                 bbox_inches='tight')
     print("\n  -> fig9_sta_pulse_comparison.pdf")
     plt.close(fig5)
 
@@ -1029,7 +1022,7 @@ def main():
     print("EXPERIMENT 6: Effect of Preparation Time on Fidelity")
     print("=" * 72)
 
-    fig6, axes6 = plt.subplots(1, 2, figsize=(16, 6))
+    fig6, axes6 = plt.subplots(1, 2, figsize=(FULL_W, 2.63))
 
     # (a) Fidelity vs t_prep for standard pulse at fixed t_tr
     t_tr_fixed = 45.6  # from the paper
@@ -1075,12 +1068,10 @@ def main():
     ax6a.axvline(x=8, color='lightgray', ls=':', lw=1, alpha=0.7)
     ax6a.text(8.5, 0.1, '$\\tau \\sim 8$ (adiabatic\nscale)', fontsize=8,
               color='gray')
-    ax6a.set_xlabel('Preparation time $t_{prep}$ ($\\hbar/J$)',
-                    fontsize=12)
-    ax6a.set_ylabel('Fidelity $f$', fontsize=12)
-    ax6a.set_title(f'(a) Fidelity vs $t_{{prep}}$ ($t_{{tr}}={t_tr_fixed}$)',
-                   fontsize=11, fontweight='bold')
-    ax6a.legend(fontsize=9)
+    ax6a.set_xlabel('Preparation time $t_{prep}$ ($\\hbar/J$)')
+    ax6a.set_ylabel('Fidelity $f$')
+    ax6a.set_title(f'(a) Fidelity vs $t_{{prep}}$ ($t_{{tr}}={t_tr_fixed}$)')
+    ax6a.legend()
     ax6a.set_ylim(-0.05, 1.1)
 
     # (b) Gap analysis: why t_prep > tau is needed
@@ -1106,21 +1097,19 @@ def main():
     ax6b.text(v_tr + 0.02, ax6b.get_ylim()[1] * 0.9, f'$v_{{tr}}={v_tr}$',
               fontsize=9, color='gray')
 
-    ax6b.set_xlabel('$v$', fontsize=12)
-    ax6b.set_ylabel('Gap $\\Delta$', fontsize=11, color='#0077BB')
+    ax6b.set_xlabel('$v$')
+    ax6b.set_ylabel('Gap $\\Delta$', color='#0077BB')
     ax6b_twin.set_ylabel('Adiabatic timescale $\\tau$ ($\\hbar/J$)',
-                         fontsize=11, color='#CC3311')
-    ax6b.set_title('(b) Gap and adiabatic timescale',
-                   fontsize=11, fontweight='bold')
-    ax6b.legend(fontsize=9, loc='upper left')
-    ax6b_twin.legend(fontsize=9, loc='upper right')
+                         color='#CC3311')
+    ax6b.set_title('(b) Gap and adiabatic timescale')
+    ax6b.legend(loc='upper left')
+    ax6b_twin.legend(loc='upper right')
 
     fig6.suptitle('Fidelity dependence on preparation time\n'
-                  f'$N={N_dom}$, $\\ell={ell}$, $L={L_sym}$',
-                  fontsize=13, fontweight='bold')
+                  f'$N={N_dom}$, $\\ell={ell}$, $L={L_sym}$')
     fig6.tight_layout()
     fig6.savefig(os.path.join(FIGURES_DIR, 'fig10_tprep_dependence.pdf'),
-                 bbox_inches='tight', facecolor='white')
+                 bbox_inches='tight')
     print("\n  -> fig10_tprep_dependence.pdf")
     plt.close(fig6)
 
@@ -1131,7 +1120,7 @@ def main():
     print("EXPERIMENT 7: Asymmetric Wall + STA Combined Study")
     print("=" * 72)
 
-    fig7 = plt.figure(figsize=(18, 14))
+    fig7 = plt.figure(figsize=(FULL_W, 5.44))
     gs7 = gridspec.GridSpec(2, 2, hspace=0.4, wspace=0.35)
 
     # For each wall position, compare standard vs STA
@@ -1206,7 +1195,7 @@ def main():
             table[i + 1, j].set_facecolor(color)
 
     ax7a.set_title('(a) Results summary: DW position × protocol',
-                   fontsize=12, fontweight='bold', pad=20)
+                   pad=20)
 
     # (b) Fidelity curves for center wall: std vs STA
     ax7b = fig7.add_subplot(gs7[1, 0])
@@ -1218,10 +1207,9 @@ def main():
         ax7b.plot(t_scan_combined, fids, proto['ls'], color=proto['color'],
                   lw=1.5, label=label_p)
     ax7b.axhline(y=0.995, color='gray', ls='--', lw=1, alpha=0.5)
-    ax7b.set_xlabel('$t_{tr}$ ($\\hbar/J$)', fontsize=11)
-    ax7b.set_ylabel('Fidelity', fontsize=11)
-    ax7b.set_title(f'(b) DW center (site {wp_center}): protocol comparison',
-                   fontsize=11, fontweight='bold')
+    ax7b.set_xlabel('$t_{tr}$ ($\\hbar/J$)')
+    ax7b.set_ylabel('Fidelity')
+    ax7b.set_title(f'(b) DW center (site {wp_center}): protocol comparison')
     ax7b.legend(fontsize=8)
     ax7b.set_ylim(-0.05, 1.1)
 
@@ -1235,19 +1223,18 @@ def main():
         ax7c.plot(t_scan_combined, fids, proto['ls'], color=proto['color'],
                   lw=1.5, label=label_p)
     ax7c.axhline(y=0.995, color='gray', ls='--', lw=1, alpha=0.5)
-    ax7c.set_xlabel('$t_{tr}$ ($\\hbar/J$)', fontsize=11)
-    ax7c.set_ylabel('Fidelity', fontsize=11)
-    ax7c.set_title(f'(c) DW quarter (site {wp_quarter}): protocol comparison',
-                   fontsize=11, fontweight='bold')
+    ax7c.set_xlabel('$t_{tr}$ ($\\hbar/J$)')
+    ax7c.set_ylabel('Fidelity')
+    ax7c.set_title(f'(c) DW quarter (site {wp_quarter}): protocol comparison')
     ax7c.legend(fontsize=8)
     ax7c.set_ylim(-0.05, 1.1)
 
     fig7.suptitle('Combined study: asymmetric position + Shortcut to Adiabaticity\n'
                   f'$L={L_total}$, $v_{{tr}}={v_tr}$, $w={w}$',
-                  fontsize=14, fontweight='bold', y=1.01)
+                  y=1.01)
 
     fig7.savefig(os.path.join(FIGURES_DIR, 'fig11_combined_study.pdf'),
-                 bbox_inches='tight', facecolor='white')
+                 bbox_inches='tight')
     print("\n  -> fig11_combined_study.pdf")
     plt.close(fig7)
 
@@ -1258,7 +1245,7 @@ def main():
     print("EXPERIMENT 8: Systematic Study — Fidelity vs Wall Position")
     print("=" * 72)
 
-    fig8, axes8 = plt.subplots(1, 2, figsize=(16, 6))
+    fig8, axes8 = plt.subplots(1, 2, figsize=(FULL_W, 2.63))
 
     # Study for multiple chain lengths
     L_values = [11, 15]
@@ -1294,25 +1281,22 @@ def main():
                   ms=5, lw=1.5, label=f'$L={L_val}$')
 
     ax8a.axhline(y=0.995, color='gray', ls='--', lw=1, alpha=0.5)
-    ax8a.set_xlabel('Relative DW position ($j_{DW}/(L-1)$)', fontsize=12)
-    ax8a.set_ylabel('Maximum fidelity', fontsize=12)
-    ax8a.set_title('(a) Fidelity vs relative DW position',
-                   fontsize=11, fontweight='bold')
-    ax8a.legend(fontsize=9)
+    ax8a.set_xlabel('Relative DW position ($j_{DW}/(L-1)$)')
+    ax8a.set_ylabel('Maximum fidelity')
+    ax8a.set_title('(a) Fidelity vs relative DW position')
+    ax8a.legend()
     ax8a.set_ylim(0, 1.1)
 
-    ax8b.set_xlabel('Relative DW position ($j_{DW}/(L-1)$)', fontsize=12)
-    ax8b.set_ylabel('Optimal $t_{tr}$ ($\\hbar/J$)', fontsize=12)
-    ax8b.set_title('(b) Transfer time vs DW position',
-                   fontsize=11, fontweight='bold')
-    ax8b.legend(fontsize=9)
+    ax8b.set_xlabel('Relative DW position ($j_{DW}/(L-1)$)')
+    ax8b.set_ylabel('Optimal $t_{tr}$ ($\\hbar/J$)')
+    ax8b.set_title('(b) Transfer time vs DW position')
+    ax8b.legend()
 
     fig8.suptitle('Systematic study: effect of wall position and chain size\n'
-                  f'$v_{{tr}}={v_tr}$, $w={w}$',
-                  fontsize=13, fontweight='bold')
+                  f'$v_{{tr}}={v_tr}$, $w={w}$')
     fig8.tight_layout()
     fig8.savefig(os.path.join(FIGURES_DIR, 'fig12_systematic_wall_position.pdf'),
-                 bbox_inches='tight', facecolor='white')
+                 bbox_inches='tight')
     print("\n  -> fig12_systematic_wall_position.pdf")
     plt.close(fig8)
 

@@ -17,6 +17,10 @@ import matplotlib.pyplot as plt
 import matplotlib.gridspec as gridspec
 from scipy.linalg import expm
 import os
+import sys
+sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+from thesis_style import apply_thesis_style, COL_W, FULL_W, COLORS
+apply_thesis_style()
 
 _SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
 FIGURES_DIR = os.path.join(_SCRIPT_DIR, '..', 'tesis', 'figures')
@@ -266,18 +270,18 @@ def plot_dimer_spectrum(ax, ratios, spectra, L_sites):
                label='$v/w = 1$ (transition)')
     ax.axhline(y=0, color='gray', ls=':', lw=0.5)
     
-    ax.set_xlabel('$v/w$', fontsize=13)
-    ax.set_ylabel('Energy $E/w$', fontsize=13)
+    ax.set_xlabel('$v/w$')
+    ax.set_ylabel('Energy $E/w$')
     ax.set_title(f'SSH dimer chain spectrum ({L_sites} sites, '
-                 f'{L_sites//2} cells)', fontsize=12, fontweight='bold')
-    ax.legend(fontsize=10, loc='upper left')
+                 f'{L_sites//2} cells)')
+    ax.legend(loc='upper left')
     ax.set_xlim(ratios[0], ratios[-1])
     
     # Annotate phases
     ax.text(0.4, 1.6, 'Topological\nphase\n($\\nu=1$)',
-            ha='center', fontsize=11, color='#009988', fontweight='bold')
+            ha='center', fontsize=8, color='#009988', fontweight='bold')
     ax.text(1.8, 1.6, 'Trivial\nphase\n($\\nu=0$)',
-            ha='center', fontsize=11, color='#888', fontweight='bold')
+            ha='center', fontsize=8, color='#888', fontweight='bold')
     
     # Annotate gap
     idx_05 = np.argmin(np.abs(ratios - 0.5))
@@ -286,7 +290,7 @@ def plot_dimer_spectrum(ax, ratios, spectra, L_sites):
     neg_max = np.max(gap_05[gap_05 < 0])
     ax.annotate('', xy=(0.5, pos_min), xytext=(0.5, neg_max),
                 arrowprops=dict(arrowstyle='<->', color='#EE7733', lw=2))
-    ax.text(0.55, 0, '$\\Delta$', fontsize=12, color='#EE7733',
+    ax.text(0.55, 0, '$\\Delta$', fontsize=8, color='#EE7733',
             fontweight='bold', va='center')
 
 
@@ -323,14 +327,13 @@ def plot_dimer_gap(ax, L_sites, w=1.0, n_points=200):
     ax.plot(ratios, gaps, '-', color='#EE7733', lw=2.5,
             label=f'{L_sites} sites')
     ax.axvline(x=1.0, color='#CC3311', ls='--', lw=1.5, alpha=0.8)
-    ax.set_xlabel('$v/w$', fontsize=13)
-    ax.set_ylabel('Gap $\\Delta/w$', fontsize=13)
-    ax.set_title(f'Spectral gap: finite chain vs bulk', fontsize=12,
-                 fontweight='bold')
+    ax.set_xlabel('$v/w$')
+    ax.set_ylabel('Gap $\\Delta/w$')
+    ax.set_title(f'Spectral gap: finite chain vs bulk')
     ax.set_xlim(ratios[0], ratios[-1])
-    ax.legend(fontsize=9, loc='upper right')
+    ax.legend(loc='upper right')
     ax.text(1.0, max(bulk_gap)*0.85, '$v=w$\n(topological\ntransition)',
-            ha='center', fontsize=10, color='#CC3311')
+            ha='center', fontsize=8, color='#CC3311')
 
 
 def plot_domain_wall_states(ax, N_domains, ell, v, w, states_dict, title):
@@ -405,12 +408,12 @@ def plot_domain_wall_states(ax, N_domains, ell, v, w, states_dict, title):
             ap = state[pk] * scale
             sg = np.sign(ap) if ap != 0 else 1
             ax.text(pk, wave_y + ap + 0.12*sg, sl.get(key, key),
-                    ha='center', fontsize=10, color=col, fontweight='bold')
+                    ha='center', fontsize=8, color=col, fontweight='bold')
     ax.axhline(y=wave_y, color='lightgray', lw=0.5, zorder=0)
     ax.set_xlim(-1, L)
     ax.set_ylim(chain_y - 0.55, wave_y + 1.8)
-    ax.set_xlabel('Site index $j$', fontsize=11)
-    ax.set_title(title, fontsize=12, fontweight='bold', pad=10)
+    ax.set_xlabel('Site index $j$')
+    ax.set_title(title, pad=10)
     ax.set_yticks([])
     for s in ['top', 'right', 'left']:
         ax.spines[s].set_visible(False)
@@ -420,9 +423,9 @@ def plot_transfer_heatmap(ax, times, occupation, L, title):
     """Plot site occupation vs time as a heatmap (like Fig 2 of paper)."""
     im = ax.pcolormesh(times, np.arange(L), occupation.T,
                        shading='auto', cmap='inferno', vmin=0, vmax=1)
-    ax.set_xlabel('Time $t$ ($\\hbar/J$)', fontsize=11)
-    ax.set_ylabel('Site $j$', fontsize=11)
-    ax.set_title(title, fontsize=12, fontweight='bold')
+    ax.set_xlabel('Time $t$ ($\\hbar/J$)')
+    ax.set_ylabel('Site $j$')
+    ax.set_title(title)
     ax.set_ylim(-0.5, L - 0.5)
     plt.colorbar(im, ax=ax, label='$\\langle n_j \\rangle$', shrink=0.8)
 
@@ -431,9 +434,9 @@ def plot_pulse(ax, times, v_values, title='Control pulse'):
     """Plot the control pulse v(t)."""
     ax.plot(times, v_values, '-', color='#009988', lw=2)
     ax.fill_between(times, v_values, alpha=0.2, color='#009988')
-    ax.set_xlabel('Time $t$ ($\\hbar/J$)', fontsize=11)
-    ax.set_ylabel('$v(t)$', fontsize=11)
-    ax.set_title(title, fontsize=11)
+    ax.set_xlabel('Time $t$ ($\\hbar/J$)')
+    ax.set_ylabel('$v(t)$')
+    ax.set_title(title)
     ax.set_xlim(times[0], times[-1])
 
 
@@ -450,10 +453,10 @@ def plot_boundary_occupations(ax, times, bound_occ, title):
         ax.plot(times, occ, '-', color=colors.get(k, '#009988'), lw=2,
                 label=labels.get(k, k))
     
-    ax.set_xlabel('Time $t$ ($\\hbar/J$)', fontsize=11)
-    ax.set_ylabel('Occupation', fontsize=11)
-    ax.set_title(title, fontsize=12, fontweight='bold')
-    ax.legend(fontsize=10)
+    ax.set_xlabel('Time $t$ ($\\hbar/J$)')
+    ax.set_ylabel('Occupation')
+    ax.set_title(title)
+    ax.legend()
     ax.set_xlim(times[0], times[-1])
     ax.set_ylim(-0.05, 1.05)
 
@@ -480,7 +483,7 @@ def main():
     ratios, spectra = compute_spectrum_vs_ratio(L_dimer, w)
     ratios_odd, spectra_odd = compute_spectrum_vs_ratio(L_odd, w)
     
-    fig1 = plt.figure(figsize=(18, 12))
+    fig1 = plt.figure(figsize=(FULL_W, 4.67))
     gs1 = gridspec.GridSpec(2, 2, hspace=0.35, wspace=0.3)
     
     # (a) Even chain spectrum
@@ -497,19 +500,18 @@ def main():
     ax1b.axvline(x=1.0, color='#CC3311', ls='--', lw=1.5, alpha=0.8,
                  label='$v/w = 1$ (transition)')
     ax1b.axhline(y=0, color='gray', ls=':', lw=0.5)
-    ax1b.set_xlabel('$v/w$', fontsize=13)
-    ax1b.set_ylabel('Energy $E/w$', fontsize=13)
-    ax1b.set_title(f'(b) Odd: {L_odd} sites (incomplete cell → edge state)',
-                   fontsize=12, fontweight='bold')
-    ax1b.legend(fontsize=10, loc='upper left')
+    ax1b.set_xlabel('$v/w$')
+    ax1b.set_ylabel('Energy $E/w$')
+    ax1b.set_title(f'(b) Odd: {L_odd} sites (incomplete cell \u2192 edge state)')
+    ax1b.legend(loc='upper left')
     ax1b.set_xlim(ratios_odd[0], ratios_odd[-1])
-    ax1b.text(0.3, 0.12, 'Edge\nstate\n$E=0$', fontsize=10,
+    ax1b.text(0.3, 0.12, 'Edge\nstate\n$E=0$', fontsize=8,
               color='#CC3311', fontweight='bold', ha='center')
     
     # (c) Gap comparison
     ax1c = fig1.add_subplot(gs1[1, 0])
     plot_dimer_gap(ax1c, L_dimer, w)
-    ax1c.set_title('(c) Spectral gap vs v/w', fontsize=12, fontweight='bold')
+    ax1c.set_title('(c) Spectral gap vs v/w')
     
     # (d) Sketch of the dimer chain
     ax1d = fig1.add_subplot(gs1[1, 1])
@@ -518,11 +520,11 @@ def main():
     ax1d.set_yticks([])
     for sp in ['top', 'right', 'left']:
         ax1d.spines[sp].set_visible(False)
-    ax1d.set_title('(d) SSH dimer model', fontsize=12, fontweight='bold')
+    ax1d.set_title('(d) SSH dimer model')
     
     # Draw topological phase (v < w)
     y_top = 1.5
-    ax1d.text(5.5, 2.0, 'Topological phase: $v < w$', fontsize=11,
+    ax1d.text(5.5, 2.0, 'Topological phase: $v < w$', fontsize=8,
               ha='center', fontweight='bold', color='#009988')
     for j in range(10):
         mk = 'o' if j%2==0 else 's'
@@ -541,7 +543,7 @@ def main():
     
     # Draw trivial phase (v > w)
     y_triv = 0.5
-    ax1d.text(5.5, 1.0, 'Trivial phase: $v > w$', fontsize=11,
+    ax1d.text(5.5, 1.0, 'Trivial phase: $v > w$', fontsize=8,
               ha='center', fontweight='bold', color='#888')
     for j in range(10):
         mk = 'o' if j%2==0 else 's'
@@ -564,10 +566,10 @@ def main():
                               ec='#009988', fc='none', lw=1.0, ls='--', alpha=0.5)
         ax1d.add_patch(rect)
     
-    ax1d.set_xlabel('Site $j$', fontsize=11)
+    ax1d.set_xlabel('Site $j$')
     
     fig1.savefig(os.path.join(FIGURES_DIR, 'fig1_dimer_spectrum.pdf'),
-                 bbox_inches='tight', facecolor='white')
+                 bbox_inches='tight')
     print("  -> tesis/figures/fig1_dimer_spectrum.pdf")
     plt.close(fig1)
     
@@ -620,7 +622,7 @@ def main():
     print(f"  Wall at site: {ell_dw + 1}")
     
     # Full spectrum plot
-    fig2 = plt.figure(figsize=(16, 12))
+    fig2 = plt.figure(figsize=(FULL_W, 5.25))
     gs2 = gridspec.GridSpec(2, 2, height_ratios=[1.2, 1], hspace=0.35,
                            wspace=0.3)
     
@@ -633,10 +635,10 @@ def main():
     ax_spec.plot(evals_dw, np.zeros_like(evals_dw), '|', color='#888', ms=12)
     ax_spec.plot(np.sort(E_prot), np.zeros(n_prot), 'o', color='#CC3311',
                  ms=10, zorder=5, label=f'{n_prot} protected')
-    ax_spec.set_xlabel('Energy $E$', fontsize=12)
-    ax_spec.set_title('Energy spectrum', fontsize=12, fontweight='bold')
+    ax_spec.set_xlabel('Energy $E$')
+    ax_spec.set_title('Energy spectrum')
     ax_spec.set_yticks([])
-    ax_spec.legend(fontsize=10)
+    ax_spec.legend()
     for s in ['top', 'right', 'left']:
         ax_spec.spines[s].set_visible(False)
     
@@ -649,13 +651,13 @@ def main():
     for key in ['L', 'S1', 'R']:
         ax_prob.plot(sites, np.abs(an_dw[key])**2, 'o-',
                      color=colors_p[key], ms=4, lw=1.5, label=labels_p[key])
-    ax_prob.set_xlabel('Site $j$', fontsize=12)
-    ax_prob.set_ylabel('$|\\psi_j|^2$', fontsize=12)
-    ax_prob.set_title('Probability density', fontsize=12, fontweight='bold')
-    ax_prob.legend(fontsize=10)
+    ax_prob.set_xlabel('Site $j$')
+    ax_prob.set_ylabel('$|\\psi_j|^2$')
+    ax_prob.set_title('Probability density')
+    ax_prob.legend()
     
     fig2.savefig(os.path.join(FIGURES_DIR, 'fig2_domain_wall_states.pdf'),
-                 bbox_inches='tight', facecolor='white')
+                 bbox_inches='tight')
     print("  -> tesis/figures/fig2_domain_wall_states.pdf")
     plt.close(fig2)
     
@@ -686,7 +688,7 @@ def main():
         times, occupation, N_tr, ell_tr, v_tr, w_tr, t_tr, t_prep, dt)
     
     # Figure 3: Transfer heatmap + pulse + boundary occupations
-    fig3 = plt.figure(figsize=(16, 14))
+    fig3 = plt.figure(figsize=(COL_W, 3.0))
     gs3 = gridspec.GridSpec(3, 1, height_ratios=[1.2, 0.4, 1], hspace=0.35)
     
     ax_heat = fig3.add_subplot(gs3[0])
@@ -702,7 +704,7 @@ def main():
         f'(b) Topological state occupation during transfer')
     
     fig3.savefig(os.path.join(FIGURES_DIR, 'fig3_transfer_protocol.pdf'),
-                 bbox_inches='tight', facecolor='white')
+                 bbox_inches='tight')
     print("  -> tesis/figures/fig3_transfer_protocol.pdf")
     plt.close(fig3)
     
@@ -723,22 +725,20 @@ def main():
     best_f = fidelities[best_idx]
     print(f"  Best t_tr = {best_t:.1f}, fidelity = {best_f:.6f}")
     
-    fig4, ax4 = plt.subplots(figsize=(10, 5))
+    fig4, ax4 = plt.subplots(figsize=(COL_W, 2.1))
     ax4.plot(t_scan, fidelities, '-', color='#0077BB', lw=2)
     ax4.axhline(y=0.995, color='#CC3311', ls='--', lw=1.5, alpha=0.7,
                 label='$f_0 = 0.995$')
     ax4.plot(best_t, best_f, 'o', color='#CC3311', ms=10, zorder=5,
              label=f'Optimal: $t_{{tr}}={best_t:.1f}$, $f={best_f:.4f}$')
-    ax4.set_xlabel('Transfer time $t_{tr}$', fontsize=12)
-    ax4.set_ylabel('Fidelity $f = |\\langle R|\\psi(t_{tr})\\rangle|^2$',
-                   fontsize=12)
-    ax4.set_title(f'Fidelity vs transfer time (N={N_tr}, $\\ell$={ell_tr})',
-                  fontsize=12, fontweight='bold')
-    ax4.legend(fontsize=10)
+    ax4.set_xlabel('Transfer time $t_{tr}$')
+    ax4.set_ylabel('Fidelity $f = |\\langle R|\\psi(t_{tr})\\rangle|^2$')
+    ax4.set_title(f'Fidelity vs transfer time (N={N_tr}, $\\ell$={ell_tr})')
+    ax4.legend()
     ax4.set_ylim(-0.05, 1.05)
     
     fig4.savefig(os.path.join(FIGURES_DIR, 'fig4_fidelity_scan.pdf'),
-                 bbox_inches='tight', facecolor='white')
+                 bbox_inches='tight')
     print("  -> tesis/figures/fig4_fidelity_scan.pdf")
     plt.close(fig4)
     

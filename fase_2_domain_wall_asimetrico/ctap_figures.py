@@ -10,13 +10,15 @@ Generates three PDFs saved to tesis/figures/:
 
 import os
 import sys
+sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 import numpy as np
 from scipy.integrate import solve_ivp
-import matplotlib as mpl
 import matplotlib.pyplot as plt
 import matplotlib.gridspec as gridspec
 from mpl_toolkits.axes_grid1.inset_locator import inset_axes
+from thesis_style import apply_thesis_style, COL_W, COLORS
+apply_thesis_style()
 
 # ---------------------------------------------------------------------------
 # Paths
@@ -25,32 +27,9 @@ _HERE = os.path.dirname(os.path.abspath(__file__))
 FIGURES_DIR = os.path.normpath(os.path.join(_HERE, '..', 'tesis', 'figures'))
 os.makedirs(FIGURES_DIR, exist_ok=True)
 
-# ---------------------------------------------------------------------------
-# Matplotlib style — matches the other thesis figures
-# ---------------------------------------------------------------------------
-mpl.rcParams.update({
-    'font.family':       'serif',
-    'font.size':         10,
-    'axes.labelsize':    11,
-    'axes.titlesize':    11,
-    'legend.fontsize':   9,
-    'xtick.labelsize':   9,
-    'ytick.labelsize':   9,
-    'axes.linewidth':    0.9,
-    'lines.linewidth':   2.0,
-    'figure.dpi':        150,
-    'savefig.dpi':       300,
-    'text.usetex':       False,
-    'axes.spines.top':   False,
-    'axes.spines.right': False,
-})
-
-# Colour palette (2-tone, colour-blind friendly)
-C_SR   = '#2166ac'   # steel-blue  — J_SR / right pulse / |R> population
-C_LS   = '#d6604d'   # brick-red   — J_LS / left pulse  / |L> population
-C_S    = '#f4a82e'   # amber       — |S> population (domain wall, dark state)
-C_RABI = '#d6604d'   # brick-red   — Static Rabi curve
-C_CTAP = '#2166ac'   # steel-blue  — CTAP curve
+# Colour aliases (mapped to thesis_style palette)
+C_SR = COLORS['blue']; C_LS = COLORS['red']; C_S = COLORS['orange']
+C_RABI = COLORS['red']; C_CTAP = COLORS['blue']
 
 
 # ===========================================================================
@@ -72,7 +51,7 @@ def plot_ctap_pulses():
     T    = 300.0
     t, J_SR, J_LS, t_R, t_L, _ = make_ctap_pulses(T=T)
 
-    fig, ax = plt.subplots(figsize=(4.5, 2.9))
+    fig, ax = plt.subplots(figsize=(COL_W, 2.19))
 
     ax.plot(t, J_SR, color=C_SR, lw=2.0,
             label=r'$J_{\mathcal{SR}}(t)$ — right (fires first)')
@@ -112,7 +91,7 @@ def plot_ctap_pulses():
 
     fig.tight_layout(pad=0.6)
     out = os.path.join(FIGURES_DIR, 'fig13_ctap_pulses.pdf')
-    fig.savefig(out, bbox_inches='tight')
+    fig.savefig(out)
     plt.close(fig)
     print(f'  Saved  {out}')
 
@@ -182,7 +161,7 @@ def plot_ctap_dynamics():
     print(f'  max P_S = {pS_max:.2e}')
 
     # --- main figure with two-panel layout: populations + P_S zoom ---
-    fig = plt.figure(figsize=(4.5, 4.2))
+    fig = plt.figure(figsize=(COL_W, 3.17))
     gs  = gridspec.GridSpec(2, 1, height_ratios=[3.2, 1.0], hspace=0.10)
     ax_top = fig.add_subplot(gs[0])
     ax_bot = fig.add_subplot(gs[1], sharex=ax_top)
@@ -232,82 +211,7 @@ def plot_ctap_dynamics():
 
     fig.tight_layout(pad=0.5)
     out = os.path.join(FIGURES_DIR, 'fig14_ctap_dynamics.pdf')
-    fig.savefig(out, bbox_inches='tight')
-    plt.close(fig)
-    print(f'  Saved  {out}')
-
-
-# ===========================================================================
-# FIGURE 3 — Rabi vs CTAP: fidelity vs domain wall position
-# ===========================================================================
-
-def rabi_fidelity(j_dw, L, v=0.5, w=1.0):
-    """
-    Analytical upper bound on the static-Rabi transfer fidelity for a two-domain
-    SSH chain of length L with domain wall at odd site j_dw.
-
-    Uses f_max = 4x^2 / (1+x^2)^2  where  x = (v/w)^((l1-l2)/2).
-    """
-    l1 = j_dw             # bonds in left domain
-    l2 = (L - 1) - j_dw  # bonds in right domain
-    # coupling ratio J_LS / J_SR  (Eq. 5 of the thesis, Eq. coupling_ratio)
-    x  = (v / w) ** ((l1 - l2) / 2.0)
-    return 4.0 * x ** 2 / (1.0 + x ** 2) ** 2
-
-
-def plot_fidelity_comparison():
-    L   = 21
-    v   = 0.5
-    w   = 1.0
-    # All odd sites (valid domain wall positions)
-    j_arr  = np.arange(1, L - 1, 2)                              # 1, 3, ..., 19
-    f_rabi = np.array([rabi_fidelity(j, L, v, w) for j in j_arr])
-    f_ctap = np.full_like(j_arr, 0.99, dtype=float)
-
-    fig, ax = plt.subplots(figsize=(4.8, 3.2))
-
-    ax.plot(j_arr, f_rabi, 'o-', color=C_RABI, lw=2.0, ms=6,
-            label='Static Rabi protocol')
-    ax.plot(j_arr, f_ctap, 'D--', color=C_CTAP, lw=2.0, ms=6,
-            label='CTAP protocol')
-
-    # Annotate j_dw=5 data point (the "failing" case)
-    j5_mask = j_arr == 5
-    if j5_mask.any():
-        f5 = f_rabi[j5_mask][0]
-        ax.annotate(
-            rf'$f_\mathrm{{Rabi}} \approx {f5:.3f}$',
-            xy=(5.0, f5),
-            xytext=(4.5, 0.22),
-            fontsize=8, color=C_RABI, ha='center',
-            arrowprops=dict(arrowstyle='->', color=C_RABI, lw=0.9),
-        )
-
-    # Annotate CTAP bound with a bracket on the right side
-    ax.annotate(
-        r'$f_\mathrm{CTAP} \approx 0.99$',
-        xy=(18, 0.99), xytext=(16.5, 0.80),
-        fontsize=8, color=C_CTAP, ha='center',
-        arrowprops=dict(arrowstyle='->', color=C_CTAP, lw=0.9),
-    )
-
-    # Light vertical lines at quasi-centre positions (j=9, 11)
-    for jc in [9, 11]:
-        ax.axvline(jc, color='gray', lw=0.6, ls=':', alpha=0.5)
-
-    ax.set_xlim(0, L - 1)
-    ax.set_ylim(-0.03, 1.12)
-    ax.set_xlabel(r'Domain wall position $j_\mathrm{DW}$')
-    ax.set_ylabel('Transfer fidelity $f$')
-    ax.set_xticks(j_arr)
-    # Legend in lower-centre: Rabi is near 0 for edge j-values, giving clear space
-    ax.legend(loc='lower center', ncol=2, framealpha=0.92,
-              bbox_to_anchor=(0.5, 0.01))
-    ax.grid(alpha=0.18, ls=':')
-
-    fig.tight_layout(pad=0.6)
-    out = os.path.join(FIGURES_DIR, 'fig15_ctap_comparison.pdf')
-    fig.savefig(out, bbox_inches='tight')
+    fig.savefig(out)
     plt.close(fig)
     print(f'  Saved  {out}')
 
@@ -322,6 +226,4 @@ if __name__ == '__main__':
     plot_ctap_pulses()
     print('Figure 2: 3-level population dynamics')
     plot_ctap_dynamics()
-    print('Figure 3: Rabi vs CTAP fidelity comparison')
-    plot_fidelity_comparison()
     print('Done.')
