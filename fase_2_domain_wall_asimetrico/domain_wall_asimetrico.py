@@ -21,7 +21,7 @@ from scipy.linalg import expm
 import os
 import sys
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
-from thesis_style import apply_thesis_style, COL_W, FULL_W, COLORS
+from thesis_style import apply_thesis_style, COL_W, FULL_W, COLORS, panel_label
 apply_thesis_style()
 
 _SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
@@ -531,7 +531,7 @@ def plot_chain_diagram(ax, L_total, wall_pos, v, w, states_dict=None,
 def plot_transfer_heatmap(ax, times, occupation, L, title):
     """Plot site occupation vs time as a heatmap."""
     im = ax.pcolormesh(times, np.arange(L), occupation.T,
-                       shading='auto', cmap='inferno', vmin=0, vmax=1)
+                       shading='auto', cmap='inferno', vmin=0, vmax=1, rasterized=True)
     ax.set_xlabel('Time $t$ ($\\hbar/J$)')
     ax.set_ylabel('Site $j$')
     ax.set_title(title)
@@ -581,8 +581,8 @@ def main():
 
     fig1 = plt.figure(figsize=(FULL_W, 7.8))
     gs1 = gridspec.GridSpec(len(wall_positions), 2,
-                           hspace=0.45, wspace=0.35,
-                           width_ratios=[1.5, 1])
+                           hspace=0.45, wspace=0.30,
+                           width_ratios=[3.0, 1])
 
     for idx, (label, wp) in enumerate(wall_positions.items()):
         print(f"\n--- Domain wall at position {wp} ({label}), L={L_total} ---")
@@ -634,7 +634,6 @@ def main():
         ax_spec.plot(np.sort(E_prot), np.zeros(n_prot), 'o', color='#CC3311',
                      ms=10, zorder=5, label=f'{n_prot} protected')
         ax_spec.set_xlabel('Energy $E$')
-        ax_spec.set_title(f'Spectrum ({label})')
         ax_spec.set_yticks([])
         ax_spec.legend()
         for s in ['top', 'right', 'left']:
@@ -646,9 +645,6 @@ def main():
         print(f"  Eff. coupling S-R: J ~ (v/w)^({ell_right//2}) ~ "
               f"{(v_tr/w)**(ell_right//2):.6f}")
 
-    fig1.suptitle('Effect of domain wall position\n'
-                  'on protected states',
-                  y=0.98)
 
     fig1.savefig(os.path.join(FIGURES_DIR, 'fig5_asymmetric_wall_states.pdf'),
                  bbox_inches='tight')
@@ -733,9 +729,6 @@ def main():
         ax_pulse.set_title(f'Pulse and occupation ({label})')
         ax_pulse.set_xlim(times[0], times[-1])
 
-    fig2.suptitle('Transfer protocol with asymmetric domain wall\n'
-                  f'$L={L_total}$, $v_{{tr}}={v_tr}$, $w={w}$',
-                  y=0.99)
 
     fig2.savefig(os.path.join(FIGURES_DIR, 'fig6_asymmetric_transfer.pdf'),
                  bbox_inches='tight')
@@ -812,8 +805,6 @@ def main():
                        bar.get_height() + 1,
                        f'{val:.1f}', ha='center', fontsize=8, color='#EE7733')
 
-    fig3.suptitle('Effect of domain wall position on fidelity\n'
-                  f'$L={L_total}$, $v_{{tr}}={v_tr}$, $w={w}$')
     fig3.tight_layout()
     fig3.savefig(os.path.join(FIGURES_DIR, 'fig7_fidelity_comparison.pdf'),
                  bbox_inches='tight')
@@ -868,8 +859,6 @@ def main():
     ax4b.text((L_total - 1) / 2 + 0.3, 1.3, 'Symmetric ($J_{LS}=J_{SR}$)',
               fontsize=9, color='gray')
 
-    fig4.suptitle('Effective coupling analysis between protected states\n'
-                  f'$L={L_total}$, $v={v_tr}$, $w={w}$')
     fig4.tight_layout()
     fig4.savefig(os.path.join(FIGURES_DIR, 'fig8_effective_coupling.pdf'),
                  bbox_inches='tight')
@@ -1006,9 +995,6 @@ def main():
         f'(d) STA global sin²: $t_{{tr}}$={sta_res["best_t"]:.1f}, '
         f'$f$={sta_res["best_f"]:.4f}')
 
-    fig5.suptitle('Transfer protocol comparison\n'
-                  f'Symmetric chain $N={N_dom}$, $\\ell={ell}$, '
-                  f'$L={L_sym}$', y=1.01)
 
     fig5.savefig(os.path.join(FIGURES_DIR, 'fig9_sta_pulse_comparison.pdf'),
                  bbox_inches='tight')
@@ -1105,8 +1091,6 @@ def main():
     ax6b.legend(loc='upper left')
     ax6b_twin.legend(loc='upper right')
 
-    fig6.suptitle('Fidelity dependence on preparation time\n'
-                  f'$N={N_dom}$, $\\ell={ell}$, $L={L_sym}$')
     fig6.tight_layout()
     fig6.savefig(os.path.join(FIGURES_DIR, 'fig10_tprep_dependence.pdf'),
                  bbox_inches='tight')
@@ -1182,20 +1166,17 @@ def main():
     table.set_fontsize(9)
     table.scale(1.1, 1.6)
 
-    # Color the cells by fidelity
-    for i, sd in enumerate(summary_data):
-        f_val = sd['best_f']
-        if f_val > 0.99:
-            color = '#D4EDDA'
-        elif f_val > 0.95:
-            color = '#FFF3CD'
+    # Clean monochrome styling: light-grey header, white body, thin borders
+    for (row, col), cell in table.get_celld().items():
+        cell.set_edgecolor('0.7')
+        cell.set_linewidth(0.5)
+        if row == 0:
+            cell.set_facecolor('0.92')
+            cell.set_text_props(fontweight='bold')
         else:
-            color = '#F8D7DA'
-        for j in range(5):
-            table[i + 1, j].set_facecolor(color)
+            cell.set_facecolor('white')
 
-    ax7a.set_title('(a) Results summary: DW position × protocol',
-                   pad=20)
+    panel_label(ax7a, '(a)', loc='upper left')
 
     # (b) Fidelity curves for center wall: std vs STA
     ax7b = fig7.add_subplot(gs7[1, 0])
@@ -1229,9 +1210,6 @@ def main():
     ax7c.legend(fontsize=8)
     ax7c.set_ylim(-0.05, 1.1)
 
-    fig7.suptitle('Combined study: asymmetric position + Shortcut to Adiabaticity\n'
-                  f'$L={L_total}$, $v_{{tr}}={v_tr}$, $w={w}$',
-                  y=1.01)
 
     fig7.savefig(os.path.join(FIGURES_DIR, 'fig11_combined_study.pdf'),
                  bbox_inches='tight')
@@ -1292,8 +1270,6 @@ def main():
     ax8b.set_title('(b) Transfer time vs DW position')
     ax8b.legend()
 
-    fig8.suptitle('Systematic study: effect of wall position and chain size\n'
-                  f'$v_{{tr}}={v_tr}$, $w={w}$')
     fig8.tight_layout()
     fig8.savefig(os.path.join(FIGURES_DIR, 'fig12_systematic_wall_position.pdf'),
                  bbox_inches='tight')

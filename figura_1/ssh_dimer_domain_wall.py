@@ -19,7 +19,7 @@ from scipy.linalg import expm
 import os
 import sys
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
-from thesis_style import apply_thesis_style, COL_W, FULL_W, COLORS
+from thesis_style import apply_thesis_style, COL_W, FULL_W, COLORS, panel_label
 apply_thesis_style()
 
 _SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
@@ -422,7 +422,8 @@ def plot_domain_wall_states(ax, N_domains, ell, v, w, states_dict, title):
 def plot_transfer_heatmap(ax, times, occupation, L, title):
     """Plot site occupation vs time as a heatmap (like Fig 2 of paper)."""
     im = ax.pcolormesh(times, np.arange(L), occupation.T,
-                       shading='auto', cmap='inferno', vmin=0, vmax=1)
+                       shading='auto', cmap='inferno', vmin=0, vmax=1,
+                            rasterized=True)
     ax.set_xlabel('Time $t$ ($\\hbar/J$)')
     ax.set_ylabel('Site $j$')
     ax.set_title(title)
@@ -489,8 +490,7 @@ def main():
     # (a) Even chain spectrum
     ax1a = fig1.add_subplot(gs1[0, 0])
     plot_dimer_spectrum(ax1a, ratios, spectra, L_dimer)
-    ax1a.set_title(f'(a) Even: {L_dimer} sites ({L_dimer//2} cells)',
-                   fontsize=12, fontweight='bold')
+    ax1a.set_title(f'(a) Even: {L_dimer} sites ({L_dimer//2} cells)')
     
     # (b) Odd chain spectrum — note the edge state at E=0 in topological phase!
     ax1b = fig1.add_subplot(gs1[0, 1])
@@ -687,24 +687,46 @@ def main():
     bound_occ = compute_boundary_occupations(
         times, occupation, N_tr, ell_tr, v_tr, w_tr, t_tr, t_prep, dt)
     
-    # Figure 3: Transfer heatmap + pulse + boundary occupations
-    fig3 = plt.figure(figsize=(COL_W, 3.0))
-    gs3 = gridspec.GridSpec(3, 1, height_ratios=[1.2, 0.4, 1], hspace=0.35)
-    
+    # Figure 3: Transfer heatmap + pulse + boundary occupations (shared x-axis)
+    fig3 = plt.figure(figsize=(COL_W, 3.5))
+    gs3 = gridspec.GridSpec(3, 1, height_ratios=[1.25, 0.5, 1.0], hspace=0.12)
     ax_heat = fig3.add_subplot(gs3[0])
-    plot_transfer_heatmap(ax_heat, times, occupation, L_tr,
-        f'(a) Transfer L→R: $N={N_tr}$, $\\ell={ell_tr}$, $L={L_tr}$')
-    
-    ax_pulse = fig3.add_subplot(gs3[1])
-    plot_pulse(ax_pulse, times, v_values,
-        f'Control pulse $v(t)$, $v_{{tr}}={v_tr}$')
-    
-    ax_bound = fig3.add_subplot(gs3[2])
-    plot_boundary_occupations(ax_bound, times, bound_occ,
-        f'(b) Topological state occupation during transfer')
-    
-    fig3.savefig(os.path.join(FIGURES_DIR, 'fig3_transfer_protocol.pdf'),
-                 bbox_inches='tight')
+    ax_pulse = fig3.add_subplot(gs3[1], sharex=ax_heat)
+    ax_bound = fig3.add_subplot(gs3[2], sharex=ax_heat)
+
+    im = ax_heat.pcolormesh(times, np.arange(L_tr), occupation.T,
+                            shading='auto', cmap='inferno', vmin=0, vmax=1,
+                            rasterized=True)
+    ax_heat.set_ylabel('Site $j$')
+    ax_heat.set_ylim(-0.5, L_tr - 0.5)
+    plt.setp(ax_heat.get_xticklabels(), visible=False)
+    fig3.colorbar(im, ax=[ax_heat, ax_pulse, ax_bound],
+                  label='$\\langle n_j \\rangle$', shrink=0.5, pad=0.02, aspect=30)
+    panel_label(ax_heat, '(a)', loc='upper left', color='white')
+
+    ax_pulse.plot(times, v_values, '-', color=COLORS['teal'])
+    ax_pulse.fill_between(times, v_values, alpha=0.18, color=COLORS['teal'])
+    ax_pulse.set_ylabel('$v(t)$')
+    ax_pulse.set_ylim(0, max(v_values) * 1.25)
+    plt.setp(ax_pulse.get_xticklabels(), visible=False)
+    panel_label(ax_pulse, '(b)', loc='upper right')
+
+    cmap_b = {'L': COLORS['red'], 'R': COLORS['blue']}
+    lab_b = {'L': r'$|\mathcal{L}\rangle$', 'R': r'$|\mathcal{R}\rangle$'}
+    for k in bound_occ:
+        if k.startswith('S'):
+            cmap_b[k] = COLORS['orange']
+            lab_b[k] = r'$|\mathcal{S}\rangle$'
+    for k, occ in bound_occ.items():
+        ax_bound.plot(times, occ, '-', color=cmap_b.get(k, COLORS['teal']),
+                      label=lab_b.get(k, k))
+    ax_bound.set_xlabel('Time $t$ ($\\hbar/J$)')
+    ax_bound.set_ylabel('Occupation')
+    ax_bound.set_ylim(-0.05, 1.05)
+    ax_bound.legend(loc='center right')
+    panel_label(ax_bound, '(c)', loc='upper left')
+
+    fig3.savefig(os.path.join(FIGURES_DIR, 'fig3_transfer_protocol.pdf'))
     print("  -> tesis/figures/fig3_transfer_protocol.pdf")
     plt.close(fig3)
     
@@ -733,7 +755,6 @@ def main():
              label=f'Optimal: $t_{{tr}}={best_t:.1f}$, $f={best_f:.4f}$')
     ax4.set_xlabel('Transfer time $t_{tr}$')
     ax4.set_ylabel('Fidelity $f = |\\langle R|\\psi(t_{tr})\\rangle|^2$')
-    ax4.set_title(f'Fidelity vs transfer time (N={N_tr}, $\\ell$={ell_tr})')
     ax4.legend()
     ax4.set_ylim(-0.05, 1.05)
     
