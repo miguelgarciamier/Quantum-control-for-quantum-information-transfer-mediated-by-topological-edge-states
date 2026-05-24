@@ -522,30 +522,27 @@ def plot_chain_diagram(ax, L_total, wall_pos, v, w, states_dict=None,
     ax.set_xlim(-1, L_total)
     ax.set_ylim(chain_y - 0.55, wave_y + 1.8)
     ax.set_xlabel('Site index $j$')
-    ax.set_title(title, pad=10)
     ax.set_yticks([])
     for s in ['top', 'right', 'left']:
         ax.spines[s].set_visible(False)
 
 
-def plot_transfer_heatmap(ax, times, occupation, L, title):
+def plot_transfer_heatmap(ax, times, occupation, L, title=''):
     """Plot site occupation vs time as a heatmap."""
     im = ax.pcolormesh(times, np.arange(L), occupation.T,
                        shading='auto', cmap='inferno', vmin=0, vmax=1, rasterized=True)
     ax.set_xlabel('Time $t$ ($\\hbar/J$)')
     ax.set_ylabel('Site $j$')
-    ax.set_title(title)
     ax.set_ylim(-0.5, L - 0.5)
     plt.colorbar(im, ax=ax, label='$\\langle n_j \\rangle$', shrink=0.8)
 
 
-def plot_pulse(ax, times, v_values, title='Control pulse'):
+def plot_pulse(ax, times, v_values, title=''):
     """Plot the control pulse v(t)."""
     ax.plot(times, v_values, '-', color='#009988', lw=2)
     ax.fill_between(times, v_values, alpha=0.2, color='#009988')
     ax.set_xlabel('Time $t$ ($\\hbar/J$)')
     ax.set_ylabel('$v(t)$')
-    ax.set_title(title)
     ax.set_xlim(times[0], times[-1])
 
 
@@ -579,10 +576,9 @@ def main():
         'Quarter (~1/4)': 5,
     }
 
-    fig1 = plt.figure(figsize=(FULL_W, 7.8))
-    gs1 = gridspec.GridSpec(len(wall_positions), 2,
-                           hspace=0.45, wspace=0.30,
-                           width_ratios=[3.0, 1])
+    _panel_letters = ['(a)', '(b)', '(c)']
+    fig1 = plt.figure(figsize=(FULL_W, 5.4))
+    gs1 = gridspec.GridSpec(len(wall_positions), 1, hspace=0.40)
 
     for idx, (label, wp) in enumerate(wall_positions.items()):
         print(f"\n--- Domain wall at position {wp} ({label}), L={L_total} ---")
@@ -623,21 +619,10 @@ def main():
         ell_right = L_total - 1 - wp  # number of bonds in domain 2
         print(f"  Domain 1: {ell_left} bonds, Domain 2: {ell_right} bonds")
 
-        # Plot chain diagram
-        ax_chain = fig1.add_subplot(gs1[idx, 0])
-        plot_chain_diagram(ax_chain, L_total, wp, v_tr, w, an_states,
-                          f'{label}: DW at site {wp}, L={L_total}')
-
-        # Plot spectrum
-        ax_spec = fig1.add_subplot(gs1[idx, 1])
-        ax_spec.plot(evals, np.zeros_like(evals), '|', color='#888', ms=12)
-        ax_spec.plot(np.sort(E_prot), np.zeros(n_prot), 'o', color='#CC3311',
-                     ms=10, zorder=5, label=f'{n_prot} protected')
-        ax_spec.set_xlabel('Energy $E$')
-        ax_spec.set_yticks([])
-        ax_spec.legend()
-        for s in ['top', 'right', 'left']:
-            ax_spec.spines[s].set_visible(False)
+        # Plot chain diagram only (spectrum omitted — see Table I)
+        ax_chain = fig1.add_subplot(gs1[idx])
+        plot_chain_diagram(ax_chain, L_total, wp, v_tr, w, an_states, '')
+        panel_label(ax_chain, _panel_letters[idx])
 
         # Print domain lengths
         print(f"  Eff. coupling L-S: J ~ (v/w)^({ell_left//2}) ~ "
@@ -660,9 +645,9 @@ def main():
 
     t_prep = 15.0
 
-    fig2 = plt.figure(figsize=(FULL_W, 8.4))
-    gs2 = gridspec.GridSpec(len(wall_positions), 2,
-                           hspace=0.4, wspace=0.3)
+    _panel_letters_2 = ['(a)', '(b)', '(c)']
+    fig2 = plt.figure(figsize=(FULL_W, 5.6))
+    gs2 = gridspec.GridSpec(len(wall_positions), 1, hspace=0.40)
 
     transfer_results = {}
 
@@ -698,16 +683,8 @@ def main():
             L_total, wp, v_pulse_standard, v_tr, w, best_t, dt,
             t_prep=t_prep)
 
-        # Heatmap
-        ax_heat = fig2.add_subplot(gs2[idx, 0])
-        plot_transfer_heatmap(ax_heat, times, occ, L_total,
-                              f'{label}: DW={wp}, $t_{{tr}}$={best_t:.1f}')
-        ax_heat.axhline(y=wp, color='#FF8800', ls='--', alpha=0.7, lw=1)
-        ax_heat.text(best_t * 0.02, wp + 0.5, 'DW', fontsize=8,
-                     color='#FF8800')
-
-        # Pulse + final occupation
-        ax_pulse = fig2.add_subplot(gs2[idx, 1])
+        # Pulse + occupation only (heatmap omitted — redundant for asymmetric cases)
+        ax_pulse = fig2.add_subplot(gs2[idx])
         ax_pulse.plot(times, v_vals, '-', color='#009988', lw=2,
                       label='$v(t)$')
         ax_pulse.fill_between(times, v_vals, alpha=0.15, color='#009988')
@@ -722,12 +699,12 @@ def main():
                  alpha=0.7, label=f'Site {L_total - 1} (R)')
         ax2.set_ylabel('Occupation')
         ax2.set_ylim(-0.05, 1.1)
-        ax2.legend(fontsize=8, loc='center right')
+        ax2.legend(fontsize=7.5, loc='center right')
 
         ax_pulse.set_xlabel('Time $t$ ($\\hbar/J$)')
         ax_pulse.set_ylabel('$v(t)$')
-        ax_pulse.set_title(f'Pulse and occupation ({label})')
         ax_pulse.set_xlim(times[0], times[-1])
+        panel_label(ax_pulse, _panel_letters_2[idx])
 
 
     fig2.savefig(os.path.join(FIGURES_DIR, 'fig6_asymmetric_transfer.pdf'),
@@ -761,7 +738,7 @@ def main():
                  label='$f_0 = 0.995$')
     ax3a.set_xlabel('Transfer time $t_{tr}$ ($\\hbar/J$)')
     ax3a.set_ylabel('Fidelity $f$')
-    ax3a.set_title('(a) Fidelity vs $t_{tr}$ for different DW positions')
+    panel_label(ax3a, '(a)')
     ax3a.legend()
     ax3a.set_ylim(-0.05, 1.1)
 
@@ -793,7 +770,7 @@ def main():
     ax3b.set_ylabel('Maximum fidelity', color='#0077BB')
     ax3b_twin.set_ylabel('Optimal $t_{tr}$ ($\\hbar/J$)',
                          color='#EE7733')
-    ax3b.set_title('(b) Summary: optimal fidelity and time')
+    panel_label(ax3b, '(b)')
     ax3b.set_ylim(0, 1.15)
 
     # Add value labels on bars
@@ -840,7 +817,7 @@ def main():
                   label='$J_{SR}$ (wall-right)')
     ax4a.set_xlabel('Wall position (site)')
     ax4a.set_ylabel('Effective coupling $|J|$')
-    ax4a.set_title('(a) Effective couplings vs DW position')
+    panel_label(ax4a, '(a)')
     ax4a.legend()
     ax4a.axvline(x=(L_total - 1) / 2, color='gray', ls='--', alpha=0.5)
     ax4a.text((L_total - 1) / 2 + 0.3, ax4a.get_ylim()[1] * 0.5,
@@ -853,7 +830,7 @@ def main():
     ax4b.axhline(y=1.0, color='gray', ls='--', alpha=0.5)
     ax4b.set_xlabel('Wall position (site)')
     ax4b.set_ylabel('$J_{LS} / J_{SR}$')
-    ax4b.set_title('(b) Coupling asymmetry')
+    panel_label(ax4b, '(b)')
     ax4b.set_yscale('log')
     ax4b.grid(True, alpha=0.3)
     ax4b.text((L_total - 1) / 2 + 0.3, 1.3, 'Symmetric ($J_{LS}=J_{SR}$)',
@@ -919,7 +896,7 @@ def main():
 
     # (a) Visualize pulse shapes
     fig5 = plt.figure(figsize=(FULL_W, 5.44))
-    gs5 = gridspec.GridSpec(2, 2, hspace=0.35, wspace=0.3)
+    gs5 = gridspec.GridSpec(2, 2, hspace=0.40, wspace=0.30)
 
     ax5a = fig5.add_subplot(gs5[0, 0])
     t_demo = np.linspace(0, 50, 500)
@@ -930,7 +907,7 @@ def main():
                   label=name)
     ax5a.set_xlabel('Time $t$ ($\\hbar/J$)')
     ax5a.set_ylabel('$v(t)$')
-    ax5a.set_title('(a) Pulse profile comparison ($t_{tr}=50$)')
+    panel_label(ax5a, '(a)')
     ax5a.legend(fontsize=7, loc='upper right')
 
     # (b) Fidelity scan for each pulse type
@@ -962,7 +939,7 @@ def main():
                  label='$f_0 = 0.995$')
     ax5b.set_xlabel('$t_{tr}$ ($\\hbar/J$)')
     ax5b.set_ylabel('Fidelity $f$')
-    ax5b.set_title('(b) Fidelity vs $t_{tr}$ for different pulses')
+    panel_label(ax5b, '(b)')
     ax5b.legend(fontsize=6.5, loc='lower right')
     ax5b.set_ylim(-0.05, 1.1)
 
@@ -986,14 +963,12 @@ def main():
         sta_res['best_t'], dt, **sta_res['config']['kwargs'])
 
     ax5c = fig5.add_subplot(gs5[1, 0])
-    plot_transfer_heatmap(ax5c, times_std, occ_std, L_sym,
-        f'(c) Standard: $t_{{tr}}$={std_res["best_t"]:.1f}, '
-        f'$f$={std_res["best_f"]:.4f}')
+    plot_transfer_heatmap(ax5c, times_std, occ_std, L_sym)
+    panel_label(ax5c, '(c)', loc='inside')
 
     ax5d = fig5.add_subplot(gs5[1, 1])
-    plot_transfer_heatmap(ax5d, times_sta, occ_sta, L_sym,
-        f'(d) STA global sin²: $t_{{tr}}$={sta_res["best_t"]:.1f}, '
-        f'$f$={sta_res["best_f"]:.4f}')
+    plot_transfer_heatmap(ax5d, times_sta, occ_sta, L_sym)
+    panel_label(ax5d, '(d)', loc='inside')
 
 
     fig5.savefig(os.path.join(FIGURES_DIR, 'fig9_sta_pulse_comparison.pdf'),
@@ -1056,7 +1031,7 @@ def main():
               color='gray')
     ax6a.set_xlabel('Preparation time $t_{prep}$ ($\\hbar/J$)')
     ax6a.set_ylabel('Fidelity $f$')
-    ax6a.set_title(f'(a) Fidelity vs $t_{{prep}}$ ($t_{{tr}}={t_tr_fixed}$)')
+    panel_label(ax6a, '(a)')
     ax6a.legend()
     ax6a.set_ylim(-0.05, 1.1)
 
@@ -1087,7 +1062,7 @@ def main():
     ax6b.set_ylabel('Gap $\\Delta$', color='#0077BB')
     ax6b_twin.set_ylabel('Adiabatic timescale $\\tau$ ($\\hbar/J$)',
                          color='#CC3311')
-    ax6b.set_title('(b) Gap and adiabatic timescale')
+    panel_label(ax6b, '(b)')
     ax6b.legend(loc='upper left')
     ax6b_twin.legend(loc='upper right')
 
@@ -1105,7 +1080,7 @@ def main():
     print("=" * 72)
 
     fig7 = plt.figure(figsize=(FULL_W, 5.44))
-    gs7 = gridspec.GridSpec(2, 2, hspace=0.4, wspace=0.35)
+    gs7 = gridspec.GridSpec(2, 2, hspace=0.40, wspace=0.30)
 
     # For each wall position, compare standard vs STA
     protocols = {
@@ -1176,7 +1151,7 @@ def main():
         else:
             cell.set_facecolor('white')
 
-    panel_label(ax7a, '(a)', loc='upper left')
+    panel_label(ax7a, '(a)')
 
     # (b) Fidelity curves for center wall: std vs STA
     ax7b = fig7.add_subplot(gs7[1, 0])
@@ -1190,8 +1165,8 @@ def main():
     ax7b.axhline(y=0.995, color='gray', ls='--', lw=1, alpha=0.5)
     ax7b.set_xlabel('$t_{tr}$ ($\\hbar/J$)')
     ax7b.set_ylabel('Fidelity')
-    ax7b.set_title(f'(b) DW center (site {wp_center}): protocol comparison')
-    ax7b.legend(fontsize=8)
+    panel_label(ax7b, '(b)')
+    ax7b.legend(fontsize=7.5)
     ax7b.set_ylim(-0.05, 1.1)
 
     # (c) Fidelity curves for 1/4 wall: std vs STA
@@ -1206,8 +1181,8 @@ def main():
     ax7c.axhline(y=0.995, color='gray', ls='--', lw=1, alpha=0.5)
     ax7c.set_xlabel('$t_{tr}$ ($\\hbar/J$)')
     ax7c.set_ylabel('Fidelity')
-    ax7c.set_title(f'(c) DW quarter (site {wp_quarter}): protocol comparison')
-    ax7c.legend(fontsize=8)
+    panel_label(ax7c, '(c)')
+    ax7c.legend(fontsize=7.5)
     ax7c.set_ylim(-0.05, 1.1)
 
 
@@ -1261,13 +1236,13 @@ def main():
     ax8a.axhline(y=0.995, color='gray', ls='--', lw=1, alpha=0.5)
     ax8a.set_xlabel('Relative DW position ($j_{DW}/(L-1)$)')
     ax8a.set_ylabel('Maximum fidelity')
-    ax8a.set_title('(a) Fidelity vs relative DW position')
+    panel_label(ax8a, '(a)')
     ax8a.legend()
     ax8a.set_ylim(0, 1.1)
 
     ax8b.set_xlabel('Relative DW position ($j_{DW}/(L-1)$)')
     ax8b.set_ylabel('Optimal $t_{tr}$ ($\\hbar/J$)')
-    ax8b.set_title('(b) Transfer time vs DW position')
+    panel_label(ax8b, '(b)')
     ax8b.legend()
 
     fig8.tight_layout()

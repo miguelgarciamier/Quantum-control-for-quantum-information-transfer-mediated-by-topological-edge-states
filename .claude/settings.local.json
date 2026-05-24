@@ -1,0 +1,16 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(Get-ChildItem -Path \"C:\\\\Users\\\\miigu\\\\OneDrive\\\\Escritorio\\\\Master\\\\TFM\\\\Simulaciones\\\\SSH dimer and domain wall\" -Recurse)",
+      "Bash(Select-Object -Property FullName, PSIsContainer)",
+      "Bash(Sort-Object FullName)",
+      "Bash(Format-Table -AutoSize)",
+      "Bash(.venv/Scripts/python figura_1/ssh_dimer_domain_wall.py)",
+      "PowerShell($env:PYTHONIOENCODING = 'utf-8'; cd \"C:\\\\Users\\\\miigu\\\\OneDrive\\\\Escritorio\\\\Master\\\\TFM\\\\Simulaciones\\\\SSH dimer and domain wall\"; .venv\\\\Scripts\\\\python figura_1\\\\ssh_dimer_domain_wall.py 2>&1 | Select-Object -Last 15)",
+      "PowerShell(Get-Item *)",
+      "PowerShell(Get-Process *)",
+      "PowerShell(cd \"C:\\\\Users\\\\miigu\\\\OneDrive\\\\Escritorio\\\\Master\\\\TFM\\\\Simulaciones\\\\SSH dimer and domain wall\\\\tesis\"; Select-String -Path thesis_part2.log -Pattern \"\\(Warning|Error|Overfull|Underfull|undefined|multiply defined\\)\" | Where-Object { $_.Line -notmatch \"MiKTeX\" } | Select-Object -First 60 | ForEach-Object { $_.Line })",
+      "PowerShell(cd \"C:\\\\Users\\\\miigu\\\\OneDrive\\\\Escritorio\\\\Master\\\\TFM\\\\Simulaciones\\\\SSH dimer and domain wall\\\\tesis\"; Select-String -Path thesis_part2.log -Pattern \"^!\" | Select-Object -First 20 | ForEach-Object { $_.Line })"
+    ]
+  }
+}
