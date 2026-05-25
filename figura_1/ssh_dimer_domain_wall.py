@@ -279,8 +279,9 @@ def plot_dimer_spectrum(ax, ratios, spectra, L_sites):
     ax.text(0.18, 0.97, 'Topological\n($\\nu=1$)',
             ha='center', va='top', fontsize=8, color='#009988',
             fontweight='bold', transform=ax.transAxes)
-    ax.text(0.82, 0.97, 'Trivial\n($\\nu=0$)',
-            ha='center', va='top', fontsize=8, color='#888',
+    # Trivial label placed in the E≈0 spectral gap of the trivial phase
+    ax.text(0.78, 0.50, 'Trivial\n($\\nu=0$)',
+            ha='center', va='center', fontsize=8, color='#888',
             fontweight='bold', transform=ax.transAxes)
     
     # Annotate gap
@@ -288,9 +289,11 @@ def plot_dimer_spectrum(ax, ratios, spectra, L_sites):
     gap_05 = spectra[idx_05]
     pos_min = np.min(gap_05[gap_05 > 0])
     neg_max = np.max(gap_05[gap_05 < 0])
-    ax.annotate('', xy=(0.5, pos_min), xytext=(0.5, neg_max),
-                arrowprops=dict(arrowstyle='<->', color='#EE7733', lw=2))
-    ax.text(0.55, 0, '$\\Delta$', fontsize=8, color='#EE7733',
+    # Clean bracket-style gap indicator (vertical bar + end caps)
+    ax.vlines(0.5, neg_max, pos_min, color='#EE7733', lw=1.4)
+    ax.hlines(pos_min, 0.46, 0.54, color='#EE7733', lw=1.4)
+    ax.hlines(neg_max, 0.46, 0.54, color='#EE7733', lw=1.4)
+    ax.text(0.57, 0, r'$\Delta$', fontsize=8, color='#EE7733',
             fontweight='bold', va='center')
 
 
@@ -631,7 +634,8 @@ def main():
                  ms=10, zorder=5, label=f'{n_prot} protected')
     ax_spec.set_xlabel('Energy $E$')
     ax_spec.set_yticks([])
-    ax_spec.legend()
+    ax_spec.legend(fontsize=7, markerscale=0.7, handlelength=1.0,
+                   borderpad=0.25, handletextpad=0.5)
     panel_label(ax_spec, '(b)')
     for s in ['top', 'right', 'left']:
         ax_spec.spines[s].set_visible(False)
@@ -647,7 +651,7 @@ def main():
                      color=colors_p[key], ms=4, lw=1.5, label=labels_p[key])
     ax_prob.set_xlabel('Site $j$')
     ax_prob.set_ylabel('$|\\psi_j|^2$')
-    ax_prob.legend()
+    ax_prob.legend(loc='lower left', fontsize=7.5)
     panel_label(ax_prob, '(c)')
     
     fig2.savefig(os.path.join(FIGURES_DIR, 'fig2_domain_wall_states.pdf'),
@@ -717,7 +721,7 @@ def main():
     ax_bound.set_xlabel('Time $t$ ($\\hbar/J$)')
     ax_bound.set_ylabel('Occupation')
     ax_bound.set_ylim(-0.05, 1.05)
-    ax_bound.legend(loc='center right')
+    ax_bound.legend(loc='lower right', fontsize=7.5)
     panel_label(ax_bound, '(c)')
 
     fig3.savefig(os.path.join(FIGURES_DIR, 'fig3_transfer_protocol.pdf'))
@@ -749,7 +753,7 @@ def main():
              label=f'Optimal: $t_{{tr}}={best_t:.1f}$, $f={best_f:.4f}$')
     ax4.set_xlabel('Transfer time $t_{tr}$')
     ax4.set_ylabel('Fidelity $f = |\\langle R|\\psi(t_{tr})\\rangle|^2$')
-    ax4.legend()
+    ax4.legend(loc='lower left')
     ax4.set_ylim(-0.05, 1.05)
     
     fig4.savefig(os.path.join(FIGURES_DIR, 'fig4_fidelity_scan.pdf'),

@@ -17,6 +17,7 @@ Based on:
 import numpy as np
 import matplotlib.pyplot as plt
 import matplotlib.gridspec as gridspec
+from matplotlib.lines import Line2D
 from scipy.linalg import expm
 import os
 import sys
@@ -699,13 +700,26 @@ def main():
                  alpha=0.7, label=f'Site {L_total - 1} (R)')
         ax2.set_ylabel('Occupation')
         ax2.set_ylim(-0.05, 1.1)
-        ax2.legend(fontsize=7.5, loc='center right')
 
         ax_pulse.set_xlabel('Time $t$ ($\\hbar/J$)')
         ax_pulse.set_ylabel('$v(t)$')
         ax_pulse.set_xlim(times[0], times[-1])
         panel_label(ax_pulse, _panel_letters_2[idx])
 
+
+    # Shared legend above the panel stack — generic labels valid for all 3 rows
+    _h6 = [
+        Line2D([0], [0], ls='--', color='#CC3311', lw=1.5, alpha=0.7),
+        Line2D([0], [0], ls='--', color='#EE7733', lw=1.5, alpha=0.7),
+        Line2D([0], [0], ls='--', color='#0077BB', lw=1.5, alpha=0.7),
+    ]
+    _l6 = [
+        r'Site 0 ($|\mathcal{L}\rangle$)',
+        r'DW ($|\mathcal{S}\rangle$)',
+        r'Site 20 ($|\mathcal{R}\rangle$)',
+    ]
+    fig2.legend(_h6, _l6, loc='upper center', bbox_to_anchor=(0.5, 1.01),
+                ncol=3, fontsize=7.5, framealpha=0.9, handlelength=1.4)
 
     fig2.savefig(os.path.join(FIGURES_DIR, 'fig6_asymmetric_transfer.pdf'),
                  bbox_inches='tight')
@@ -818,7 +832,7 @@ def main():
     ax4a.set_xlabel('Wall position (site)')
     ax4a.set_ylabel('Effective coupling $|J|$')
     panel_label(ax4a, '(a)')
-    ax4a.legend()
+    ax4a.legend(loc='upper center', fontsize=7.5)
     ax4a.axvline(x=(L_total - 1) / 2, color='gray', ls='--', alpha=0.5)
     ax4a.text((L_total - 1) / 2 + 0.3, ax4a.get_ylim()[1] * 0.5,
               'Center', fontsize=9, color='gray')
@@ -908,7 +922,6 @@ def main():
     ax5a.set_xlabel('Time $t$ ($\\hbar/J$)')
     ax5a.set_ylabel('$v(t)$')
     panel_label(ax5a, '(a)')
-    ax5a.legend(fontsize=7, loc='upper right')
 
     # (b) Fidelity scan for each pulse type
     ax5b = fig5.add_subplot(gs5[0, 1])
@@ -931,17 +944,22 @@ def main():
         print(f"    Best: t_tr={best_t_sta:.1f}, f={best_f_sta:.6f}")
 
         ax5b.plot(t_scan_sta, fids, cfg['ls'], color=cfg['color'], lw=1.5,
-                  label=f'{name}: $f$={best_f_sta:.3f}', alpha=0.85)
+                  label=None, alpha=0.85)
         ax5b.plot(best_t_sta, best_f_sta, 'o', color=cfg['color'], ms=6,
                   zorder=5)
 
-    ax5b.axhline(y=0.995, color='gray', ls='--', lw=1, alpha=0.7,
-                 label='$f_0 = 0.995$')
+    ax5b.axhline(y=0.995, color='gray', ls='--', lw=1, alpha=0.7, label=None)
     ax5b.set_xlabel('$t_{tr}$ ($\\hbar/J$)')
     ax5b.set_ylabel('Fidelity $f$')
     panel_label(ax5b, '(b)')
-    ax5b.legend(fontsize=6.5, loc='lower right')
     ax5b.set_ylim(-0.05, 1.1)
+
+    # Shared legend: pulse profiles from ax5a + reference line
+    _h9, _l9 = ax5a.get_legend_handles_labels()
+    _h9.append(Line2D([0], [0], ls='--', color='gray', lw=1.0, alpha=0.7))
+    _l9.append(r'$f_0 = 0.995$')
+    fig5.legend(_h9, _l9, loc='upper center', bbox_to_anchor=(0.5, 1.01),
+                ncol=4, fontsize=7, framealpha=0.9)
 
     # (c) and (d): Heatmaps for best standard and best STA
     # Pick best standard and best STA
@@ -1032,7 +1050,7 @@ def main():
     ax6a.set_xlabel('Preparation time $t_{prep}$ ($\\hbar/J$)')
     ax6a.set_ylabel('Fidelity $f$')
     panel_label(ax6a, '(a)')
-    ax6a.legend()
+    ax6a.legend(loc='upper left', fontsize=7.5)
     ax6a.set_ylim(-0.05, 1.1)
 
     # (b) Gap analysis: why t_prep > tau is needed
@@ -1243,7 +1261,7 @@ def main():
     ax8b.set_xlabel('Relative DW position ($j_{DW}/(L-1)$)')
     ax8b.set_ylabel('Optimal $t_{tr}$ ($\\hbar/J$)')
     panel_label(ax8b, '(b)')
-    ax8b.legend()
+    ax8b.legend(loc='lower center', fontsize=7.5)
 
     fig8.tight_layout()
     fig8.savefig(os.path.join(FIGURES_DIR, 'fig12_systematic_wall_position.pdf'),

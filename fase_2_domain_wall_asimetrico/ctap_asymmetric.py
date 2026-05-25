@@ -78,7 +78,7 @@ def plot_fig15():
     ax.set_xlabel(r'Domain-wall position $j_{\mathrm{DW}}$')
     ax.set_ylabel(r'Transfer fidelity $f$')
     ax.set_ylim(-0.04, 1.10); ax.set_xticks(j_arr)
-    ax.legend(loc='center left', bbox_to_anchor=(0.0, 0.55)); ax.grid(True)
+    ax.legend(loc='lower center', fontsize=7.5); ax.grid(True)
     fig.savefig(os.path.join(FIGURES_DIR, 'fig15_ctap_comparison.pdf')); plt.close(fig)
 
 def plot_fig16():
