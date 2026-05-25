@@ -205,7 +205,7 @@ def plot_ctap_dynamics():
     ax_bot.tick_params(axis='y', labelcolor=C_S, labelsize=8)
     ax_bot.grid(alpha=0.18, ls=':')
     # Label above the P_S oscillations (max P_S ≈ 6e-4)
-    ax_bot.text(T / 2, 5e-3,
+    ax_bot.text(T / 2, 2e-3,
                 r'$P_{\mathcal{S}} \ll 1$  —  dark state never populated',
                 ha='center', va='bottom', color=C_S, fontsize=7.5)
 

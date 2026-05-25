@@ -334,8 +334,8 @@ def plot_dimer_gap(ax, L_sites, w=1.0, n_points=200):
     ax.set_ylabel('Gap $\\Delta/w$')
     ax.set_xlim(ratios[0], ratios[-1])
     ax.legend(loc='upper right')
-    ax.text(1.0, max(bulk_gap)*0.85, '$v=w$\n(topological\ntransition)',
-            ha='center', fontsize=8, color='#CC3311')
+    ax.text(0.92, max(bulk_gap)*0.85, '$v=w$\n(topological\ntransition)',
+            ha='right', fontsize=8, color='#CC3311')
 
 
 def plot_domain_wall_states(ax, N_domains, ell, v, w, states_dict, title):
@@ -503,8 +503,12 @@ def main():
     panel_label(ax1b, '(b)')
     ax1b.legend(loc='lower right', fontsize=7.5)
     ax1b.set_xlim(ratios_odd[0], ratios_odd[-1])
-    ax1b.text(0.3, 0.12, 'Edge\nstate\n$E=0$', fontsize=8,
-              color='#CC3311', fontweight='bold', ha='center')
+    ax1b.annotate('Edge\nstate\n$E=0$',
+                  xy=(0.5, 0.0), xycoords='data',
+                  xytext=(0.10, 0.87), textcoords='axes fraction',
+                  fontsize=8, color='#CC3311', fontweight='bold',
+                  ha='center', va='top',
+                  arrowprops=dict(arrowstyle='->', color='#CC3311', lw=1.0))
     
     # (c) Gap comparison
     ax1c = fig1.add_subplot(gs1[1, 0])
@@ -522,7 +526,7 @@ def main():
     
     # Draw topological phase (v < w)
     y_top = 1.5
-    ax1d.text(5.5, 2.0, 'Topological phase: $v < w$', fontsize=8,
+    ax1d.text(5.5, 1.88, 'Topological phase: $v < w$', fontsize=8,
               ha='center', fontweight='bold', color='#009988')
     for j in range(10):
         mk = 'o' if j%2==0 else 's'
@@ -541,7 +545,7 @@ def main():
     
     # Draw trivial phase (v > w)
     y_triv = 0.5
-    ax1d.text(5.5, 1.0, 'Trivial phase: $v > w$', fontsize=8,
+    ax1d.text(5.5, 0.73, 'Trivial phase: $v > w$', fontsize=8,
               ha='center', fontweight='bold', color='#888')
     for j in range(10):
         mk = 'o' if j%2==0 else 's'
