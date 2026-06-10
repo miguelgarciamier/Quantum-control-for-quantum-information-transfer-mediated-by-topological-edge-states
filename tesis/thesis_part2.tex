@@ -1304,12 +1304,18 @@ geometric coupling ratio that also bounds the Rabi protocol
 [Eq.~(\ref{eq:fmax})]; the longer domain physically caps its coupling because
 the intracell hopping must satisfy $v < w$ to keep the bulk gap open.
 
-Figure~\ref{fig:ctap_comparison} reports the result. Bare CTAP recovers
-$f > 0.99$ wherever $\rho \lesssim 8$ ($|\ell_1 - \ell_2| \lesssim 6$) and
-reaches $f \approx 0.91$ at $\rho = 32$ ($j_{\mathrm{DW}} = 5$) for sufficiently
-long pulses---more than two orders of magnitude above the Rabi bound
-$f_{\max} = 0.004$. Adding the counterdiabatic term~(\ref{eq:hcd_effective})
-raises this to $f \approx 0.97$.
+Figure~\ref{fig:ctap_comparison} reports the result. With well-conditioned
+pulses, bare CTAP keeps $f \gtrsim 0.99$ across every wall position for which
+the three-level description remains valid ($\rho \lesssim 10^2$, unshaded
+region), whereas the static-Rabi fidelity collapses as soon as the wall leaves
+the center: at $\rho = 32$ ($j_{\mathrm{DW}} = 5$) CTAP exceeds the Rabi bound
+$f_{\max} = 0.004$ by more than two orders of magnitude. The counterdiabatic
+term~(\ref{eq:hcd_effective}) reaches the same fidelity in a fixed,
+chain-length-independent time; its role is therefore to \emph{accelerate} the
+transfer, not to raise its fidelity. The residual ceiling of a \emph{fixed}
+pulse sequence---for example $f \approx 0.91$ at $\rho = 32$ for the pulse
+separation of Fig.~\ref{fig:ctap_asymmetry}---is not a fundamental bound but the
+boundary-condition effect $f \le \cos^2\Theta_0$ analyzed below.
 
 Figure~\ref{fig:ctap_asymmetry} isolates the dependence on the peak ratio
 $\rho$. Both variants are essentially perfect for $\rho \lesssim 8$; the bare

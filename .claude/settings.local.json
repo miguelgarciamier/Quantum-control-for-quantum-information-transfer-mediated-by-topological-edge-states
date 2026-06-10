@@ -32,7 +32,13 @@
       "Bash(python fase_2_domain_wall_asimetrico/paso4_chiral_spectral.py)",
       "Bash(python -m fase_2_domain_wall_asimetrico.paso4_transfer_robust)",
       "Bash(python -m fase_2_domain_wall_asimetrico.paso4_cd_tradeoff)",
-      "PowerShell(Stop-Process *)"
+      "PowerShell(Stop-Process *)",
+      "Bash(python -m fase_2_domain_wall_asimetrico.fig_multidomain_speedup)",
+      "Bash(python -m fase_2_domain_wall_asimetrico.paso4_fig_data)",
+      "Bash(python -m fase_2_domain_wall_asimetrico.fig_robustness_chiral)",
+      "Bash(python -m fase_2_domain_wall_asimetrico.fig4_fullchain_ctap)",
+      "Bash(python -m fase_2_domain_wall_asimetrico.fig16_ctap_asymmetry_new)",
+      "Bash(python -m fase_2_domain_wall_asimetrico.fig15_wc_ctap)"
     ]
   }
 }

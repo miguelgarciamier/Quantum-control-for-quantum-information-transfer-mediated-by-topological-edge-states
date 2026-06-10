@@ -65,49 +65,63 @@ T       = TAU / Jbott
 sig, tR, tL = pulse_params(T)
 print(f"j_DW={J_DW}: J_LS={J_LS_pk:.4e}  J_SR={J_SR_pk:.4e}  Jbott={Jbott:.4e}  T={T:.1f}")
 
-# ── Full-chain evolution j_DW=5 ──────────────────────────────────────────────
+# ── Full-chain evolution j_DW=5 (cached to npz) ──────────────────────────────
+NPZ_CACHE = os.path.join(_HERE, 'fig4_fullchain_ctap_cache.npz')
 N_OUT = 400
 
 def Ht(t):
     vL = max(0., vL_val(t, sig, tL))
     vR = max(0., vR_val(t, sig, tR))
-    return build_H(build_hoppings(L, J_DW, vL, vR, w))
+    return build_H(build_hoppings(L, [J_DW], [vL, vR], w))
 
-psi0 = np.zeros(L, complex); psi0[0] = 1.
+if os.path.exists(NPZ_CACHE):
+    _c = np.load(NPZ_CACHE)
+    psis = _c['psis'];  t_arr = _c['t_arr']
+    PL   = _c['PL'];    PS    = _c['PS']
+    PR   = _c['PR'];    lk    = _c['lk']
+    Nt   = len(t_arr);  t_n   = t_arr / T
+    dens = np.abs(psis)**2
+    f_final = float(np.abs(psis[-1, L-1])**2)
+    print(f"  Loaded from cache ({Nt} steps)")
+    print(f"  f_final={f_final:.6f}  maxP_S={PS.max():.4e}  maxLeak={lk.max():.2e}")
+else:
+    psi0 = np.zeros(L, complex); psi0[0] = 1.
 
-def rhs(t, y):
-    psi_c = y[:L] + 1j*y[L:]
-    dp    = -1j*(Ht(t) @ psi_c)
-    return np.concatenate([dp.real, dp.imag])
+    def rhs(t, y):
+        psi_c = y[:L] + 1j*y[L:]
+        dp    = -1j*(Ht(t) @ psi_c)
+        return np.concatenate([dp.real, dp.imag])
 
-y0  = np.concatenate([psi0.real, psi0.imag])
-sol = solve_ivp(rhs, [0, T], y0, method='RK45',
-                t_eval=np.linspace(0, T, N_OUT + 1),
-                rtol=1e-6, atol=1e-8)
+    y0  = np.concatenate([psi0.real, psi0.imag])
+    sol = solve_ivp(rhs, [0, T], y0, method='RK45',
+                    t_eval=np.linspace(0, T, N_OUT + 1),
+                    rtol=1e-6, atol=1e-8)
 
-psis_raw = sol.y[:L].T + 1j*sol.y[L:].T
-norms    = np.linalg.norm(psis_raw, axis=1)
-print(f"  norma_final = {norms[-1]:.10f}")
-psis = psis_raw / norms[:, np.newaxis]
+    psis_raw = sol.y[:L].T + 1j*sol.y[L:].T
+    norms    = np.linalg.norm(psis_raw, axis=1)
+    print(f"  norma_final = {norms[-1]:.10f}")
+    psis = psis_raw / norms[:, np.newaxis]
 
-Nt   = len(sol.t)
-dens = np.abs(psis)**2                     # (Nt, L)
-PL   = np.zeros(Nt); PS = np.zeros(Nt)
-PR   = np.zeros(Nt); lk = np.zeros(Nt)
+    Nt   = len(sol.t)
+    dens = np.abs(psis)**2
+    PL   = np.zeros(Nt); PS = np.zeros(Nt)
+    PR   = np.zeros(Nt); lk = np.zeros(Nt)
 
-for k, (t_k, psi) in enumerate(zip(sol.t, psis)):
-    tri = protected_triplet(Ht(t_k))
-    pL_ = tri['L'] / np.linalg.norm(tri['L'])
-    pS_ = tri['S'] / np.linalg.norm(tri['S'])
-    pR_ = tri['R'] / np.linalg.norm(tri['R'])
-    PL[k] = float(np.abs(pL_ @ psi)**2)
-    PS[k] = float(np.abs(pS_ @ psi)**2)
-    PR[k] = float(np.abs(pR_ @ psi)**2)
-    lk[k] = max(1e-12, 1. - (PL[k] + PS[k] + PR[k]))
+    for k, (t_k, psi) in enumerate(zip(sol.t, psis)):
+        tri = protected_triplet(Ht(t_k))
+        pL_ = tri['L'] / np.linalg.norm(tri['L'])
+        pS_ = tri['S'] / np.linalg.norm(tri['S'])
+        pR_ = tri['R'] / np.linalg.norm(tri['R'])
+        PL[k] = float(np.abs(pL_ @ psi)**2)
+        PS[k] = float(np.abs(pS_ @ psi)**2)
+        PR[k] = float(np.abs(pR_ @ psi)**2)
+        lk[k] = max(1e-12, 1. - (PL[k] + PS[k] + PR[k]))
 
-t_n = sol.t / T    # normalised time [0,1]
-f_final = float(np.abs(psis[-1, L-1])**2)
-print(f"  f_final={f_final:.6f}  maxP_S={PS.max():.4e}  maxLeak={lk.max():.2e}")
+    t_n = sol.t / T
+    f_final = float(np.abs(psis[-1, L-1])**2)
+    print(f"  f_final={f_final:.6f}  maxP_S={PS.max():.4e}  maxLeak={lk.max():.2e}")
+    np.savez(NPZ_CACHE, psis=psis, t_arr=sol.t, PL=PL, PS=PS, PR=PR, lk=lk)
+    print(f"  Saved cache: {NPZ_CACHE}")
 
 # ── Read paso3d_final.csv ────────────────────────────────────────────────────
 fbar   = {}    # fbar[(j, proto)] = fidelity
@@ -158,8 +172,8 @@ ax_b.set_xlim(0, 1);  ax_b.set_ylim(-0.05, 1.12)
 ax_b.set_xlabel(r'$t/T$');  ax_b.set_ylabel(r'$P_\alpha$')
 ax_b.legend(loc='center right', fontsize=8, handlelength=1.2)
 
-# inset: leakage on log scale
-axi = ax_b.inset_axes([0.04, 0.38, 0.39, 0.37])
+# inset: leakage on log scale — shifted right to clear the P_α y-label
+axi = ax_b.inset_axes([0.14, 0.42, 0.37, 0.33])
 axi.semilogy(t_n, lk, color=COLORS['grey'], lw=0.9)
 axi.set_xlim(0, 1);  axi.set_ylim(1e-9, 1e-5)
 axi.set_xlabel(r'$t/T$', fontsize=6.5);  axi.set_ylabel('leak.', fontsize=6.5)
@@ -181,8 +195,7 @@ im = ax_c.imshow(dens.T, aspect='auto', origin='lower',
 ax_c.axhline(J_DW + 0.5, lw=0.65, ls='--', color='white', alpha=0.75)
 ax_c.text(0.02, J_DW + 0.65, 'DW', color='white', fontsize=6.5, va='bottom')
 ax_c.set_xlabel(r'$t/T$');  ax_c.set_ylabel('site $j$')
-ax_c.set_yticks([0, J_DW, L - 1])
-ax_c.set_yticklabels([r'$0$', rf'${J_DW}$', r'$20$'])
+ax_c.yaxis.set_major_locator(ticker.MultipleLocator(5))
 cb = fig.colorbar(im, ax=ax_c, fraction=0.046, pad=0.03)
 cb.set_label(r'$|\psi_j|^2$', fontsize=8)
 cb.ax.tick_params(labelsize=7)
@@ -205,14 +218,14 @@ for ip, (proto, col, lbl) in enumerate(zip(protos_d, colors_d, labels_d)):
 # QEC threshold
 ax_d.axhline(0.995, color='k', lw=0.85, ls='--', zorder=3, label=r'$f_0{=}0.995$')
 
-# Annotate T_transfer above CTAP_full bars (between eff and full in x)
+# Annotate T_transfer above each CTAP_full bar, no rotation
 for i, j in enumerate(J_DWs_d):
     Tv  = T_ctap.get(j, 0.)
     lbl_T = f'T={Tv/1e3:.1f}k'
-    x_ann = x_ctr[i] + (offsets[1] + offsets[2]) / 2   # midpoint between eff/full
-    y_ann = fbar.get((j, 'CTAP_full'), 1.0) + 0.005
+    x_ann = x_ctr[i] + offsets[2]                       # centred on CTAP_full bar
+    y_ann = fbar.get((j, 'CTAP_full'), 1.0) + 0.025
     ax_d.text(x_ann, y_ann, lbl_T, ha='center', va='bottom',
-              fontsize=5.5, color=COLORS['teal'], rotation=90)
+              fontsize=5.5, color=COLORS['teal'], rotation=0)
 
 ax_d.set_xticks(x_ctr)
 ax_d.set_xticklabels([r'$j_\mathrm{DW}{=}11$', r'$j_\mathrm{DW}{=}7$',
