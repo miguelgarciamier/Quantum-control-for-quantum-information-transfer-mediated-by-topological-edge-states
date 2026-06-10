@@ -14,7 +14,25 @@
       "PowerShell(cd \"C:\\\\Users\\\\miigu\\\\OneDrive\\\\Escritorio\\\\Master\\\\TFM\\\\Simulaciones\\\\SSH dimer and domain wall\"; $env:PYTHONIOENCODING='utf-8'; .venv\\\\Scripts\\\\python.exe figura_1\\\\ssh_dimer_domain_wall.py 2>&1 | Select-Object -Last 10)",
       "PowerShell(cd \"C:\\\\Users\\\\miigu\\\\OneDrive\\\\Escritorio\\\\Master\\\\TFM\\\\Simulaciones\\\\SSH dimer and domain wall\"; $env:PYTHONIOENCODING='utf-8'; .venv\\\\Scripts\\\\python.exe fase_2_domain_wall_asimetrico\\\\domain_wall_asimetrico.py 2>&1 | Select-Object -Last 15)",
       "PowerShell(cd \"C:\\\\Users\\\\miigu\\\\OneDrive\\\\Escritorio\\\\Master\\\\TFM\\\\Simulaciones\\\\SSH dimer and domain wall\"; $env:PYTHONIOENCODING='utf-8'; .venv\\\\Scripts\\\\python.exe fase_2_domain_wall_asimetrico\\\\ctap_asymmetric.py 2>&1)",
-      "PowerShell(cd \"C:\\\\Users\\\\miigu\\\\OneDrive\\\\Escritorio\\\\Master\\\\TFM\\\\Simulaciones\\\\SSH dimer and domain wall\"; $env:PYTHONIOENCODING='utf-8'; .venv\\\\Scripts\\\\python.exe fase_2_domain_wall_asimetrico\\\\domain_wall_asimetrico.py 2>&1 | Select-Object -Last 5)"
+      "PowerShell(cd \"C:\\\\Users\\\\miigu\\\\OneDrive\\\\Escritorio\\\\Master\\\\TFM\\\\Simulaciones\\\\SSH dimer and domain wall\"; $env:PYTHONIOENCODING='utf-8'; .venv\\\\Scripts\\\\python.exe fase_2_domain_wall_asimetrico\\\\domain_wall_asimetrico.py 2>&1 | Select-Object -Last 5)",
+      "Bash(.venv/Scripts/python.exe fase_2_domain_wall_asimetrico/ctap_full_chain.py)",
+      "Bash(python paso2_ctap_j7.py)",
+      "Bash(pip install *)",
+      "Bash(dir *)",
+      "Bash(python paso3_tabla.py)",
+      "Bash(python paso3b_tabla.py)",
+      "Bash(python paso3c_jdw5.py)",
+      "Bash(python -c ' *)",
+      "Bash(python paso3d_tabla.py)",
+      "Bash(python paso3d_final.py)",
+      "Bash(python fig4_fullchain_ctap.py)",
+      "Bash(python ctap_full_chain.py)",
+      "Bash(python fase_2_domain_wall_asimetrico/paso2_speedup.py)",
+      "Bash(python fase_2_domain_wall_asimetrico/paso3_5state.py)",
+      "Bash(python fase_2_domain_wall_asimetrico/paso4_chiral_spectral.py)",
+      "Bash(python -m fase_2_domain_wall_asimetrico.paso4_transfer_robust)",
+      "Bash(python -m fase_2_domain_wall_asimetrico.paso4_cd_tradeoff)",
+      "PowerShell(Stop-Process *)"
     ]
   }
 }

@@ -1715,6 +1715,27 @@ manufacture coupling where the geometry forbids it.
   \label{fig:ctap_asymmetry}
 \end{figure}
 
+\subsection{The fidelity ceiling as a boundary-condition effect}
+
+The full-chain results show that the residual infidelity of CTAP at large coupling
+asymmetry is not a topological or geometric limitation, but a boundary-condition
+effect of the pulse sequence. The protocol is initialized in the localized state
+$|L\rangle$, whereas the instantaneous dark state at $t=0$ is
+$|D_0(0)\rangle = \cos\Theta_0\,|L\rangle - \sin\Theta_0\,|R\rangle$ with
+$\Theta_0 = \arctan[J_{LS}(0)/J_{SR}(0)]$. The overlap of the initial state with the
+dark state therefore bounds the achievable fidelity,
+\begin{equation}
+f \le \cos^2\Theta_0 ,
+\end{equation}
+the deficit $\sin^2\Theta_0$ being the population that fails to follow the
+dark-state trajectory. This ceiling is set entirely by how completely the pulses
+suppress $J_{LS}(0)$ (and, symmetrically, $J_{SR}(T)$) at the protocol endpoints;
+it is removed by increasing the pulse separation, at the cost of a longer protocol
+time, and is therefore distinct from the genuine physical limit at
+$\rho \gtrsim 10^2$, where the protected gap closes and the three-level description
+breaks down. With suitably conditioned pulses $\Theta_0 \to 0$ and $f \to 1$ across
+the entire experimentally relevant range of asymmetries.
+
 \subsection{Extension to two domain walls: even-state parity constraint}
 \label{sec:ctap_twodw}
 
