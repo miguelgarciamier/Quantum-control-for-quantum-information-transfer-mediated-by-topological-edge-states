@@ -1,18 +1,8 @@
 % =============================================================================
-% Master's Thesis (TFM) - Part II (extended version)
+% Master's Thesis (TFM) - Part I
 % "Quantum control for quantum information transfer mediated by
 %  topological edge states"
 % Template: REVTeX 4.2 (APS format)
-%
-% Changes from Part I:
-%   - Abstract: removed inline journal citations
-%   - Body: author names include initials throughout
-%   - Fig. 9 caption: corrected panel description
-%   - Fig. 11 left-panel title: fixed in Python source (now English)
-%   - Fig. 12 table headers: fixed in Python source (now English)
-%   - Section V.E last sentence: highlighted in bold
-%   - NEW Section VIII: CTAP — dynamic control beyond the static Rabi regime
-%   - Updated conclusions (Section IX)
 % =============================================================================
 \documentclass[
   reprint,
@@ -20,7 +10,6 @@
   amssymb,
   aps,
   prb,
-  floatfix,
   longbibliography,
 ]{revtex4-2}
 
@@ -34,7 +23,6 @@
 \usepackage{siunitx}
 \usepackage{float}
 \usepackage{tikz}
-\usepackage{morefloats}
 \usetikzlibrary{calc,decorations.pathreplacing}
 
 \graphicspath{{figures/}}
@@ -55,46 +43,38 @@
 % ============================================================================
 \title{Quantum control for quantum information transfer mediated by topological edge states}
 
-\author{Miguel García-Mier García}
+\author{Miguel}
 % \email{your.email@university.edu}
 \affiliation{%
-  MSc in Quantum Technologies, Universidad Internacional Men\'endez Pelayo, Spain
+  Master en F\'isica Te\'orica, Universidad Complutense de Madrid, 28040 Madrid, Spain
 }
 
-\date{May 2026}
+\date{\today}
 
 \begin{abstract}
 We study quantum state transfer in one-dimensional topological chains based on the
 Su-Schrieffer-Heeger (SSH) model, comparing two distinct paradigms:
 domain wall-mediated transfer and counterdiabatic (CD) driving.
-First, we numerically reproduce a domain wall transfer protocol,
+First, we numerically reproduce the domain wall protocol of
+Zurita \textit{et al.}~[Quantum \textbf{7}, 1043 (2023)],
 achieving fidelities $f > 0.999$ for symmetric two-domain configurations with
 $L = 11$ sites. We investigate the effect of asymmetric domain wall placement,
-demonstrating that the fidelity is constrained by the exponential
-sensitivity of the effective couplings to the domain lengths---a limitation of
-the static Rabi protocol rather than of topological protection itself.
+demonstrating that the fidelity is fundamentally limited by the exponential
+sensitivity of the effective couplings to the domain lengths.
 We further explore shortcut-to-adiabaticity (STA) pulse protocols and find that
 no pulse optimization can overcome the coupling asymmetry that governs the
 transfer phase.
-Second, we present an extensive analysis of a hybrid analog-digital protocol
-for nonadiabatic edge-state transfer, where the SSH Hamiltonian is supplemented
-with approximate counterdiabatic interactions derived from adiabatic gauge
-potentials and optimized via variational quantum circuits.
-Third, motivated by the CTAP (Coherent Tunnelling Adiabatic Passage) formalism,
-we replace the static Rabi protocol by a dynamic counter-intuitive pulse sequence
-that exploits the topological dark state of the effective three-level
-Hamiltonian. Numerical integration of the full $L=21$ chain recovers fidelities
-$f>0.999$ at wall positions where the Rabi protocol collapses, with bulk leakage
-below $10^{-7}$ and an effective three-level reduction that is quantitatively
-exact; the residual infidelity is a removable pulse boundary-condition effect,
-not a topological bound. A collective version of the protocol transfers across a
-multi-domain chain with fidelity $0.998$ while shortening the transfer time by
-more than four orders of magnitude. Crucially, because CTAP uses only
-nearest-neighbour couplings it inherits the chiral protection that pins the edge
-states against off-diagonal disorder, whereas the next-nearest-neighbour driving
-of the CD protocol breaks that symmetry: the control protocol, not the topology
-alone, determines whether the transfer is robust. We also discuss the even-state
-parity constraint limiting the two-domain-wall case.
+Second, we present an extensive analysis of the hybrid analog-digital protocol
+of Romero \textit{et al.}~[Phys.\ Rev.\ Applied \textbf{21}, 034033 (2024)],
+where nonadiabatic edge-state transfer is achieved by supplementing the SSH
+Hamiltonian with approximate counterdiabatic interactions derived from adiabatic
+gauge potentials and optimized via variational quantum circuits.
+We provide a detailed comparison of both approaches, contrasting their physical
+mechanisms, scalability, experimental requirements, and robustness against
+disorder. The domain wall approach exploits topological protection within an
+effective low-energy subspace, while the CD approach directly engineers the
+time evolution to follow the instantaneous eigenstate, achieving fidelities
+above 99\% for chains up to 15 sites in the nonadiabatic regime.
 \end{abstract}
 
 \maketitle
@@ -120,7 +100,7 @@ topological phase. These states are robust against local perturbations that resp
 the protecting chiral symmetry, making them attractive candidates as quantum
 information carriers.
 
-J.~Zurita, C.~E.~Creffield, and G.~Platero~\cite{Zurita2023} demonstrated that chains
+Zurita, Creffield, and Platero~\cite{Zurita2023} demonstrated that chains
 comprising multiple SSH domains separated by \emph{topological domain walls}
 can mediate fast, high-fidelity quantum transfer. The key mechanism is an
 exponential speed-up arising from the multi-domain structure: by distributing
@@ -146,17 +126,10 @@ questions:
 
 Additionally, we provide a comprehensive analysis of an alternative approach:
 the hybrid analog-digital protocol recently proposed by
-S.~V.~Romero, X.~Chen, G.~Platero, and Y.~Ban~\cite{Romero2024}, where nonadiabatic transfer is
+Romero~\textit{et al.}~\cite{Romero2024}, where nonadiabatic transfer is
 achieved through counterdiabatic (CD) driving rather than topological domain
 walls. We compare both paradigms in terms of their physical mechanisms,
 scalability, and robustness.
-
-Finally, motivated by the CTAP framework of
-A.~D.~Greentree, J.~H.~Cole, A.~R.~Hamilton, and L.~C.~L.~Hollenberg~\cite{Greentree2004},
-we show how the limitations of the static Rabi protocol in asymmetric
-configurations can be overcome by means of a dynamic counter-intuitive pulse
-sequence that exploits the topological dark state of the effective three-level
-Hamiltonian.
 
 The remainder of this document is organized as follows.
 Section~\ref{sec:model} introduces the SSH model, its topological properties,
@@ -168,9 +141,6 @@ STA pulse protocols.
 Section~\ref{sec:cd_protocol} presents a detailed exposition of the hybrid
 analog-digital counterdiabatic protocol. Section~\ref{sec:comparison} provides
 a systematic comparison of the domain wall and counterdiabatic approaches.
-Section~\ref{sec:ctap} introduces the CTAP framework as a route beyond the
-static Rabi limitation, analyzes the topological dark state, and discusses
-extensions to two-domain wall systems.
 Section~\ref{sec:conclusions} summarizes our findings and outlines future
 directions.
 
@@ -229,16 +199,16 @@ $v = w$. For a chain with an odd number of sites ($L = 11$), a zero-energy edge
 state appears in the topological phase, manifesting the bulk-boundary
 correspondence~\cite{Prodan2016}.
 
-\begin{figure*}[t]
+\begin{figure}[t]
   \centering
-  \includegraphics[width=\textwidth]{fig1_dimer_spectrum.pdf}
+  \includegraphics[width=\columnwidth]{fig1_dimer_spectrum.pdf}
   \caption{Energy spectrum of the SSH dimer chain as a function of the hopping
   ratio $v/w$. \textbf{Left:} Even chain ($L = 10$). The bulk gap
   $\Delta = 2|w - v|$ closes at $v = w$. \textbf{Right:} Odd chain ($L = 11$).
   A zero-energy state (red) appears in the topological phase ($v/w < 1$),
   localized at the boundary.}
   \label{fig:spectrum}
-\end{figure*}
+\end{figure}
 
 % --- 2.3 Topology ---
 \subsection{Topological invariant}
@@ -297,16 +267,16 @@ where $r = v/w$ is the decay ratio, and $\ell_1$, $\ell_2$ are the lengths
 resides on a single sublattice and decays exponentially away from its localization
 center with characteristic length $\xi = -1/\ln r$.
 
-\begin{figure*}[t]
+\begin{figure}[t]
   \centering
-  \includegraphics[width=\textwidth]{fig2_domain_wall_states.pdf}
-  \caption{Topologically protected states in a two-domain SSH chain ($L = 23$,
-  $N = 2$, $\ell = 10$, $v = 0.5$, $w = 1.0$). The three states $\ketL$,
+  \includegraphics[width=\columnwidth]{fig2_domain_wall_states.pdf}
+  \caption{Topologically protected states in a two-domain SSH chain ($L = 11$,
+  $N = 2$, $\ell = 4$, $v = 0.5$, $w = 1.0$). The three states $\ketL$,
   $\ketS$, and $\ketR$ are localized at the left edge, the domain wall, and the
   right edge, respectively. Sublattice polarization (alternating signs) is
   clearly visible.}
   \label{fig:dw_states}
-\end{figure*}
+\end{figure}
 
 % --- 2.5 Effective Hamiltonian ---
 \subsection{Effective low-energy Hamiltonian}
@@ -354,7 +324,7 @@ a coupling ratio of~4, while $|\ell_1 - \ell_2| = 8$ yields a ratio of~$2^4 = 16
 \subsection{Adiabatic preparation and readout}
 \label{sec:protocol}
 
-The transfer protocol proposed by J.~Zurita, C.~E.~Creffield, and G.~Platero~\cite{Zurita2023}
+The transfer protocol proposed by Zurita \textit{et al.}~\cite{Zurita2023}
 consists of three phases:
 \begin{enumerate}
   \item \textbf{Preparation} ($0 \leq t < \tprep$): The intracell hopping
@@ -383,7 +353,7 @@ The standard pulse shape (Eq.~(11) of Ref.~\cite{Zurita2023}) is
 with $\Omega = \pi/(2\tprep)$. The $\sin^2$ ramp is chosen for its smoothness:
 both $v(t)$ and $\dot{v}(t)$ vanish at $t = 0$ and $t = \tprep$, minimizing
 diabatic transitions to bulk states. The adiabatic condition requires
-$\tprep \gg \tau = 2/\Delta$, where $\Delta$ [Eq.~(\ref{eq:gap})] is the instantaneous spectral gap.
+$\tprep \gg \tau = 2/\Delta$, where $\Delta$ is the instantaneous spectral gap.
 
 The transfer fidelity is defined as the occupation probability of the target
 site at the end of the protocol:
@@ -487,13 +457,9 @@ analytical predictions. Table~\ref{tab:asym_states} summarizes the results.
 
 \begin{table}[b]
   \caption{Protected states for the asymmetric domain wall configurations in an
-  $L = 21$ chain ($v = 0.5$, $w = 1.0$). $E_{\pm} = \pm\sqrt{\JLS^2+\JSR^2}$ are
-  the energies of the two split levels of the effective three-site chain
-  [Eq.~(\ref{eq:heff})], the central level remaining pinned at $E = 0$.
-  ``Min.~overlap'' is the smallest singular value of the overlap matrix between
-  the analytical states [Eqs.~(\ref{eq:ketL})--(\ref{eq:ketR})] and the numerical
-  eigenstates (unity = perfect agreement). $\JLS/\JSR$ is the effective coupling
-  ratio that sets the Rabi bound of Eq.~(\ref{eq:fmax}).}
+  $L = 21$ chain ($v = 0.5$, $w = 1.0$). The subspace overlap is computed as
+  the singular values of the overlap matrix between analytical and numerical
+  eigenstates.}
   \label{tab:asym_states}
   \begin{ruledtabular}
   \begin{tabular}{ccccc}
@@ -514,19 +480,16 @@ the left edge, $\ketL$ becomes increasingly compressed into a shorter domain
 a longer domain. The state $\ketS$ develops an asymmetric envelope, decaying
 faster into the shorter domain.
 
-\begin{figure*}[t]
+\begin{figure}[t]
   \centering
-  \includegraphics[width=\textwidth]{fig5_asymmetric_wall_states.pdf}
-  \caption{Spatial profiles of the three protected states $\ketL$, $\ketS$,
-  $\ketR$ for different domain wall positions in an $L = 21$ chain:
-  \textbf{(a)} $j_{\mathrm{DW}} = 11$ (quasi-center),
-  \textbf{(b)} $j_{\mathrm{DW}} = 7$ (one-third),
-  \textbf{(c)} $j_{\mathrm{DW}} = 5$ (one-quarter). As the wall moves toward the
-  left edge, $\ketL$ is compressed into the shorter domain while $\ketR$ spreads
-  over the longer one; the exponential localization and sublattice polarization
-  (alternating signs) are preserved in all cases.}
+  \includegraphics[width=\columnwidth]{fig5_asymmetric_wall_states.pdf}
+  \caption{Spatial profiles of the three protected states for different domain
+  wall positions in an $L = 21$ chain. Top to bottom: $j_{\mathrm{DW}} = 11$
+  (quasi-center), $j_{\mathrm{DW}} = 7$ (one-third), $j_{\mathrm{DW}} = 5$
+  (one-quarter). The exponential localization and sublattice polarization are
+  preserved in all cases.}
   \label{fig:asym_states}
-\end{figure*}
+\end{figure}
 
 \subsection{Effective couplings and the asymmetry mechanism}
 \label{sec:asym_couplings}
@@ -544,22 +507,22 @@ predicted by Eq.~(\ref{eq:coupling_ratio}):
   \begin{tabular}{ccccl}
     $j_{\mathrm{DW}}$ & $\JLS$ & $\JSR$ & Ratio & Predicted ratio \\
     \colrule
-    11 & 0.0105 & 0.0210 & 0.50 & $(v/w)^1 = 0.50$ \\
-    7  & 0.0423 & 0.0053 & 8.0  & $(w/v)^3 = 8.0$ \\
-    5  & 0.0862 & 0.0027 & 32.0 & $(w/v)^5 = 32.0$ \\
+    11 & 0.0148 & 0.0296 & 0.50 & $(v/w)^1 = 0.50$ \\
+    7  & 0.0593 & 0.0074 & 8.0  & $(w/v)^3 = 8.0$ \\
+    5  & 0.1186 & 0.0037 & 32.0 & $(w/v)^5 = 32.0$ \\
   \end{tabular}
   \end{ruledtabular}
 \end{table}
 
-\begin{figure*}[t]
+\begin{figure}[t]
   \centering
-  \includegraphics[width=\textwidth]{fig8_effective_coupling.pdf}
+  \includegraphics[width=\columnwidth]{fig8_effective_coupling.pdf}
   \caption{Effective couplings $\JLS$ (left--soliton) and $\JSR$
   (soliton--right) as a function of the domain wall position for $L = 21$.
   The coupling asymmetry grows exponentially with the displacement from the
   chain center, consistent with Eq.~(\ref{eq:coupling_ratio}).}
   \label{fig:coupling_asymmetry}
-\end{figure*}
+\end{figure}
 
 The coupling asymmetry has a direct and dramatic consequence for the transfer
 fidelity. In a three-site chain with unequal hoppings $J_1 \neq J_2$, the
@@ -582,12 +545,8 @@ Table~\ref{tab:asym_fidelity} reports the optimal fidelities obtained from a
 scan over $\ttr \in [30, 600]$.
 
 \begin{table}[b]
-  \caption{Optimal transfer fidelity for the asymmetric domain wall positions
-  ($L = 21$, standard $\sin^2$ pulse, $\tprep = 15$). $\ttr^{\mathrm{opt}}$ is the
-  protocol time of the first fidelity maximum from a scan over
-  $\ttr \in [30,600]$, and $f_{\max}$ the corresponding peak fidelity. The peaks
-  track the analytical Rabi bound of Eq.~(\ref{eq:fmax}), set by the coupling
-  ratio $\JLS/\JSR$ of Table~\ref{tab:couplings}.}
+  \caption{Optimal transfer fidelity for asymmetric domain wall positions
+  ($L = 21$, standard $\sin^2$ pulse).}
   \label{tab:asym_fidelity}
   \begin{ruledtabular}
   \begin{tabular}{cccc}
@@ -601,21 +560,14 @@ scan over $\ttr \in [30, 600]$.
   \end{ruledtabular}
 \end{table}
 
-\begin{figure*}[t]
+\begin{figure}[t]
   \centering
-  \includegraphics[width=\textwidth]{fig6_asymmetric_transfer.pdf}
-  \caption{Transfer dynamics for the three asymmetric domain wall configurations
-  ($L = 21$, standard $\sin^2$ pulse, $\tprep = 15$):
-  \textbf{(a)} $j_{\mathrm{DW}} = 11$, \textbf{(b)} $j_{\mathrm{DW}} = 7$,
-  \textbf{(c)} $j_{\mathrm{DW}} = 5$, each at its optimal $\ttr$ (Table~\ref{tab:asym_fidelity}).
-  Each panel shows the shaded ramp $v(t)$ (left axis) and the occupations of the
-  three localized sites---site $0$ ($\ketL$), the domain wall ($\ketS$) and site
-  $L-1$ ($\ketR$) (right axis). As the wall moves off-centre, the coupling
-  asymmetry $\JLS \neq \JSR$ caps the population that can be swapped into $\ketR$:
-  the transfer is essentially complete in (a) but increasingly incomplete in (b)
-  and (c), where the excitation remains trapped in $\ketL$ and $\ketS$.}
+  \includegraphics[width=\columnwidth]{fig6_asymmetric_transfer.pdf}
+  \caption{Transfer dynamics for asymmetric domain wall configurations
+  ($L = 21$). The fidelity degrades dramatically as the domain wall moves
+  away from the chain center.}
   \label{fig:asym_transfer}
-\end{figure*}
+\end{figure}
 
 The quasi-centered case ($j_{\mathrm{DW}} = 11$) achieves $f = 0.637$, in
 quantitative agreement with the analytical bound $f_{\max} = 0.64$ from
@@ -629,19 +581,14 @@ fidelity-vs-$\ttr$ curves for all three wall positions. The oscillation
 frequencies and amplitudes differ markedly, reflecting the distinct
 effective coupling landscapes.
 
-\begin{figure*}[t]
+\begin{figure}[t]
   \centering
-  \includegraphics[width=\textwidth]{fig7_fidelity_comparison.pdf}
-  \caption{Transfer fidelity for the three domain wall positions in the
-  $L = 21$ chain. \textbf{(a)} Fidelity $f$ vs.~the protocol time $\ttr$ for the
-  quasi-centre ($\sim 1/2$), one-third ($\sim 1/3$) and one-quarter ($\sim 1/4$)
-  wall positions; dots mark the first maximum. \textbf{(b)} The corresponding
-  peak fidelity (left axis, bars) and optimal $\ttr$ (right axis) for
-  $j_{\mathrm{DW}} = 11, 7, 5$. The first fidelity maximum decreases
-  exponentially with the displacement from the centre, consistent with the
-  coupling asymmetry of Eq.~(\ref{eq:coupling_ratio}).}
+  \includegraphics[width=\columnwidth]{fig7_fidelity_comparison.pdf}
+  \caption{Transfer fidelity as a function of $\ttr$ for the three domain wall
+  positions in the $L = 21$ chain. The first fidelity maximum (marked by dots)
+  decreases exponentially with the displacement from the center.}
   \label{fig:fidelity_comparison}
-\end{figure*}
+\end{figure}
 
 \subsection{Systematic study: fidelity vs.~wall position}
 \label{sec:systematic}
@@ -660,18 +607,15 @@ that the fidelity profile is perfectly symmetric about the chain center
     $j_{\mathrm{DW}} = 3$.
 \end{itemize}
 
-\begin{figure*}[t]
+\begin{figure}[t]
   \centering
-  \includegraphics[width=\textwidth]{fig12_systematic_wall_position.pdf}
-  \caption{Maximum transfer fidelity (left panel) and optimal transfer time
-  $\ttr$ (right panel) as a function of the normalized domain wall position
-  $j_\mathrm{DW}/(L-1)$, for chains of length $L = 11$ (blue) and $L = 15$
-  (orange). Both quantities peak sharply at the chain center
-  ($j_\mathrm{DW}/(L-1) = 0.5$): the fidelity reaches its maximum and the
-  optimal transfer time its minimum. Only odd-index sites produce valid
-  domain walls.}
+  \includegraphics[width=\columnwidth]{fig12_systematic_wall_position.pdf}
+  \caption{Maximum transfer fidelity as a function of domain wall position for
+  $L = 11$ (left) and $L = 15$ (right). The fidelity is sharply peaked at the
+  chain center and symmetric about it. Only odd-index sites produce valid domain
+  walls.}
   \label{fig:systematic}
-\end{figure*}
+\end{figure}
 
 The symmetric profiles confirm that the transfer fidelity depends only on the
 \emph{difference} $|\ell_1 - \ell_2|$ between domain lengths, not on their
@@ -753,21 +697,16 @@ performance of each pulse profile on the symmetric chain ($L = 11$, $\ell = 4$).
   \end{ruledtabular}
 \end{table}
 
-\begin{figure*}[t]
+\begin{figure}[t]
   \centering
-  \includegraphics[width=\textwidth]{fig9_sta_pulse_comparison.pdf}
-  \caption{Comparison of the pulse profiles for the symmetric chain
-  ($L = 11$, $\ell = 4$). \textbf{(a)} The ramp shapes $v(t)$ and
-  \textbf{(b)} the resulting fidelity $f$ vs.~$\ttr$ for all profiles (shared
-  legend); dots mark each optimum. The standard $\sin^2$ pulse with
-  $\tprep = 15$ (solid blue) gives the best time--fidelity trade-off
-  ($f = 0.9994$ at $\ttr = 45$), whereas the STA-global $\sin^2$ (green
-  dash-dot) reaches the highest absolute fidelity ($f = 0.99995$) at the cost of
-  $\ttr = 75$. \textbf{(c)},\textbf{(d)} Site-resolved occupation
-  $\langle n_j\rangle$ vs.~time for the standard $\sin^2$ ($\ttr = 45$) and the
-  STA-global $\sin^2$ ($\ttr = 75$) protocols, respectively.}
+  \includegraphics[width=\columnwidth]{fig9_sta_pulse_comparison.pdf}
+  \caption{Comparison of transfer fidelity vs.~$\ttr$ for different pulse
+  profiles in the symmetric chain ($L = 11$, $\ell = 4$). The standard
+  $\sin^2$ pulse with $\tprep = 15$ achieves the best time--fidelity trade-off
+  ($f = 0.9994$ at $\ttr = 45$). The STA-global $\sin^2$ achieves the highest
+  absolute fidelity ($f = 0.99995$) but requires $\ttr = 75$.}
   \label{fig:sta_pulses}
-\end{figure*}
+\end{figure}
 
 The key findings are:
 \begin{itemize}
@@ -797,14 +736,14 @@ fidelity saturates near its maximum. The crossover occurs at
 $\tprep \sim 2/\Delta_{\min}$, where $\Delta_{\min}$ is the minimum spectral
 gap encountered during the ramp.
 
-\begin{figure*}[t]
+\begin{figure}[t]
   \centering
-  \includegraphics[width=\textwidth]{fig10_tprep_dependence.pdf}
+  \includegraphics[width=\columnwidth]{fig10_tprep_dependence.pdf}
   \caption{Optimal transfer fidelity as a function of preparation time $\tprep$
   for different pulse profiles. The fidelity saturates once $\tprep$ exceeds
   the adiabatic timescale $\tau \sim 2/\Delta_{\min}$.}
   \label{fig:tprep}
-\end{figure*}
+\end{figure}
 
 \subsection{Results: asymmetric chains with STA}
 \label{sec:sta_asymmetric}
@@ -830,21 +769,14 @@ configurations ($L = 21$, $j_{\mathrm{DW}} = 11, 7, 5$).
   \end{ruledtabular}
 \end{table}
 
-\begin{figure*}[t]
+\begin{figure}[t]
   \centering
-  \includegraphics[width=\textwidth]{fig11_combined_study.pdf}
-  \caption{Combined effect of asymmetry and STA pulses ($L = 21$).
-  \textbf{(a)} Optimal protocol time $\ttr^{\mathrm{opt}}$ and peak fidelity for
-  every combination of wall position ($j_{\mathrm{DW}} = 11, 7, 5$) and pulse
-  profile (standard $\sin^2$, STA $\alpha = 2$, STA-global $\sin^2$).
-  \textbf{(b)},\textbf{(c)} Fidelity vs.~$\ttr$ for the three pulse profiles at
-  the quasi-centre ($j_{\mathrm{DW}} = 11$, peak $f \approx 0.64$) and at a
-  strongly asymmetric position ($j_{\mathrm{DW}} = 7$), respectively. At every
-  position the three pulse variants are essentially indistinguishable and none
-  approaches $f_0 = 0.995$: pulse shaping acts only on the ramps and cannot
-  overcome the coupling asymmetry that governs the transfer phase.}
+  \includegraphics[width=\columnwidth]{fig11_combined_study.pdf}
+  \caption{Combined effect of asymmetry and STA pulses on the transfer fidelity
+  ($L = 21$). No pulse optimization can overcome the fundamental coupling
+  asymmetry that limits the maximum achievable fidelity.}
   \label{fig:combined_asym_sta}
-\end{figure*}
+\end{figure}
 
 The results (Table~\ref{tab:sta_asym} and Fig.~\ref{fig:combined_asym_sta})
 are unambiguous: \emph{no pulse protocol significantly improves the fidelity in
@@ -852,49 +784,424 @@ asymmetric configurations}. This confirms that the limitation is not due to
 diabatic excitations during the ramp phases---which STA protocols are designed
 to address---but rather stems from the fundamental coupling asymmetry
 $\JLS \neq \JSR$ in the transfer phase. The pulse shape affects only the
-preparation and readout fidelity; \textbf{the transfer phase itself is governed
-by the effective couplings $\JLS$ and $\JSR$, which are fixed by the domain-wall
-geometry [Eq.~(12)] and not by the ramp profile.} Reshaping the ramp therefore
-cannot alter the bound $f_{\max}$ of Eq.~(17): only a protocol that varies the
-coupling ratio $\JLS(t)/\JSR(t)$ in time---such as the CTAP scheme of
-Sec.~\ref{sec:ctap}---can overcome the asymmetry.
+preparation and readout fidelity; the transfer dynamics are governed entirely
+by the topological properties of the chain.
 
 % ============================================================================
 \section{Hybrid analog-digital counterdiabatic protocol}
 \label{sec:cd_protocol}
 
-As an alternative to the domain-wall construction, S.~V.~Romero \textit{et al.}~\cite{Romero2024}
-achieve nonadiabatic edge-state transfer in a \emph{uniform} SSH chain of $2N-1$ sites. The edge
-state is transported by sweeping the hopping ratio $t_1(t)/t_2(t)$ through the topological phase
-diagram---a Thouless-pump-like protocol whose zero-energy eigenstate migrates from one boundary
-to the other. Operating adiabatically would require very long protocol times; to go fast, the
-bare Hamiltonian $H_0(t)$ is supplemented with an approximate counterdiabatic (CD) term derived
-from the adiabatic gauge potential via the variational method of Sels and Polkovnikov~\cite{Sels2017}.
+In this section, we present a detailed analysis of the alternative transfer
+paradigm proposed by Romero, Chen, Platero, and
+Ban~\cite{Romero2024}. Rather than exploiting topological domain walls as
+in the Zurita protocol (Sec.~\ref{sec:transfer}), this approach achieves
+nonadiabatic edge-state transfer in a \emph{uniform} SSH chain by supplementing
+the Hamiltonian with approximate counterdiabatic (CD) interactions. The CD
+terms are derived analytically from adiabatic gauge potentials and can be
+further optimized digitally via variational quantum circuits, hence the
+denomination ``hybrid analog-digital.''
 
-The essential point for the present work is the structure of this CD correction. To first order
-it consists of next-to-nearest-neighbor (NNN) hoppings between sites of the \emph{same} sublattice.
-Since the zero-energy eigenstate has support only on sublattice $A$, the relevant term reduces to
+% --- 6.1 SSH model with odd sites ---
+\subsection{SSH chain with an odd number of sites}
+\label{sec:cd_ssh}
+
+The starting point is a standard SSH chain with $2N - 1$ sites (an odd number),
+with $N$ sites on sublattice A (odd indices) and $N - 1$ on sublattice B
+(even indices). The Hamiltonian is~\cite{Romero2024}
 \begin{equation}
-H_{\mathrm{cd}} = -i\sum_{j=1}^{N-1}\kappa_{2j+1,2j-1}\, c_{2j+1}^\dagger c_{2j-1} + \mathrm{H.c.},
+  H_0(t) = t_2(t) \sum_{j=1}^{N-1} c_{2j}^\dagger c_{2j-1}
+  + t_1(t) \sum_{j=1}^{N-1} c_{2j+1}^\dagger c_{2j} + \text{H.c.},
+  \label{eq:H0_romero}
 \end{equation}
-with the couplings $\kappa$ optimized variationally. \emph{These NNN hoppings break the chiral
-(sublattice) symmetry of the SSH model}---precisely the symmetry that pins the edge states at
-$E=0$ and protects them against off-diagonal disorder. This observation underlies the
-speed--robustness trade-off analyzed in Sec.~\ref{sec:comp_robustness}.
+where $c_i^\dagger$ ($c_i$) creates (annihilates) a fermion at site $i$,
+$t_2(t)$ is the intra-cell hopping, and $t_1(t)$ is the inter-cell hopping.
+Due to chiral symmetry, the spectrum consists of $2N - 2$ nonzero-energy
+levels arranged symmetrically about $E = 0$, plus one exact zero-energy
+eigenstate~\cite{Asboth2016}:
+\begin{equation}
+  \ket{\Phi_0(t)} = \frac{1}{\mathcal{N}} \sum_{i=1}^{N}
+  \left[-\frac{t_2(t)}{t_1(t)}\right]^{i-1} \ket{A_i},
+  \label{eq:zero_mode_romero}
+\end{equation}
+where $\mathcal{N}^2 = \sum_{i=0}^{N-1} [t_2(t)/t_1(t)]^{2i}$ is the
+normalization factor. Crucially, this zero-energy state has nonzero components
+only on sublattice A sites (the $b_i = 0$ property), a consequence of chiral
+symmetry that will be exploited in the simplification of the CD terms.
 
-Higher-order corrections introduce progressively longer-range hoppings and the analytical
-expansion becomes impractical beyond short chains, so Romero \textit{et al.} optimize the NNN
-strengths digitally in a hybrid quantum-classical loop. In a fixed nonadiabatic time (a
-$\sim\!100\times$ speed-up over the adiabatic protocol) the optimized driving reaches $F>0.99$
-for chains up to nine sites and $F\sim0.90$ for fifteen sites under the constraint
-$\lVert H_{\mathrm{cd}}\rVert\sim\lVert H_0\rVert$, and they report robustness to on-site and
-hopping disorder and to Rice-Mele staggering at the $\sim\!10\%$ level~\cite{Romero2024}.
+The transfer mechanism is conceptually simple: when $t_1(0)/t_2(0) \gg 1$, the
+zero-energy state is localized at the left edge (site $A_1$). When
+$t_1(T)/t_2(T) \ll 1$ at the final time $t = T$, the state migrates to the
+right edge (site $A_N$). An adiabatic modulation of the hopping parameters
+achieves this transfer, as in the original Thouless
+pumping~\cite{Thouless1983, Longhi2019}. A standard parametrization
+is~\cite{Romero2024}
+\begin{equation}
+  t_{1,2}(t) = t_0(1 \pm \cos\Omega t),
+  \label{eq:hoppings_romero}
+\end{equation}
+where $\Omega$ sets the speed of the protocol and the adiabatic regime
+corresponds to $\Omega = 0.01\,t_0$ (transfer time $T = \pi/\Omega =
+100\pi/t_0$). The transfer fidelity is
+\begin{equation}
+  F(t) = |\langle \Phi_0(t) | \Psi(t) \rangle|^2,
+  \label{eq:fidelity_romero}
+\end{equation}
+measuring how closely the evolved state $\ket{\Psi(t)}$ follows the
+instantaneous zero-energy eigenstate at all times during the protocol.
 
-In summary, the CD protocol trades the structural simplicity and topological protection of the
-domain-wall scheme for control complexity: it operates on a defect-free chain at fixed,
-chain-length-independent speed, but the NNN driving that enables that speed explicitly breaks
-chiral symmetry---with consequences for disorder robustness that we make precise in
-Sec.~\ref{sec:comp_robustness}.
+It is important to note two key differences with the Zurita
+protocol (Sec.~\ref{sec:protocol}): (i) the chain contains no domain
+wall---it is a uniform SSH chain with a single dimerization pattern; and
+(ii) the transfer operates by dynamically sweeping the hopping ratio
+$t_1(t)/t_2(t)$ through the entire topological phase diagram, rather than
+by populating the protected subspace at a fixed hopping ratio. The adiabatic
+condition $T \gg \pi/t_0$ ensures that the state tracks the instantaneous
+eigenstate, but this requires very long protocol times, making the system
+vulnerable to decoherence.
+
+% --- 6.2 Counterdiabatic driving ---
+\subsection{Counterdiabatic driving from adiabatic gauge potentials}
+\label{sec:cd_driving}
+
+The central idea of counterdiabatic (CD) driving~\cite{Demirplak2003,
+Berry2009} is to add an auxiliary Hamiltonian $H_{\mathrm{cd}}(t)$ to the
+original $H_0(t)$ such that the total evolution under
+$H(t) = H_0(t) + H_{\mathrm{cd}}(t)$ exactly tracks the instantaneous
+eigenstate of $H_0(t)$, even when the adiabatic condition is violated. The
+exact CD term~\cite{Berry2009} requires full spectral knowledge of $H_0(t)$
+at all times and typically involves highly nonlocal interactions, making it
+impractical.
+
+Romero \textit{et al.}~\cite{Romero2024} employ the variational approach
+to approximate CD driving developed by Sels and
+Polkovnikov~\cite{Sels2017}. The approximate CD Hamiltonian at order $l$
+takes the form
+\begin{equation}
+  H_{\mathrm{cd}}^{(l)} = \dot{\lambda}\, \mathcal{A}_\lambda^{(l)},
+  \label{eq:Hcd}
+\end{equation}
+where $\dot{\lambda} = \dot{t}_1(t)$ is the rate of change of the control
+parameter and $\mathcal{A}_\lambda^{(l)}$ is the approximate adiabatic gauge
+potential, expanded in terms of nested commutators (NCs) of $H_0$ and
+$\partial_\lambda H_0$:
+\begin{equation}
+  \mathcal{A}_\lambda^{(l)} = i \sum_{k=1}^{l} \alpha_k^{(l)}
+  \underbrace{[H_0, [H_0, \ldots, [H_0}_{2k-1},
+  \partial_\lambda H_0]]].
+  \label{eq:gauge_potential}
+\end{equation}
+The time-dependent coefficients $\alpha_k^{(l)}(t)$ are determined variationally
+by minimizing the action $S_l = \mathrm{tr}[G_l^2]$, where
+$G_l = \partial_\lambda H_0 - i[H_0, \mathcal{A}_\lambda^{(l)}]$. In the limit
+$l \to \infty$, the expansion converges to the exact gauge potential. For finite
+$l$, one obtains an approximate CD driving whose accuracy improves with order.
+
+% --- 6.3 The first-order NC ---
+\subsection{First-order nested commutator}
+\label{sec:first_order}
+
+The first-order ($l = 1$) gauge potential involves only the single commutator
+$[H_0, \partial_\lambda H_0]$, yielding~\cite{Romero2024}
+\begin{equation}
+  \mathcal{A}_\lambda^{(1)} = i\kappa^{(1)} \left[
+  \sum_{j=1}^{N-2} c_{2j+2}^\dagger c_{2j}
+  - \sum_{j=1}^{N-1} c_{2j+1}^\dagger c_{2j-1} \right] + \text{H.c.},
+  \label{eq:A1}
+\end{equation}
+where $\kappa^{(1)} = -\Lambda\dot{\lambda}\,\alpha_1^{(1)}$ with
+$\Lambda = 2t_0$. The variational parameter is obtained
+analytically~\cite{Romero2024, Sels2017} as
+\begin{equation}
+  \alpha_1^{(1)} = -\frac{\mathcal{C}(N)}{t_1^2 + t_2^2},
+  \quad
+  \mathcal{C}(N) = \frac{2(N-2) + 1}{8(N-2) + 1}.
+  \label{eq:alpha1}
+\end{equation}
+
+The physical interpretation of Eq.~(\ref{eq:A1}) is highly significant:
+\emph{the first-order CD driving consists of next-to-nearest-neighbor (NNN)
+hopping terms between sites of the same sublattice}---odd-odd (sublattice A)
+and even-even (sublattice B) with equal magnitude $|\kappa^{(1)}|$.
+Since the zero-energy eigenstate [Eq.~(\ref{eq:zero_mode_romero})] has zero
+amplitude on all sublattice B sites, the NNN hoppings on sublattice B do not
+contribute to the transfer and can be neglected. This simplification reduces
+the CD driving to NNN hoppings exclusively between neighboring sublattice A
+sites (Fig.~\ref{fig:cd_schematic}), which is far more experimentally
+tractable than the generic nonlocal interactions of the exact CD
+Hamiltonian~(\ref{eq:cd}).
+
+\begin{figure}[t]
+  \centering
+  \begin{tikzpicture}[
+    siteA/.style={circle, draw=blue!70, fill=blue!15, minimum size=6mm, inner sep=0pt, font=\footnotesize},
+    siteB/.style={circle, draw=red!70, fill=red!15, minimum size=6mm, inner sep=0pt, font=\footnotesize},
+    hop/.style={thick},
+    nnn/.style={thick, dashed, blue!60},
+    >=stealth
+  ]
+    % Sites
+    \node[siteA] (A1) at (0,0) {$A_1$};
+    \node[siteB] (B1) at (1.2,0) {$B_1$};
+    \node[siteA] (A2) at (2.4,0) {$A_2$};
+    \node[siteB] (B2) at (3.6,0) {$B_2$};
+    \node[siteA] (A3) at (4.8,0) {$A_3$};
+    \node[siteB] (B3) at (6.0,0) {$B_3$};
+    \node[siteA] (A4) at (7.2,0) {$A_4$};
+    % NN hoppings
+    \draw[hop] (A1) -- node[above, font=\scriptsize] {$t_2$} (B1);
+    \draw[hop] (B1) -- node[above, font=\scriptsize] {$t_1$} (A2);
+    \draw[hop] (A2) -- node[above, font=\scriptsize] {$t_2$} (B2);
+    \draw[hop] (B2) -- node[above, font=\scriptsize] {$t_1$} (A3);
+    \draw[hop] (A3) -- node[above, font=\scriptsize] {$t_2$} (B3);
+    \draw[hop] (B3) -- node[above, font=\scriptsize] {$t_1$} (A4);
+    % NNN hoppings (CD driving) on sublattice A
+    \draw[nnn] (A1) to[bend left=45] node[above, font=\scriptsize] {$\kappa_{31}$} (A2);
+    \draw[nnn] (A2) to[bend left=45] node[above, font=\scriptsize] {$\kappa_{53}$} (A3);
+    \draw[nnn] (A3) to[bend left=45] node[above, font=\scriptsize] {$\kappa_{75}$} (A4);
+    % Labels
+    \node[below=3mm, font=\scriptsize, blue!70] at (1.2, -0.55) {Sublattice A: odd sites};
+    \node[below=3mm, font=\scriptsize, red!70] at (5.4, -0.55) {Sublattice B: even sites};
+    % Braces for unit cell
+    \draw[decorate, decoration={brace, amplitude=4pt, mirror}]
+      ($(A1.south) + (-0.1, -0.15)$) -- ($(B1.south) + (0.1, -0.15)$)
+      node[midway, below=5pt, font=\scriptsize] {unit cell};
+  \end{tikzpicture}
+  \caption{Schematic of the hybrid analog-digital protocol for a chain of
+  $2N - 1 = 7$ sites. The original SSH hopping parameters $t_1(t)$, $t_2(t)$
+  (solid lines) are supplemented by counterdiabatic NNN hoppings
+  $\kappa_{2j+1,2j-1}$ (dashed arcs) connecting neighboring sublattice A
+  sites. The NNN terms between sublattice B sites are negligible
+  for the zero-energy eigenstate transfer.}
+  \label{fig:cd_schematic}
+\end{figure}
+
+% --- 6.4 Higher-order contributions ---
+\subsection{Higher-order nested commutators}
+\label{sec:higher_order}
+
+The first-order NC provides excellent results for short chains (five sites)
+but becomes insufficient for longer chains, where higher-order corrections
+are needed. The second-order NC ($l = 2$) introduces additional terms:
+\begin{equation}
+  \mathcal{A}_\lambda^{(2)} = i\bigl(
+  \alpha_1^{(2)} [H_0, \partial_\lambda H_0]
+  + \alpha_2^{(2)} [H_0, [H_0, [H_0, \partial_\lambda H_0]]]
+  \bigr),
+  \label{eq:A2}
+\end{equation}
+which, after evaluation, produces NNN hoppings (as from the first order)
+plus fourth-nearest-neighbor hoppings within and between sublattices. Again,
+the sublattice B terms can be neglected for the zero-energy state transfer.
+
+In general, the $l$th-order NC introduces interactions up to $2l$th-nearest
+neighbors~\cite{Romero2024}. For a chain with $2N - 1$ sites, the minimum
+order required to account for all possible interactions along the same
+sublattice is $l = N - 1$. This rapid growth of computational complexity and
+long-range interactions motivates two key simplifications performed
+in Ref.~\cite{Romero2024}:
+
+\begin{enumerate}
+  \item \textbf{Neglect sublattice B hoppings}: Since the transfer trajectory
+    follows the zero-energy eigenstate, which has zero amplitude on sublattice B,
+    the CD hoppings between even-even sites do not contribute.
+  \item \textbf{Retain only NNN hoppings on sublattice A}: The longer-range
+    hoppings (fourth-nearest neighbors and beyond) from higher-order NCs are
+    discarded, keeping only the dominant NNN terms. The simplified CD driving
+    takes the form
+    \begin{equation}
+      H_{\mathrm{cd}} = -i \sum_{j=1}^{N-1}
+      \kappa_{2j+1,2j-1}\, c_{2j+1}^\dagger c_{2j-1} + \text{H.c.},
+      \label{eq:Hcd_simplified}
+    \end{equation}
+    where $\kappa_{2j+1,2j-1}$ are site-dependent coupling strengths to be
+    optimized.
+\end{enumerate}
+
+This simplified form retains the essential physics of the CD correction while
+requiring only experimentally accessible NNN hoppings. For a five-site chain,
+this simplified protocol achieves fidelities indistinguishable from the full
+second-order NC, confirming that the NNN sublattice A terms capture the
+dominant CD contribution.
+
+% --- 6.5 Numerical results: analog CD ---
+\subsection{Analog counterdiabatic results}
+\label{sec:cd_analog_results}
+
+For a five-site chain ($N = 3$) in the nonadiabatic regime ($\Omega = t_0$,
+$T = \pi$), the performance of the different CD approximations is~\cite{Romero2024}:
+
+\begin{itemize}
+  \item \textbf{No CD} ($H_0$ only): The fidelity drops
+    significantly in the nonadiabatic regime, falling below 50\% for
+    $\Omega \gtrsim 0.1\,t_0$.
+  \item \textbf{First-order NC} ($H_0 + H_{\mathrm{cd}}^{(1)}$): The transfer
+    improves substantially but does not reach high fidelity for
+    $\Omega = t_0$.
+  \item \textbf{Second-order NC} ($H_0 + H_{\mathrm{cd}}^{(2)}$): The protocol
+    retains high fidelity $F(T) > 99\%$ even at $\Omega = t_0$
+    (transfer 100$\times$ faster than the adiabatic regime), with CD driving
+    strengths of the same order as $t_0$.
+\end{itemize}
+
+These results demonstrate that a modest order of the NC expansion suffices
+for short chains. However, for chains longer than five sites, higher orders
+become necessary, and the analytical approach becomes computationally expensive.
+This motivates the variational digital optimization described next.
+
+% --- 6.6 Digital optimization ---
+\subsection{Variational quantum circuit optimization}
+\label{sec:cd_digital}
+
+To circumvent the limitations of the analytical NC approach, Romero
+\textit{et al.}~\cite{Romero2024} leverage digital quantum simulation (DQS)
+to find optimal CD driving parameters. The key idea is to treat the
+NNN hopping strengths $\kappa_{2j+1,2j-1}$ as variational parameters and
+optimize them using classical optimizers in a hybrid
+quantum-classical loop~\cite{Cerezo2021}.
+
+\subsubsection{Encoding and Trotterization}
+
+The SSH chain of $2N - 1$ sites is encoded in
+$n = \lceil \log_2(2N-1) \rceil$ qubits. Both $H_0$ and $H_{\mathrm{cd}}$
+are decomposed in the Pauli basis, and the time evolution is implemented
+via first-order Trotter-Suzuki decomposition~\cite{Trotter1959}:
+\begin{equation}
+  U(T, 0) \approx \prod_{k=1}^{r}
+  e^{-i H_0^{(c)}(k\Delta t)\Delta t}\,
+  e^{-i H_{\mathrm{cd}}^{(c)}(k\Delta t)\Delta t},
+  \label{eq:trotter}
+\end{equation}
+with $r = T/\Delta t$ Trotter steps. The NNN coupling strengths are
+discretized as a vector of $r + 1$ parameters per hopping location, with
+boundary conditions $\kappa(0) = \kappa(T) = 0$, leaving $r - 1$ free
+parameters per location to optimize.
+
+\subsubsection{Cost functions}
+
+Two cost functions are employed~\cite{Romero2024}:
+
+\begin{enumerate}
+  \item \textbf{Transfer fidelity}: Directly maximizing
+    $C(\vec{\kappa}^{(c)}) = F(T)$ [Eq.~(\ref{eq:fidelity_romero})], which
+    requires computing state overlaps and is well-suited for noiseless
+    simulators.
+  \item \textbf{Hellinger distance}: A measurement-based cost function
+    \begin{equation}
+      H^2(P, Q) = 1 - \sum_{i=0}^{m-1} \sqrt{p_i q_i},
+      \label{eq:hellinger}
+    \end{equation}
+    where $P$ is the measured probability distribution after $N_{\mathrm{shot}}$
+    measurements and $Q$ is the target distribution (unit probability at the
+    final site). Minimizing $H^2$ is equivalent to maximizing the population
+    at the target site and is practical for real quantum
+    hardware~\cite{Romero2024}.
+\end{enumerate}
+
+The optimization uses the simultaneous perturbation stochastic approximation
+(SPSA) algorithm, initialized with values proportional to the analytical
+first-order NC result $\kappa^{(1)}$ (``warm starting'') and with adaptive
+bounds to keep $\|H_{\mathrm{cd}}\| \sim \|H_0\|$ for experimental
+feasibility.
+
+\subsubsection{Two simplification strategies}
+
+Two simplification ansatzes are tested for the NNN hoppings:
+\begin{enumerate}
+  \item \textbf{Time-symmetric hoppings}: Exploiting the symmetry
+    $\kappa_{2i+1,2i-1}^{(c)}(t) = \kappa_{2(N-i)+1,2(N-i)-1}^{(c)}(T - t)$,
+    which halves the number of free parameters to
+    $\lfloor N/2 \rfloor (r - 1)$.
+  \item \textbf{Equal NNN hoppings}: All NNN couplings are set equal,
+    $\kappa_{2j+1,2j-1}^{(c)}(t) \mapsto \kappa^{(c)}(t)$, reducing the
+    optimization to only $r - 1$ parameters regardless of chain length.
+    This is inspired by the site-independent structure of the first-order NC.
+\end{enumerate}
+
+\subsubsection{Results across chain lengths}
+
+The variational circuit is implemented with $r = 22$ Trotter steps, with
+10 independent runs per configuration to assess stability.
+Table~\ref{tab:cd_fidelities} summarizes the optimal fidelities obtained
+across chain lengths from 5 to 15 sites~\cite{Romero2024}.
+
+\begin{table}[b]
+  \caption{Transfer fidelities $F(T)$ from the variational quantum circuit
+  optimization~\cite{Romero2024} for different chain lengths in the
+  nonadiabatic regime ($\Omega = t_0$, $T = \pi$), using equal NNN hoppings
+  on sublattice A with the transfer fidelity as cost function.}
+  \label{tab:cd_fidelities}
+  \begin{ruledtabular}
+  \begin{tabular}{ccccc}
+    Sites & $N$ & Qubits &
+    \textrm{Iterations} & $\bar{F}(T)$ \\
+    \colrule
+    5  & 3 & 3 & 1000  & $> 0.999$ \\
+    7  & 4 & 3 & 2000  & $> 0.99$  \\
+    9  & 5 & 4 & 3000  & $> 0.99$  \\
+    11 & 6 & 4 & 5000  & $\sim 0.97$ \\
+    13 & 7 & 4 & 6000  & $\sim 0.94$ \\
+    15 & 8 & 4 & 10000 & $\sim 0.90$ \\
+  \end{tabular}
+  \end{ruledtabular}
+\end{table}
+
+For short chains (5--9 sites), the optimized CD driving achieves near-perfect
+fidelities with modest optimization effort. For longer chains (11--15 sites),
+the fidelity decreases to approximately 90\% when the constraint
+$\|H_{\mathrm{cd}}\| \sim \|H_0\|$ is maintained. Relaxing this constraint
+(allowing stronger NNN hoppings) improves the fidelity at the expense of
+experimental feasibility.
+
+% --- 6.7 Transfer solely by CD driving ---
+\subsection{Transfer solely by counterdiabatic driving}
+\label{sec:cd_only}
+
+A remarkable finding of Ref.~\cite{Romero2024} is that high-fidelity
+transfer can be achieved by setting $H_0 = 0$ and driving the system
+entirely through the CD terms. In this regime, the circuit contains
+only the variational NNN hoppings on sublattice A, which simplifies the
+implementation in several ways:
+\begin{itemize}
+  \item The circuit depth is significantly reduced (no $H_0$ block),
+  \item Convergence is faster, requiring only 1000 iterations for all chain
+    lengths tested,
+  \item The fidelities consistently exceed 99\% for chains up to 15 sites,
+    outperforming the $H_0 + H_{\mathrm{cd}}$ scheme.
+\end{itemize}
+
+This counterintuitive result can be understood as follows: when $H_0 = 0$,
+the population is entirely confined to sublattice A (no excitation of
+sublattice B sites), and the variational optimizer has full freedom to design
+the transfer pathway without competition from the original Hamiltonian's
+dynamics. The optimal CD driving in this case effectively encodes all the
+information about the SSH topology into a purely sublattice A hopping
+protocol.
+
+% --- 6.8 Robustness ---
+\subsection{Robustness against disorder}
+\label{sec:cd_robustness}
+
+The robustness of the CD protocol is assessed against three types of
+perturbations~\cite{Romero2024}:
+
+\begin{enumerate}
+  \item \textbf{Rice-Mele staggered potential}: A diagonal term
+    $\sum_j (-1)^{j-1}\Delta(t)\, c_j^\dagger c_j$ that breaks chiral
+    symmetry. The fidelity remains above 90\% for $\delta/t_0 \lesssim 0.1$.
+  \item \textbf{Diagonal disorder}: Random on-site energies
+    $\delta_j \in [-\sigma_\delta, \sigma_\delta]$. High fidelity is
+    preserved for $\sigma_\delta/t_0 \lesssim 0.1$.
+  \item \textbf{Off-diagonal (hopping) disorder}: Random perturbations to
+    the hopping amplitudes $\tau_j \in [-\sigma_\tau, \sigma_\tau]$.
+    The protocol maintains high fidelity for $\sigma_\tau/t_0 \lesssim 0.1$.
+\end{enumerate}
+
+The CD protocol with different (site-dependent) NNN hoppings is generally
+more robust than the equal-hopping version, as the site-dependent parameters
+can partially compensate local perturbations. The robustness threshold of
+${\sim}\,10\%$ disorder strength relative to $t_0$ is consistent with the
+energy scale hierarchy required for the CD correction to remain a perturbative
+supplement.
 
 % ============================================================================
 \section{Comparison of transfer paradigms}
@@ -911,7 +1218,7 @@ comparison of both approaches.
 The two protocols exploit fundamentally different physical mechanisms for
 edge-state transfer:
 
-\textbf{Domain wall approach} (J.~Zurita \textit{et al.}~\cite{Zurita2023}).
+\textbf{Domain wall approach} (Zurita \textit{et al.}~\cite{Zurita2023}).
 The chain contains topological domain walls that create protected boundary
 states ($\ketL$, $\ketS$, $\ketR$) within the bulk gap. The system is
 prepared in one boundary state and the hopping amplitude $v(t)$ is ramped
@@ -921,7 +1228,7 @@ topologically protected zero-energy states, and the bulk gap provides
 protection against excitations. The domain wall itself is a static
 structural feature of the chain.
 
-\textbf{CD approach} (S.~V.~Romero \textit{et al.}~\cite{Romero2024}).
+\textbf{CD approach} (Romero \textit{et al.}~\cite{Romero2024}).
 The chain is a uniform SSH model (no domain wall). The hoppings $t_1(t)$,
 $t_2(t)$ are swept dynamically, and the transfer occurs by following the
 instantaneous zero-energy eigenstate of $H_0(t)$ through the topological
@@ -1087,647 +1394,13 @@ the time-critical ramp phases---precisely the regime where the STA protocols
 of Sec.~\ref{sec:sta} were shown to provide only marginal improvements.
 
 % ============================================================================
-\section{CTAP: dynamic control beyond the static Rabi regime}
-\label{sec:ctap}
-
-The results of Sec.~\ref{sec:sta} established that \emph{no ramp-based
-pulse optimization} can overcome the fidelity degradation caused by coupling
-asymmetry in asymmetric domain wall configurations. However, this finding
-must be interpreted carefully. It does not imply that topological protection
-fails for asymmetric chains: the three edge states ($\ketL$, $\ketS$, $\ketR$)
-remain perfectly well-defined and well-separated from the bulk in all
-configurations studied. What fails is the specific \emph{transfer protocol}---a
-static Rabi oscillation scheme that requires equal couplings $\JLS = \JSR$.
-
-In this section we show, following the CTAP (Coherent Tunnelling Adiabatic
-Passage) framework of A.~D.~Greentree, J.~H.~Cole, A.~R.~Hamilton, and
-L.~C.~L.~Hollenberg~\cite{Greentree2004}, that high-fidelity transfer in
-asymmetric SSH domain wall systems can be recovered by switching from the
-static Rabi protocol to a dynamic counter-intuitive pulse sequence. The key
-insight is that the effective three-level Hamiltonian \emph{always} possesses
-a zero-energy dark state that mediates direct $\ketL \to \ketR$ transfer
-without populating $\ketS$, regardless of the magnitude of $\JLS$ and $\JSR$.
-
-\subsection{Reframing the asymmetry constraint}
-\label{sec:ctap_reframing}
-
-Our results demonstrate that the fidelity collapse in asymmetric configurations
-is \emph{not} a fundamental limitation of topological protection. It is an
-artifact of the static Rabi protocol: the $\sin^2$ ramp fixes the hopping
-$v(t)$ uniformly across the entire chain, so both $\JLS$ and $\JSR$ are
-determined by the same $v_{\mathrm{tr}}$ parameter. In asymmetric configurations
-($\ell_1 \neq \ell_2$), this leads to an exponentially large coupling ratio
-$\JLS/\JSR \sim (w/v)^{(\ell_2-\ell_1)/2}$ [Eq.~(\ref{eq:coupling_ratio})],
-for which the Rabi maximum fidelity is bounded by Eq.~(\ref{eq:fmax}).
-
-The topological protection is unaffected: the edge states are exponentially
-localized, the gap remains open, and the effective Hamiltonian still has the
-three-site tight-binding form~(\ref{eq:heff}). The asymmetry introduces no
-instability in the protected subspace---it merely makes the Rabi oscillation
-amplitude small. The natural solution is therefore to \emph{decouple the control
-of the left and right domains}, enabling a dynamic protocol in which the
-coupling ratio $\JLS(t)/\JSR(t)$ is varied in time to exploit the dark state
-of the effective Hamiltonian.
-
-\subsection{The effective three-level Hamiltonian and its dark state}
-\label{sec:ctap_darkstate}
-
-We now allow the effective couplings to be time-dependent by introducing
-independent control parameters $v_L(t)$ and $v_R(t)$ for the intracell
-hopping in the left and right domains, respectively. The time-dependent
-effective Hamiltonian in the protected subspace reads
-\begin{equation}
-  \Heff(t) =
-  \begin{pmatrix}
-    0 & \JLS(t) & 0 \\
-    \JLS(t) & 0 & \JSR(t) \\
-    0 & \JSR(t) & 0
-  \end{pmatrix}
-  \label{eq:heff_time}
-\end{equation}
-in the basis $(\ketL, \ketS, \ketR)$, where both couplings now depend on
-time through the independent domain controls. This is directly analogous to
-the three-well Hamiltonian of Ref.~\cite{Greentree2004} [their Eq.~(1)],
-with our $\JLS(t)$ and $\JSR(t)$ playing the roles of the tunneling rates
-$\Omega_{12}(t)$ and $\Omega_{23}(t)$, respectively.
-
-The eigenvalues of Eq.~(\ref{eq:heff_time}) are
-\begin{equation}
-  E_\pm = \pm\sqrt{\JLS^2(t) + \JSR^2(t)}, \qquad E_0 = 0,
-  \label{eq:ctap_eigenvalues}
-\end{equation}
-so the middle eigenvalue is \emph{always zero}, independent of the magnitudes
-and ratio of the couplings. The corresponding zero-energy eigenstate (the
-\emph{dark state}) is~\cite{Greentree2004}
-\begin{equation}
-  \ket{D_0(t)} = \cos\Theta(t)\,\ketL - \sin\Theta(t)\,\ketR,
-  \label{eq:darkstate}
-\end{equation}
-where the \emph{mixing angle} $\Theta(t)$ is defined by
-\begin{equation}
-  \tan\Theta(t) = \frac{\JLS(t)}{\JSR(t)}.
-  \label{eq:mixing_angle}
-\end{equation}
-The crucial property of $\ket{D_0(t)}$ is that it has \emph{zero component
-on} $\ketS$: the soliton state at the domain wall is completely absent from
-the dark state. This is a direct consequence of the chiral structure of the
-effective three-site chain and is preserved at all times regardless of the
-coupling ratio.
-
-The dark state provides a natural transfer mechanism: if at $t = 0$ we have
-$\JLS = 0$ and $\JSR \neq 0$, then $\Theta = 0$ and $\ket{D_0} = \ketL$
-(the particle is on the left). If at $t = T$ we have $\JLS \neq 0$ and
-$\JSR = 0$, then $\Theta = \pi/2$ and $\ket{D_0} = -\ketR$ (the particle
-is on the right). A slow, adiabatic change of $\Theta(t)$ from $0$ to $\pi/2$
-transfers the population from $\ketL$ to $-\ketR$ with perfect fidelity,
-\emph{without ever populating} $\ketS$.
-
-\subsection{Counter-intuitive pulse sequence}
-\label{sec:ctap_pulse}
-
-The practical implementation of the dark-state transfer follows the counter-
-intuitive pulse ordering introduced by A.~D.~Greentree \textit{et al.}~\cite{Greentree2004}
-and originally developed in the context of optical STIRAP (Stimulated Raman
-Adiabatic Passage)~\cite{GueryOdelin2019}. The counter-intuitive aspect is
-that the \emph{right-domain} coupling $\JSR(t)$ must be switched on
-\emph{before} the left-domain coupling $\JLS(t)$---the opposite of the
-intuitive ordering.
-
-To see why this is necessary, note that for the system to start in $\ket{D_0}
-= \ketL$ at $t = 0$, we need $\Theta(0) = 0$, which requires $\JLS(0) = 0$.
-Similarly, $\ket{D_0(T)} = -\ketR$ requires $\Theta(T) = \pi/2$, meaning
-$\JSR(T) = 0$. So $\JSR$ must be nonzero first (to define the dark state
-as $\ketL$) and must go to zero last (when the dark state becomes $-\ketR$).
-
-Concretely, we implement the two couplings using Gaussian pulse profiles
-analogous to Eq.~(7) of Ref.~\cite{Greentree2004}:
-\begin{align}
-  \JSR(t) &= J_{\max}^R \exp\!\left[
-    -\frac{(t - t_R)^2}{2\sigma^2}\right], \label{eq:ctap_jsr} \\
-  \JLS(t) &= J_{\max}^L \exp\!\left[
-    -\frac{(t - t_L)^2}{2\sigma^2}\right], \label{eq:ctap_jls}
-\end{align}
-where $t_R < t_L$ (the right pulse fires first) and $t_L - t_R = \sigma$
-(the pulse separation equals the standard deviation for optimal adiabaticity).
-In the SSH model, $\JSR(t)$ is controlled by varying $v_R(t)$ in the right
-domain, and $\JLS(t)$ is controlled by $v_L(t)$ in the left domain, both
-independently.
-
-The critical point is that the peak amplitudes $J_{\max}^R$ and $J_{\max}^L$
-\emph{do not need to be equal}. For an asymmetric domain wall with $\ell_1
-\neq \ell_2$, the coupling constants scale differently with $v_L$ and $v_R$
-[Eq.~(\ref{eq:coupling_scaling})]. One can simply tune the amplitude of each
-pulse independently to ensure the desired time-dependence of $\Theta(t)$.
-The adiabaticity condition $|E_\pm - E_0| \gg |\langle \dot{D}_0 | D_\pm \rangle|$
-reads~\cite{Greentree2004}
-\begin{equation}
-  \sqrt{\JLS^2 + \JSR^2} \gg
-  \frac{|\dot{\Theta}|}{ 1}
-  = \frac{|\JSR\dot{\JLS} - \JLS\dot{\JSR}|}{\JLS^2 + \JSR^2},
-  \label{eq:adiabaticity}
-\end{equation}
-which can always be satisfied by making the pulses sufficiently long, regardless
-of the coupling asymmetry.
-
-\begin{figure*}[t]
-  \centering
-  \includegraphics[width=0.48\textwidth]{fig13_ctap_pulses.pdf}%
-  \hfill
-  \includegraphics[width=0.48\textwidth]{fig14_ctap_dynamics.pdf}
-  \caption{%
-    \textbf{(a)} Counter-intuitive CTAP pulse sequence.  The right-domain
-    coupling $\JSR(t)$ (blue) fires before the left-domain coupling
-    $\JLS(t)$ (red), adiabatically rotating the mixing angle $\Theta(t)$
-    from $0$ to $\pi/2$ over the transfer time $T$.
-    \textbf{(b)} Population dynamics of the effective three-level system
-    under the CTAP protocol ($T = 300$, $\sigma = 0.18\,T$, $J_{\max}=1$).
-    Starting from $\ketL$ (red), population is transferred to $\ketR$
-    (blue) with final fidelity $f = 0.9999$.  The soliton state
-    $\ketS$ (gold, dashed) remains at zero throughout (lower panel, log
-    scale)---the hallmark of dark-state transfer via the topological zero
-    mode.}
-  \label{fig:ctap_pulses_dynamics}
-\end{figure*}
-
-\subsection{Counterdiabatic driving on the effective three-level system}
-\label{sec:ctap_cd}
-
-The CTAP protocol is adiabatic and thus intrinsically slow: the pulse
-duration must satisfy the adiabaticity condition~(\ref{eq:adiabaticity}). To
-accelerate the protocol, one can apply the shortcut-to-adiabaticity strategy
-directly to the effective three-level Hamiltonian~(\ref{eq:heff_time}).
-
-The exact counterdiabatic (CD) correction for a time-dependent two-level
-dark-state system can be derived following Berry's
-method~\cite{Berry2009, GueryOdelin2019}. For the three-level system with a
-single mixing angle $\Theta(t)$, the result takes a particularly simple
-form~\cite{GueryOdelin2019}:
-\begin{equation}
-  \mathcal{H}_{\mathrm{CD}}^{\mathrm{eff}}(t) =
-  i\hbar\,\dot{\Theta}(t)
-  \bigl(\ketL\!\bra{\mathcal{R}} - \ketR\!\bra{\mathcal{L}}\bigr),
-  \label{eq:hcd_effective}
-\end{equation}
-where $\dot{\Theta}(t) = \bigl(\JSR\dot{\JLS} - \JLS\dot{\JSR}\bigr) /
-\bigl(\JLS^2 + \JSR^2\bigr)$ is the rate of change of the mixing angle.
-Adding $\mathcal{H}_{\mathrm{CD}}^{\mathrm{eff}}$ to $\Heff(t)$
-[Eq.~(\ref{eq:heff_time})] suppresses all non-adiabatic transitions exactly,
-allowing perfect transfer in arbitrarily short times.
-
-Physically, $\mathcal{H}_{\mathrm{CD}}^{\mathrm{eff}}$ requires a
-\emph{direct imaginary coupling} between $\ketL$ and $\ketR$. In the
-microscopic SSH chain, this would correspond to engineering a long-range
-hopping between site $0$ and site $L - 1$ that is purely imaginary---a
-challenging but not impossible requirement in platforms with gauge-field
-control (e.g., via Floquet engineering or synthetic dimensions). Alternatively,
-the CD term can be approximated using local operators via the variational NC
-approach of Sec.~\ref{sec:cd_protocol}, applied now to the effective rather
-than the full Hamiltonian.
-
-An important advantage of the CTAP+CD approach over the full-chain CD
-protocol (Sec.~\ref{sec:cd_protocol}) is that here the CD term acts on
-the \emph{three-dimensional} protected subspace rather than the
-$(2N-1)$-dimensional full Hilbert space. This makes the optimization
-significantly more tractable and the required interactions more local (within
-the effective subspace).
-
-\subsection{Advantages over the static Rabi protocol in asymmetric systems}
-\label{sec:ctap_advantages}
-
-The CTAP approach offers three decisive advantages over the static Rabi
-protocol in the presence of coupling asymmetry:
-
-\begin{enumerate}
-  \item \textbf{Asymmetry invariance.} The fidelity of CTAP is independent
-    of the ratio $\JLS^{\max}/\JSR^{\max}$ as long as the adiabaticity
-    condition is satisfied. Whether $\ell_1 = \ell_2$ or $\ell_1 \ll \ell_2$,
-    the protocol can be tuned to achieve $f \to 1$ by appropriate choice of
-    pulse duration. This is in stark contrast with the static Rabi protocol,
-    for which $f_{\max} \to 0$ exponentially as $|\ell_1 - \ell_2| \to \infty$
-    [Eq.~(\ref{eq:fmax})].
-
-  \item \textbf{No population of the soliton state.} Because the transfer
-    occurs entirely through the dark state $\ket{D_0(t)}$, the soliton state
-    $\ketS$ is never populated during the transfer. In the original Rabi
-    protocol, $\ketS$ is transiently populated (up to $1/2$ population at
-    $t = \pi/(2\sqrt{2}J)$), which can enhance decoherence in platforms
-    where the domain wall site is more exposed to environmental noise.
-
-  \item \textbf{Topological origin of the dark state.} The existence of the
-    zero-energy dark state $\ket{D_0(t)}$ in Eq.~(\ref{eq:darkstate}) is
-    directly tied to the chiral symmetry of the effective Hamiltonian
-    [Eq.~(\ref{eq:heff_time})]. The latter is preserved as long as the SSH
-    chain remains in the topological phase, independently of the domain wall
-    position. CTAP thus combines the robustness of topological protection
-    with the flexibility of dynamic control.
-\end{enumerate}
-
-\begin{figure}[t]
-  \centering
-  \includegraphics[width=\columnwidth]{fig15_ctap_comparison.pdf}
-  \caption{Transfer fidelity versus domain-wall position $j_{\mathrm{DW}}$ for
-  $L=21$ ($v=0.5$, $w=1.0$), from numerical integration of the effective
-  three-level Hamiltonian~(21). The static Rabi protocol (red) peaks at
-  $f\approx0.64$ near the quasi-centre and collapses to $f\lesssim0.004$ for
-  $j_{\mathrm{DW}}\le5$. With well-conditioned pulses [Eqs.~(25)--(26); peaks at
-  $T/4$ and $3T/4$, $\sigma=0.12T$], bare CTAP (blue) and CD-assisted CTAP (teal)
-  both sustain $f\gtrsim0.99$ at every position where the three-level description
-  holds, and coincide because the counterdiabatic term changes the transfer
-  \emph{time}, not the fidelity. Shaded bands ($j_{\mathrm{DW}}\in\{1,3,17,19\}$,
-  $\rho\gtrsim10^2$) mark where the weaker coupling closes the protected gap and
-  the three-level model no longer represents the chain. Dotted line: fault-tolerance
-  threshold $f_0=0.995$.}
-  \label{fig:ctap_comparison}
-\end{figure}
-
-\clearpage
-\subsection{Numerical verification and the physical limit}
-\label{sec:ctap_numerics}
-
-To substantiate the asymmetry-resilience of CTAP we integrate the effective
-three-level Hamiltonian~(\ref{eq:heff_time}) with the counter-intuitive
-Gaussian pulses [Eqs.~(\ref{eq:ctap_jsr})--(\ref{eq:ctap_jls})] for every valid
-domain-wall position of the $L = 21$ chain. The peak amplitude of the weaker
-pulse is set to $1/\rho$, where $\rho = (w/v)^{|\ell_1 - \ell_2|/2}$ is the
-geometric coupling ratio that also bounds the Rabi protocol
-[Eq.~(\ref{eq:fmax})]; the longer domain physically caps its coupling because
-the intracell hopping must satisfy $v < w$ to keep the bulk gap open.
-
-Figure~\ref{fig:ctap_comparison} reports the result. With well-conditioned
-pulses, bare CTAP keeps $f \gtrsim 0.99$ across every wall position for which
-the three-level description remains valid ($\rho \lesssim 10^2$, unshaded
-region), whereas the static-Rabi fidelity collapses as soon as the wall leaves
-the center: at $\rho = 32$ ($j_{\mathrm{DW}} = 5$) CTAP exceeds the Rabi bound
-$f_{\max} = 0.004$ by more than two orders of magnitude. The counterdiabatic
-term~(\ref{eq:hcd_effective}) reaches the same fidelity in a fixed,
-chain-length-independent time; its role is therefore to \emph{accelerate} the
-transfer, not to raise its fidelity. The residual ceiling of a \emph{fixed}
-pulse sequence---for example $f \approx 0.91$ at $\rho = 32$ for the pulse
-separation of Fig.~\ref{fig:ctap_asymmetry}---is not a fundamental bound but the
-boundary-condition effect $f \le \cos^2\Theta_0$ analyzed below.
-
-Figure~\ref{fig:ctap_asymmetry} isolates the dependence on the peak ratio
-$\rho$ and pins down the origin of the residual infidelity. At fixed pulse
-separation the converged bare-CTAP fidelity does not remain at unity but
-follows the analytic ceiling $f=\cos^2\Theta_0(\rho)$ derived below
-[Eq.~(\ref{eq:ceiling})]; the ceiling falls with $\rho$ only because the weaker
-pulse amplitude $1/\rho$ leaves a larger residual overlap $\Theta_0$ at the
-protocol endpoints. Re-conditioning the pulses (wider separation, narrower
-width) drives $\Theta_0\to0$ and restores $f\approx1$ across the entire range.
-The genuine physical limit appears only for $\rho\gtrsim10^2$, where the weaker
-coupling $J_{\min}\sim1/\rho$ shrinks the instantaneous gap
-$\sqrt{J_{LS}^2+J_{SR}^2}$ until the three protected levels become
-quasi-degenerate and the effective three-level description---not the CTAP
-mechanism itself---breaks down. CTAP thus removes the asymmetry bottleneck of
-the static Rabi protocol across the entire experimentally relevant range; it
-cannot manufacture coupling where the geometry forbids it.
-
-\begin{figure}[t]
-  \centering
-  \includegraphics[width=\columnwidth]{fig16_ctap_asymmetry.pdf}
-  \caption{Transfer fidelity versus the peak-coupling ratio
-  $\rho=J^{L}_{\max}/J^{R}_{\max}$ for the effective three-level system,
-  identifying the residual ceiling as a pulse boundary-condition effect. At the
-  original pulse separation, the converged bare-CTAP fidelity (blue, $T=400\rho$)
-  tracks the analytic ceiling $\cos^2\Theta_0(\rho)$ [dashed; Eq.~(29)]. Re-conditioned
-  pulses (teal; peaks at $T/4$ and $3T/4$, $\sigma=0.12T$) drive $\Theta_0\to0$ and
-  keep $f\approx1$ across the whole range. Beyond $\rho\gtrsim10^2$ (shaded) the
-  protected gap of the real chain closes and the three-level description ceases to
-  apply. Dotted line: $f_0=0.995$.}
-  \label{fig:ctap_asymmetry}
-\end{figure}
-
-\subsection{Validation on the full SSH chain}
-\label{sec:fullchain}
-
-Sections~\ref{sec:ctap_darkstate}--\ref{sec:ctap_numerics} established the CTAP mechanism
-on the effective three-level Hamiltonian~(21). That description, however,
-retains only the three protected states and discards the remaining $L-3=18$
-bulk levels of the physical chain. A legitimate concern is whether the
-counter-intuitive drive, when applied to the \emph{full} $L=21$
-Hamiltonian~(1), still follows the dark state or instead leaks into the bulk
-continuum that the reduced model cannot see. We therefore integrate the
-complete time-dependent Schr\"odinger equation for the three representative
-wall positions, implementing the two couplings through the independent domain
-controls $v_L(t)$ and $v_R(t)$ of Sec.~\ref{sec:ctap_pulse} [pulse
-parameters $\sigma=0.15\,T$, $t_L-t_R=0.20\,T$ for $j_{\rm DW}=11,7$ and
-$\sigma=0.18\,T$, $t_L-t_R=0.36\,T$ for $j_{\rm DW}=5$].
-
-The outcome is summarized in Table~\ref{tab:fullchain} and
-Fig.~\ref{fig:fullchain}. At every wall position the full-chain CTAP fidelity
-exceeds the fault-tolerance threshold $f_0=0.995$, recovering essentially
-perfect transfer precisely where the static Rabi protocol is useless:
-$f=0.9998$ at $j_{\rm DW}=11$ (against the Rabi optimum $0.637$), $f=0.9999$ at
-$j_{\rm DW}=7$ (against $0.061$), and $f=0.9995$ at $j_{\rm DW}=5$ (against
-$0.004$)---an improvement of up to two and a half orders of magnitude at the
-strongest asymmetry.
-
-Two features confirm that this is genuine dark-state transport rather than a
-fortuitous overlap. First, the population outside the three-state protected
-subspace never exceeds $\sim\!10^{-7}$ throughout the protocol: the chiral gap
-isolates the dark state from the bulk, so the counter-intuitive drive does not
-excite the continuum. Second, the full-chain fidelity reproduces the
-effective-model prediction to better than $0.025\%$, so the $3\times3$
-reduction~(21) underlying Figs.~\ref{fig:ctap_comparison}--\ref{fig:ctap_asymmetry}
-is not a phenomenological approximation but a quantitatively exact projection of
-the full dynamics. In particular, the $\cos^2\Theta_0$ ceiling of
-Sec.~\ref{sec:ctap_ceiling} is a property of the real chain, not of the toy model.
-
-The price of asymmetry resilience is paid in time, not fidelity. Adiabaticity
-through the weaker effective coupling $J_{\min}\sim v\,(v/w)^{\ell_{\max}/2}$
-requires a protocol duration $T\gtrsim J_{\min}^{-1}$ that grows exponentially
-with the longer (bottleneck) domain: $T$ increases from $\approx2.6\times10^{4}$
-at $j_{\rm DW}=11$ to $\approx6.1\times10^{4}$ at $j_{\rm DW}=5$. This
-exponential cost is intrinsic to a single domain wall and is exactly what the
-multi-domain construction of Sec.~\ref{sec:ctap_twodw} removes.
-
-\begin{table}[t]
-\caption{Full-chain CTAP on the $L=21$ SSH Hamiltonian~(1) for the three
-representative wall positions. $f_{\rm Rabi}$ is the static-Rabi optimum
-(Table~III); $f_{\rm CTAP}$ is the converged counter-intuitive-pulse fidelity;
-the last column is the maximum population leaked outside the three protected
-states during the protocol.}
-\label{tab:fullchain}
-\begin{ruledtabular}
-\begin{tabular}{cccccc}
-$j_{\rm DW}$ & $(\ell_1,\ell_2)$ & $\rho$ & $f_{\rm Rabi}$ & $f_{\rm CTAP}$ & bulk leakage \\
-\colrule
-11 & (11,\,9)  & 2  & 0.637 & 0.9998 & $\sim\!10^{-7}$ \\
-7  & (7,\,13)  & 8  & 0.061 & 0.9999 & $\sim\!10^{-7}$ \\
-5  & (5,\,15)  & 32 & 0.004 & 0.9995 & $\sim\!10^{-7}$ \\
-\end{tabular}
-\end{ruledtabular}
-\end{table}
-
-\begin{figure*}[t]
-\centering
-\includegraphics[width=\textwidth]{figures/fig_fullchain_ctap.pdf}
-\caption{Validation of CTAP on the full $L=21$ SSH Hamiltonian~(1).
-  \textbf{(a)} Counter-intuitive drive in the independent domain controls:
-  the right-domain hopping $v_R(t)$ (Stokes, blue) peaks at $t_R\approx0.32\,T$
-  and fires before the left-domain hopping $v_L(t)$ (pump, red,
-  $t_L\approx0.68\,T$), rotating the mixing angle $\Theta(t)$ from $0$ to
-  $\pi/2$ (panels (a)--(c) shown for $j_{\rm DW}=5$, the strongest asymmetry).
-  \textbf{(b)} Population dynamics from the complete time-dependent
-  Schr\"odinger equation: $P_{\mathcal L}$ (red) is transferred to
-  $P_{\mathcal R}$ (teal) while the soliton population $P_{\mathcal S}$ (orange)
-  stays $\approx0$. Inset (log scale): the population leaked outside the three
-  protected states never exceeds $\sim\!2\times10^{-7}$, confirming that the
-  chiral gap isolates the dark state from the bulk continuum.
-  \textbf{(c)} Site-resolved density $|\psi_j(t)|^2$: the excitation flows from
-  site $0$ to site $20$ without accumulating on the domain-wall site (DW,
-  marked)---the spatial signature of dark-state transport.
-  \textbf{(d)} Transfer fidelity at the three representative wall positions for
-  the static Rabi optimum (Rabi), the effective three-level CTAP
-  ($\mathrm{CTAP}_{\rm eff}$) and the full-chain CTAP ($\mathrm{CTAP}_{\rm full}$).
-  The full-chain values reproduce the effective model to better than $0.025\%$
-  and clear the fault-tolerance threshold $f_0=0.995$ (dashed) at every position,
-  whereas the Rabi fidelity collapses away from the centre. Annotated transfer
-  times ($T\approx2.56\times10^{4},\,3.07\times10^{4},\,6.14\times10^{4}$) grow
-  exponentially with the bottleneck domain.}
-\label{fig:fullchain}
-\end{figure*}
-
-\subsection{The fidelity ceiling as a boundary-condition effect}
-\label{sec:ctap_ceiling}
-
-The full-chain results show that the residual infidelity of CTAP at large coupling
-asymmetry is not a topological or geometric limitation, but a boundary-condition
-effect of the pulse sequence. The protocol is initialized in the localized state
-$|L\rangle$, whereas the instantaneous dark state at $t=0$ is
-$|D_0(0)\rangle = \cos\Theta_0\,|L\rangle - \sin\Theta_0\,|R\rangle$ with
-$\Theta_0 = \arctan[J_{LS}(0)/J_{SR}(0)]$. The overlap of the initial state with the
-dark state therefore bounds the achievable fidelity,
-\begin{equation}
-f \le \cos^2\Theta_0 ,
-\label{eq:ceiling}
-\end{equation}
-the deficit $\sin^2\Theta_0$ being the population that fails to follow the
-dark-state trajectory. This ceiling is set entirely by how completely the pulses
-suppress $J_{LS}(0)$ (and, symmetrically, $J_{SR}(T)$) at the protocol endpoints;
-it is removed by increasing the pulse separation, at the cost of a longer protocol
-time, and is therefore distinct from the genuine physical limit at
-$\rho \gtrsim 10^2$, where the protected gap closes and the three-level description
-breaks down. With suitably conditioned pulses $\Theta_0 \to 0$ and $f \to 1$ across
-the entire experimentally relevant range of asymmetries.
-
-\subsection{Multi-domain acceleration and collective CTAP}
-\label{sec:multidomain}
-
-The full-chain results of Sec.~\ref{sec:fullchain} show that single-domain-wall
-CTAP is asymmetry-resilient but pays an exponential price in time: the duration
-is set by the weakest effective coupling, $T\gtrsim J_{\min}^{-1}$ with
-$J_{\min}\sim v\,(v/w)^{\ell_{\max}/2}$, and therefore grows exponentially with
-the bottleneck domain. The multi-domain construction of
-Zurita~\emph{et al.}~\cite{Zurita2023} removes this cost. Subdividing a chain of
-fixed total length into $D$ domains introduces $D-1$ internal domain walls, each
-hosting a soliton, so the protected subspace grows to the $D+1$ states
-$\{|L\rangle,|S_1\rangle,\dots,|S_{D-1}\rangle,|R\rangle\}$ arranged as a
-$(D+1)$-site effective tight-binding chain. The bottleneck segment shrinks to
-$\ell_s\simeq L/D$, and since each effective coupling scales as $(v/w)^{\ell_s/2}$,
-the transfer time collapses exponentially as $D$ increases.
-
-Figure~\ref{fig:multidomain}(a) quantifies this acceleration for a chain of fixed
-length ($L\simeq45$). As $D$ grows from $1$ to $4$ the bottleneck segment
-contracts from $\ell_s=43$ to $\ell_s=11$, and the estimated transfer time
-relative to the single-segment reference drops by $T_1/T_D=916$, $4367$, and
-$13134$ for $D=2,3,4$---almost four orders of magnitude at $D=4$. The per-segment
-scaling $J_{\rm bott}\sim(v/w)^{\ell_s/2}$ is reproduced empirically across the
-whole range.
-
-The speed-up is only useful if the dark-state mechanism survives the
-proliferation of intermediate solitons. We verify this by driving the full $D=4$
-chain ($L=45$, five protected states) with a single counter-intuitive
-\emph{collective} pulse sequence and integrating the complete time-dependent
-Schr\"odinger equation. The collective pulses are shaped directly in the effective couplings $J(t)$
-rather than in the bare hopping $v(t)$: a Gaussian profile in $v$ collapses the
-instantaneous protected gap by up to $\sim\!500\times$ at the pulse crossover for
-the longer segments, whereas shaping in $J$ keeps the gap open and the evolution
-adiabatic. Figure~\ref{fig:multidomain}(b) shows the outcome:
-population flows from $|L\rangle$ to $|R\rangle$ with fidelity $F=0.9976$, while
-the inner solitons stay essentially dark---$|S_1\rangle$ and $|S_3\rangle$ remain
-at $\approx0$ throughout and $|S_2\rangle$ is only transiently populated (peak
-$\approx0.24$ at $t/T=\tfrac12$), exactly as the odd-site collective dark state
-predicts. The protocol uses nearest-neighbour couplings only, so it inherits the
-chiral protection of the single-wall scheme, and it completes $14.3\times$ faster
-than the $D=2$ transfer over the same chain. The curves start and end near
-$0.93$ rather than unity because the injected localized site overlaps the
-protected $|L\rangle$ state at $0.93$; this is an initialization overlap, not
-leakage.
-
-The collective dark state exists because the $D=4$ configuration has an \emph{odd}
-number of effective sites ($D+1=5$). Even-site configurations admit no single
-isolated dark state and require the straddling generalization analyzed in
-Sec.~\ref{sec:ctap_twodw}.
-
-\begin{figure*}[t]
-\centering
-\includegraphics[width=\textwidth]{figures/fig_multidomain_speedup.pdf}
-\caption{Multi-domain acceleration of CTAP. (a) Speed-up $T_1/T_D$ of the
-estimated transfer time as a chain of fixed total length is subdivided into $D$
-domains (logarithmic scale). The bottleneck segment length $\ell_s$ (labels)
-contracts from $43$ at $D=1$ to $11$ at $D=4$, and the transfer accelerates by up
-to $\times13134$. (b) Collective CTAP for the $D=4$ chain ($L=45$, five protected
-states): a single counter-intuitive pulse sequence drives $P_L$ (blue) into
-$P_R$ (red) with fidelity $F=0.9976$, while the inner solitons remain dark
-($P_{S_1},P_{S_3}\approx0$; $P_{S_2}$, orange, only transiently reaches
-$\approx0.24$ at $t/T=\tfrac12$). The transfer uses nearest-neighbour couplings
-only, preserving chiral symmetry.}
-\label{fig:multidomain}
-\end{figure*}
-
-\subsection{Chiral symmetry and disorder robustness}
-\label{sec:robustness}
-
-The defining feature of the SSH edge states is that chiral (sublattice) symmetry
-pins them at $E=0$. Because CTAP transports population through these zero modes
-using nearest-neighbour couplings only, it should inherit that protection; the
-counterdiabatic protocol of Sec.~\ref{sec:cd_protocol}, by contrast, relies on
-next-nearest-neighbour (NNN) hoppings that break chiral symmetry. We make the
-contrast quantitative in two steps.
-
-We first ask how the zero mode itself responds to perturbations, by diagonalizing
-the perturbed Hamiltonian and tracking the mean magnitude of its energy
-$\langle|E_0|\rangle$ [Fig.~\ref{fig:robustness}(a)]. Off-diagonal (hopping)
-disorder---which preserves chiral symmetry---leaves the mode pinned at $E=0$ to
-machine precision ($\sim\!10^{-16}$) for all disorder strengths. On-site disorder
-and NNN hoppings, which both break chiral symmetry, instead detach the mode
-immediately; the NNN term does so linearly, $\langle|E_0|\rangle\approx
-0.95\,\kappa$. The pinning is thus a sharp, symmetry-selective effect: only
-perturbations that respect chiral symmetry preserve the zero mode.
-
-This spectral pinning carries directly over to the transfer
-[Fig.~\ref{fig:robustness}(b)]. Working at a deep adiabatic margin (so that the
-disorder-free fidelity exceeds $0.99$ in every case) and averaging over disorder
-realizations, we find that off-diagonal disorder barely affects CTAP:
-$\langle\mathcal{F}\rangle=0.994,\,0.994,\,0.993$ at $\sigma=0.05,\,0.10,\,0.20$.
-On-site disorder degrades it steadily---$0.975,\,0.774,\,0.302$ over the same
-range---with a large realization-to-realization spread, the signature of the zero
-mode wandering away from $E=0$. Adding a moderate NNN coupling $\kappa=J/3$ does
-\emph{not} erode the off-diagonal robustness: the fidelity stays flat at
-$\approx0.99$, because such an NNN term is perturbatively small against the bulk
-gap ($\sim0.5$) and shifts the protocol only negligibly.
-
-Together these results sharpen the speed--robustness trade-off between the two
-paradigms. The protection that survives off-diagonal disorder is exactly the
-chiral pinning of the zero mode, and CTAP---being nearest-neighbour---retains it
-in full. The counterdiabatic protocol buys its chain-length-independent speed
-through NNN driving at strengths $\kappa\sim\lVert H_0\rVert$
-(Sec.~\ref{sec:cd_protocol}), comparable to the hoppings themselves; the spectral
-panel shows that in that regime the zero mode is strongly detached
-($\langle|E_0|\rangle\sim0.95\,\kappa$). The acceleration of the CD protocol is
-therefore obtained at the expense of the chiral pinning that underlies
-off-diagonal-disorder robustness---a trade-off that CTAP, operating entirely
-within the nearest-neighbour topological subspace, avoids.
-
-A distinct robustness axis is the placement of the domain wall itself. A
-$\pm2$-site misplacement, which changes the segment lengths and hence the
-effective couplings, reduces the static-Rabi fidelity to $0.052$ but the CTAP
-fidelity only to $0.419$ at fixed, nominally calibrated pulses---roughly an order
-of magnitude more tolerant. This reflects the asymmetry invariance of
-Sec.~\ref{sec:ctap_advantages}: the coupling ratio sets only the adiabatic margin of
-CTAP, not its achievable fidelity, so a positional error that is fatal to the
-static Rabi protocol merely detunes CTAP. This ``geometric'' robustness is
-independent of the symmetry-protection mechanism above.
-
-\begin{figure*}[t]
-\centering
-\includegraphics[width=\textwidth]{figures/fig_robustness_chiral.pdf}
-\caption{Chiral symmetry and disorder robustness. (a) Mean zero-mode energy
-$\langle|E_0|\rangle$ (log scale) under off-diagonal (hopping) disorder $\sigma$
-at $\kappa=0$ (blue, bottom axis), on-site disorder $\sigma$ at $\kappa=0$
-(orange, bottom axis), and an NNN coupling $\kappa$ at $\sigma=0$ (teal, top
-axis). Off-diagonal disorder respects chiral symmetry and pins the mode at $E=0$
-to machine precision ($\sim\!10^{-16}$); on-site disorder and NNN coupling break
-it and detach the mode, the latter linearly as $\langle|E_0|\rangle\approx
-0.95\,\kappa$. (b) Mean CTAP transfer fidelity $\langle\mathcal{F}\rangle$ versus
-disorder strength $\sigma$ (error bars: standard deviation over realizations).
-Off-diagonal disorder leaves the fidelity flat at $\approx0.99$ (blue), and it
-stays flat when a moderate NNN coupling $\kappa=J/3$ is added (teal); on-site
-disorder degrades it to $\approx0.30$ at $\sigma=0.20$ (orange). Dotted line:
-$\mathcal{F}_0=0.995$.}
-\label{fig:robustness}
-\end{figure*}
-
-\subsection{Extension to two domain walls: even-state parity constraint}
-\label{sec:ctap_twodw}
-
-A natural extension of the domain wall transfer scheme is to consider chains
-with \emph{two} domain walls, which support \emph{four} topologically
-protected states: $\ketL$, $\ket{\mathcal{S}_1}$, $\ket{\mathcal{S}_2}$, and
-$\ketR$. The effective Hamiltonian in this subspace has the structure of a
-four-site tight-binding chain,
-\begin{equation}
-  \Heff^{(4)} =
-  \begin{pmatrix}
-    0 & J_{12} & 0 & 0 \\
-    J_{12} & 0 & J_{23} & 0 \\
-    0 & J_{23} & 0 & J_{34} \\
-    0 & 0 & J_{34} & 0
-  \end{pmatrix},
-  \label{eq:heff_4}
-\end{equation}
-and one might hope that an analogous CTAP or straddling-CTAP (SCTAP)
-pulse sequence could transfer population from $\ketL$ to $\ketR$.
-
-However, A.~D.~Greentree \textit{et al.}~\cite{Greentree2004} identified a
-fundamental obstacle related to the \emph{parity of the number of effective
-sites}: the CTAP scheme as described above is only effective for systems with
-an \emph{odd} number of sites in the effective chain. For an even-site system
-(such as our four-state chain), there is no isolated zero-energy eigenstate;
-instead, there are two states whose energies approach zero but never vanish
-simultaneously (Fig.~6 of Ref.~\cite{Greentree2004}).
-
-Physically, the absence of an isolated dark state means that any adiabatic
-transfer trajectory must pass through a region of near-degeneracy between the
-two low-energy states. Satisfying the adiabaticity condition
-$|E_0 - E_\pm| \gg |\langle\dot{D}_0|D_\pm\rangle|$ in this region requires
-an \emph{exponentially slow} protocol, negating the advantage of the CTAP
-approach.
-
-To circumvent this parity constraint, A.~D.~Greentree \textit{et al.}~\cite{Greentree2004}
-introduced the \emph{Straddling CTAP} (SCTAP) scheme, which employs an
-augmented Hamiltonian with three different pulse amplitudes:
-\begin{equation}
-  \mathcal{H}_{\mathrm{SCTAP}} =
-  \begin{pmatrix}
-    0 & \Omega_1 & 0 & 0 \\
-    \Omega_1 & 0 & \Omega_S & 0 \\
-    0 & \Omega_S & 0 & \Omega_2 \\
-    0 & 0 & \Omega_2 & 0
-  \end{pmatrix}.
-  \label{eq:sctap}
-\end{equation}
-Here $\Omega_1$ and $\Omega_2$ are the counter-intuitive ``outer'' pulses
-(analogous to the CTAP $\JLS$ and $\JSR$), and $\Omega_S$ is a persistent
-``straddling'' pulse that remains on throughout the protocol. The zero-energy
-eigenstate of this Hamiltonian [Greentree Eq.~(11)] has a modified form that
-still avoids populating the intermediate sites, but only in the limit
-$X = \Omega_1\Omega_2 / (\Omega_S\sqrt{\Omega_1^2 + \Omega_2^2}) \ll 1$.
-
-For a two-domain-wall SSH chain, the SCTAP approach would translate into:
-\begin{enumerate}
-  \item A persistent nonzero hopping $v_S$ coupling the two inner soliton
-    states $\ket{\mathcal{S}_1}$ and $\ket{\mathcal{S}_2}$, which can be
-    implemented by leaving the central domain in a state of partial
-    dimerization.
-  \item A counter-intuitive pair of outer pulses $v_R(t)$ (right domain,
-    fires first) and $v_L(t)$ (left domain, fires second), analogous to the
-    one-domain-wall CTAP.
-\end{enumerate}
-A full analysis of this scheme, including the optimization of $\Omega_S$ and
-verification of the $X \ll 1$ condition for different chain geometries, is
-deferred to future work.
-
-% ============================================================================
 \section{Discussion and conclusions}
 \label{sec:conclusions}
 
 We have presented a detailed study of quantum state transfer in
 SSH chains, comparing two distinct paradigms: domain wall-mediated transfer
-following J.~Zurita \textit{et al.}~\cite{Zurita2023} and hybrid analog-digital
-counterdiabatic driving following S.~V.~Romero \textit{et al.}~\cite{Romero2024},
-and proposing CTAP as the path beyond the limitations of the static Rabi regime.
+following Zurita~\textit{et al.}~\cite{Zurita2023} and hybrid analog-digital
+counterdiabatic driving following Romero~\textit{et al.}~\cite{Romero2024}.
 
 Our main results can be summarized as follows:
 
@@ -1746,20 +1419,23 @@ displacement, making the fidelity exquisitely sensitive to the wall position.
 For a single unit-cell displacement in $L = 21$, the fidelity drops from
 ${\sim}\,1$ to $0.637$; for larger displacements, the transfer becomes negligible.
 
-\textbf{3.~Static Rabi protocol cannot overcome the coupling asymmetry.}
+\textbf{3.~STA protocols cannot overcome topological constraints.}
 Shortcut-to-adiabaticity pulse modifications provide marginal improvements in
 the symmetric case (the global $\sin^2$ achieves $f = 0.99995$) but are
-completely ineffective against the coupling asymmetry in the transfer phase.
-This establishes that the fidelity degradation in asymmetric configurations
-is \emph{not a topological constraint} but an artifact of the static Rabi
-protocol. The topological edge states are fully intact; only the chosen
-transfer strategy is inadequate.
+\emph{completely ineffective} against the coupling asymmetry. This establishes
+a clear separation between the two sources of infidelity: (i) diabatic
+excitations during the ramp phases, which are addressable by pulse engineering,
+and (ii) the coupling asymmetry during the transfer phase, which is a
+topological property of the chain and can only be addressed by modifying the
+chain structure.
 
 \textbf{4.~Counterdiabatic driving as an alternative paradigm.}
 The hybrid analog-digital protocol of Ref.~\cite{Romero2024} circumvents
 the structural sensitivity of the domain wall approach by operating on a
 uniform SSH chain with time-dependent NNN hoppings as counterdiabatic
-corrections. In the nonadiabatic regime ($T = \pi/\Omega$, a $100\times$
+corrections. The CD terms, derived from adiabatic gauge potentials via nested
+commutators~\cite{Sels2017}, can be further optimized using variational quantum
+circuits. In the nonadiabatic regime ($T = \pi/\Omega$, a $100\times$
 speed-up over the adiabatic protocol), the CD approach achieves fidelities
 above 99\% for short chains (5--9 sites) and approximately 90\% for 15 sites
 when CD strengths are constrained to the same order as $t_0$.
@@ -1768,68 +1444,31 @@ when CD strengths are constrained to the same order as $t_0$.
 The domain wall and CD approaches are complementary: the former excels in
 platforms with precise structural control and nearest-neighbor-only couplings,
 while the latter is preferable for uniform chains with tunable NNN interactions
-and stringent time constraints.
+and stringent time constraints. A promising future direction is to combine both
+strategies---using domain wall-mediated transfer as the primary mechanism while
+adding CD corrections to the preparation and readout phases---leveraging
+topological protection for the transfer dynamics and counterdiabatic driving for
+the time-critical ramp phases.
 
-\textbf{6.~CTAP resolves the asymmetry problem via the topological dark state.}
-By introducing independent time-dependent controls for the left and right
-domains, the static Rabi limitation is overcome: the effective three-level
-Hamiltonian always possesses a zero-energy dark state $|D_0(t)\rangle =
-\cos\Theta(t)|L\rangle - \sin\Theta(t)|R\rangle$---a direct consequence of chiral
-symmetry---that mediates $|L\rangle\to|R\rangle$ transfer without populating the
-soliton state. Integrating the full $L=21$ chain, the counter-intuitive pulse
-sequence recovers $f>0.999$ at wall positions where the Rabi fidelity collapses
-to $\lesssim10^{-2}$, with bulk leakage below $10^{-7}$ and an effective
-three-level reduction accurate to better than $0.025\%$. The only residual
-infidelity is a removable pulse boundary-condition effect, $f\le\cos^2\Theta_0$;
-the sole genuine limit ($\rho\gtrsim10^2$) is geometric---the protected gap
-closing---not a failure of the protocol.
-
-\textbf{7.~CD driving on the effective three-level system accelerates CTAP.}
-The counterdiabatic correction to the three-level effective Hamiltonian
-takes the form $\mathcal{H}_{\mathrm{CD}}^{\mathrm{eff}} = i\hbar\dot{\Theta}
-(\ketL\bra{\mathcal{R}} - \ketR\bra{\mathcal{L}})$. Adding this term
-enables perfect population transfer in arbitrarily short times, combining the
-asymmetry resilience of CTAP with the speed of STA protocols. Since
-$\mathcal{H}_{\mathrm{CD}}^{\mathrm{eff}}$ acts on a three-dimensional subspace,
-the variational optimization is far more tractable than for the full $L$-site
-chain.
-
-\textbf{8.~Multi-domain construction gives exponential acceleration with a
-collective dark state.} Subdividing the chain into $D$ domains at fixed total
-length shrinks the bottleneck segment and reduces the transfer time by more than
-four orders of magnitude ($\sim\!1.3\times10^4$ at $D=4$). A single
-counter-intuitive collective pulse sequence transfers across the resulting
-four-domain chain with fidelity $F=0.998$, keeping the inner solitons dark and
-using nearest-neighbour couplings only---so the speed-up is obtained without
-sacrificing chiral symmetry.
-
-\textbf{9.~Chiral symmetry, not topology alone, governs robustness.} Chiral
-symmetry pins the edge states at $E=0$: off-diagonal (hopping) disorder leaves
-the zero mode at machine precision and the CTAP fidelity flat at $\approx0.99$,
-whereas on-site disorder and next-nearest-neighbour hoppings break the symmetry
-and detach the mode ($\langle|E_0|\rangle\approx0.95\,\kappa$ for NNN), degrading
-the transfer. Because CTAP uses only nearest-neighbour couplings it inherits this
-protection, while the NNN-based CD protocol forfeits it: the control protocol,
-not the topological phase by itself, determines whether the transfer is robust.
-CTAP is also $\sim\!8\times$ more tolerant to domain-wall misplacement than the
-static Rabi protocol.
-
-\textbf{10.~Even-state parity constraint limits two-domain-wall CTAP.}
-For chains with two domain walls, the four-dimensional protected subspace
-precludes a simple CTAP protocol due to the absence of an isolated
-zero-energy eigenstate for even numbers of effective sites. The Straddling
-CTAP (SCTAP) scheme of Ref.~\cite{Greentree2004} provides a route forward,
-requiring a persistent coupling between the two inner soliton states and
-counter-intuitive outer pulses.
+\textbf{6.~Parity constraint on domain wall placement.}
+We identify that domain walls can only be placed at odd-index sites, and that
+a perfectly centered symmetric configuration requires $L = 4k + 3$. This
+geometric constraint must be accounted for in experimental designs.
 
 These findings provide a comprehensive picture of the state of the art in
 topological quantum state transfer via SSH chains. The exponential speed-up
 predicted for multi-domain ($N > 2$) chains~\cite{Zurita2023}, the variational
-optimization strategies for CD driving~\cite{Romero2024, Hegade2021}, the CTAP
-framework for asymmetry-resilient transfer~\cite{Greentree2004}, and the
+optimization strategies for CD driving~\cite{Romero2024, Hegade2021}, and the
 possibility of hybrid domain-wall/CD protocols offer multiple avenues for future
 investigation and experimental implementation across superconducting qubit,
 cold-atom, and quantum dot platforms.
+
+% ============================================================================
+\begin{acknowledgments}
+The author acknowledges the supervision and guidance provided throughout this
+project. Numerical simulations were performed using Python with NumPy,
+SciPy, and Matplotlib.
+\end{acknowledgments}
 
 % ============================================================================
 \bibliography{references}

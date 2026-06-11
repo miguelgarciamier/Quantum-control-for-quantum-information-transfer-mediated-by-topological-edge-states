@@ -383,7 +383,7 @@ The standard pulse shape (Eq.~(11) of Ref.~\cite{Zurita2023}) is
 with $\Omega = \pi/(2\tprep)$. The $\sin^2$ ramp is chosen for its smoothness:
 both $v(t)$ and $\dot{v}(t)$ vanish at $t = 0$ and $t = \tprep$, minimizing
 diabatic transitions to bulk states. The adiabatic condition requires
-$\tprep \gg \tau = 2/\Delta$, where $\Delta$ is the instantaneous spectral gap.
+$\tprep \gg \tau = 2/\Delta$, where $\Delta$ [Eq.~(\ref{eq:gap})] is the instantaneous spectral gap.
 
 The transfer fidelity is defined as the occupation probability of the target
 site at the end of the protocol:
@@ -487,9 +487,13 @@ analytical predictions. Table~\ref{tab:asym_states} summarizes the results.
 
 \begin{table}[b]
   \caption{Protected states for the asymmetric domain wall configurations in an
-  $L = 21$ chain ($v = 0.5$, $w = 1.0$). The subspace overlap is computed as
-  the singular values of the overlap matrix between analytical and numerical
-  eigenstates.}
+  $L = 21$ chain ($v = 0.5$, $w = 1.0$). $E_{\pm} = \pm\sqrt{\JLS^2+\JSR^2}$ are
+  the energies of the two split levels of the effective three-site chain
+  [Eq.~(\ref{eq:heff})], the central level remaining pinned at $E = 0$.
+  ``Min.~overlap'' is the smallest singular value of the overlap matrix between
+  the analytical states [Eqs.~(\ref{eq:ketL})--(\ref{eq:ketR})] and the numerical
+  eigenstates (unity = perfect agreement). $\JLS/\JSR$ is the effective coupling
+  ratio that sets the Rabi bound of Eq.~(\ref{eq:fmax}).}
   \label{tab:asym_states}
   \begin{ruledtabular}
   \begin{tabular}{ccccc}
@@ -513,11 +517,14 @@ faster into the shorter domain.
 \begin{figure*}[t]
   \centering
   \includegraphics[width=\textwidth]{fig5_asymmetric_wall_states.pdf}
-  \caption{Spatial profiles of the three protected states for different domain
-  wall positions in an $L = 21$ chain. Top to bottom: $j_{\mathrm{DW}} = 11$
-  (quasi-center), $j_{\mathrm{DW}} = 7$ (one-third), $j_{\mathrm{DW}} = 5$
-  (one-quarter). The exponential localization and sublattice polarization are
-  preserved in all cases.}
+  \caption{Spatial profiles of the three protected states $\ketL$, $\ketS$,
+  $\ketR$ for different domain wall positions in an $L = 21$ chain:
+  \textbf{(a)} $j_{\mathrm{DW}} = 11$ (quasi-center),
+  \textbf{(b)} $j_{\mathrm{DW}} = 7$ (one-third),
+  \textbf{(c)} $j_{\mathrm{DW}} = 5$ (one-quarter). As the wall moves toward the
+  left edge, $\ketL$ is compressed into the shorter domain while $\ketR$ spreads
+  over the longer one; the exponential localization and sublattice polarization
+  (alternating signs) are preserved in all cases.}
   \label{fig:asym_states}
 \end{figure*}
 
@@ -537,9 +544,9 @@ predicted by Eq.~(\ref{eq:coupling_ratio}):
   \begin{tabular}{ccccl}
     $j_{\mathrm{DW}}$ & $\JLS$ & $\JSR$ & Ratio & Predicted ratio \\
     \colrule
-    11 & 0.0148 & 0.0296 & 0.50 & $(v/w)^1 = 0.50$ \\
-    7  & 0.0593 & 0.0074 & 8.0  & $(w/v)^3 = 8.0$ \\
-    5  & 0.1186 & 0.0037 & 32.0 & $(w/v)^5 = 32.0$ \\
+    11 & 0.0105 & 0.0210 & 0.50 & $(v/w)^1 = 0.50$ \\
+    7  & 0.0423 & 0.0053 & 8.0  & $(w/v)^3 = 8.0$ \\
+    5  & 0.0862 & 0.0027 & 32.0 & $(w/v)^5 = 32.0$ \\
   \end{tabular}
   \end{ruledtabular}
 \end{table}
@@ -575,8 +582,12 @@ Table~\ref{tab:asym_fidelity} reports the optimal fidelities obtained from a
 scan over $\ttr \in [30, 600]$.
 
 \begin{table}[b]
-  \caption{Optimal transfer fidelity for asymmetric domain wall positions
-  ($L = 21$, standard $\sin^2$ pulse).}
+  \caption{Optimal transfer fidelity for the asymmetric domain wall positions
+  ($L = 21$, standard $\sin^2$ pulse, $\tprep = 15$). $\ttr^{\mathrm{opt}}$ is the
+  protocol time of the first fidelity maximum from a scan over
+  $\ttr \in [30,600]$, and $f_{\max}$ the corresponding peak fidelity. The peaks
+  track the analytical Rabi bound of Eq.~(\ref{eq:fmax}), set by the coupling
+  ratio $\JLS/\JSR$ of Table~\ref{tab:couplings}.}
   \label{tab:asym_fidelity}
   \begin{ruledtabular}
   \begin{tabular}{cccc}
@@ -593,9 +604,17 @@ scan over $\ttr \in [30, 600]$.
 \begin{figure*}[t]
   \centering
   \includegraphics[width=\textwidth]{fig6_asymmetric_transfer.pdf}
-  \caption{Transfer dynamics for asymmetric domain wall configurations
-  ($L = 21$). The fidelity degrades dramatically as the domain wall moves
-  away from the chain center.}
+  \caption{Transfer dynamics for the three asymmetric domain wall configurations
+  ($L = 21$, standard $\sin^2$ pulse, $\tprep = 15$):
+  \textbf{(a)} $j_{\mathrm{DW}} = 11$, \textbf{(b)} $j_{\mathrm{DW}} = 7$,
+  \textbf{(c)} $j_{\mathrm{DW}} = 5$, each at its optimal $\ttr$
+  (Table~\ref{tab:asym_fidelity}). Each panel shows the shaded ramp $v(t)$ (left
+  axis) and the occupations of the three localized sites---site $0$ ($\ketL$),
+  the domain wall ($\ketS$) and site $L-1$ ($\ketR$) (right axis). As the wall
+  moves off-centre, the coupling asymmetry $\JLS \neq \JSR$ caps the population
+  that can be swapped into $\ketR$: the transfer is essentially complete in (a)
+  but increasingly incomplete in (b) and (c), where the excitation remains
+  trapped in $\ketL$ and $\ketS$.}
   \label{fig:asym_transfer}
 \end{figure*}
 
@@ -614,9 +633,14 @@ effective coupling landscapes.
 \begin{figure*}[t]
   \centering
   \includegraphics[width=\textwidth]{fig7_fidelity_comparison.pdf}
-  \caption{Transfer fidelity as a function of $\ttr$ for the three domain wall
-  positions in the $L = 21$ chain. The first fidelity maximum (marked by dots)
-  decreases exponentially with the displacement from the center.}
+  \caption{Transfer fidelity for the three domain wall positions in the
+  $L = 21$ chain. \textbf{(a)} Fidelity $f$ vs.~the protocol time $\ttr$ for the
+  quasi-centre ($\sim 1/2$), one-third ($\sim 1/3$) and one-quarter ($\sim 1/4$)
+  wall positions; dots mark the first maximum. \textbf{(b)} The corresponding
+  peak fidelity (left axis, bars) and optimal $\ttr$ (right axis) for
+  $j_{\mathrm{DW}} = 11, 7, 5$. The first fidelity maximum decreases
+  exponentially with the displacement from the centre, consistent with the
+  coupling asymmetry of Eq.~(\ref{eq:coupling_ratio}).}
   \label{fig:fidelity_comparison}
 \end{figure*}
 
@@ -733,11 +757,16 @@ performance of each pulse profile on the symmetric chain ($L = 11$, $\ell = 4$).
 \begin{figure*}[t]
   \centering
   \includegraphics[width=\textwidth]{fig9_sta_pulse_comparison.pdf}
-  \caption{Comparison of transfer fidelity vs.~$\ttr$ for different pulse
-  profiles in the symmetric chain ($L = 11$, $\ell = 4$). The standard
-  $\sin^2$ pulse with $\tprep = 15$ achieves the best time--fidelity trade-off
-  ($f = 0.9994$ at $\ttr = 45$). The STA-global $\sin^2$ achieves the highest
-  absolute fidelity ($f = 0.99995$) but requires $\ttr = 75$.}
+  \caption{Comparison of the pulse profiles for the symmetric chain
+  ($L = 11$, $\ell = 4$). \textbf{(a)} The ramp shapes $v(t)$ and
+  \textbf{(b)} the resulting fidelity $f$ vs.~$\ttr$ for all profiles (shared
+  legend); dots mark each optimum. The standard $\sin^2$ pulse with
+  $\tprep = 15$ (solid blue) gives the best time--fidelity trade-off
+  ($f = 0.9994$ at $\ttr = 45$), whereas the STA-global $\sin^2$ (green
+  dash-dot) reaches the highest absolute fidelity ($f = 0.99995$) at the cost of
+  $\ttr = 75$. \textbf{(c)},\textbf{(d)} Site-resolved occupation
+  $\langle n_j\rangle$ vs.~time for the standard $\sin^2$ ($\ttr = 45$) and the
+  STA-global $\sin^2$ ($\ttr = 75$) protocols, respectively.}
   \label{fig:sta_pulses}
 \end{figure*}
 
@@ -805,9 +834,16 @@ configurations ($L = 21$, $j_{\mathrm{DW}} = 11, 7, 5$).
 \begin{figure*}[t]
   \centering
   \includegraphics[width=\textwidth]{fig11_combined_study.pdf}
-  \caption{Combined effect of asymmetry and STA pulses on the transfer fidelity
-  ($L = 21$). No pulse optimization can overcome the fundamental coupling
-  asymmetry that limits the maximum achievable fidelity.}
+  \caption{Combined effect of asymmetry and STA pulses ($L = 21$).
+  \textbf{(a)} Optimal protocol time $\ttr^{\mathrm{opt}}$ and peak fidelity for
+  every combination of wall position ($j_{\mathrm{DW}} = 11, 7, 5$) and pulse
+  profile (standard $\sin^2$, STA $\alpha = 2$, STA-global $\sin^2$).
+  \textbf{(b)},\textbf{(c)} Fidelity vs.~$\ttr$ for the three pulse profiles at
+  the quasi-centre ($j_{\mathrm{DW}} = 11$, peak $f \approx 0.64$) and at a
+  strongly asymmetric position ($j_{\mathrm{DW}} = 7$), respectively. At every
+  position the three pulse variants are essentially indistinguishable and none
+  approaches $f_0 = 0.995$: pulse shaping acts only on the ramps and cannot
+  overcome the coupling asymmetry that governs the transfer phase.}
   \label{fig:combined_asym_sta}
 \end{figure*}
 
@@ -817,8 +853,12 @@ asymmetric configurations}. This confirms that the limitation is not due to
 diabatic excitations during the ramp phases---which STA protocols are designed
 to address---but rather stems from the fundamental coupling asymmetry
 $\JLS \neq \JSR$ in the transfer phase. The pulse shape affects only the
-preparation and readout fidelity; \textbf{the transfer dynamics are governed
-entirely by the topological properties of the chain.}
+preparation and readout fidelity; \textbf{the transfer phase itself is governed
+by the effective couplings $\JLS$ and $\JSR$, which are fixed by the domain-wall
+geometry [Eq.~(\ref{eq:coupling_ratio})] and not by the ramp profile.} Reshaping
+the ramp therefore cannot alter the bound $f_{\max}$ of Eq.~(\ref{eq:fmax}): only
+a protocol that varies the coupling ratio $\JLS(t)/\JSR(t)$ in time---such as the
+CTAP scheme of Sec.~\ref{sec:ctap}---can overcome the asymmetry.
 
 % ============================================================================
 \section{Hybrid analog-digital counterdiabatic protocol}
@@ -827,7 +867,7 @@ entirely by the topological properties of the chain.}
 As an alternative to the domain-wall construction, S.~V.~Romero \textit{et al.}~\cite{Romero2024}
 achieve nonadiabatic edge-state transfer in a \emph{uniform} SSH chain of $2N-1$ sites. The edge
 state is transported by sweeping the hopping ratio $t_1(t)/t_2(t)$ through the topological phase
-diagram---a Thouless-pump-like protocol whose zero-energy eigenstate migrates from one boundary
+diagram---a Thouless-pump-like protocol~\cite{Thouless1983} whose zero-energy eigenstate migrates from one boundary
 to the other. Operating adiabatically would require very long protocol times; to go fast, the
 bare Hamiltonian $H_0(t)$ is supplemented with an approximate counterdiabatic (CD) term derived
 from the adiabatic gauge potential via the variational method of Sels and Polkovnikov~\cite{Sels2017}.
@@ -1428,7 +1468,7 @@ $j_{\rm DW}$ & $(\ell_1,\ell_2)$ & $\rho$ & $f_{\rm Rabi}$ & $f_{\rm CTAP}$ & bu
   the right-domain hopping $v_R(t)$ (Stokes, blue) peaks at $t_R\approx0.32\,T$
   and fires before the left-domain hopping $v_L(t)$ (pump, red,
   $t_L\approx0.68\,T$), rotating the mixing angle $\Theta(t)$ from $0$ to
-  $\pi/2$ (shown for $j_{\rm DW}=11$).
+  $\pi/2$ (panels (a)--(c) shown for $j_{\rm DW}=5$, the strongest asymmetry).
   \textbf{(b)} Population dynamics from the complete time-dependent
   Schr\"odinger equation: $P_{\mathcal L}$ (red) is transferred to
   $P_{\mathcal R}$ (teal) while the soliton population $P_{\mathcal S}$ (orange)
