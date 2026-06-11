@@ -199,7 +199,9 @@ ax_c.yaxis.set_major_locator(ticker.MultipleLocator(5))
 cb = fig.colorbar(im, ax=ax_c, fraction=0.046, pad=0.03)
 cb.set_label(r'$|\psi_j|^2$', fontsize=8)
 cb.ax.tick_params(labelsize=7)
-panel_label(ax_c, '(c)', loc='inside')
+ax_c.text(0.04, 0.93, '(c)', transform=ax_c.transAxes,
+          fontsize=9, fontweight='bold', va='top', ha='left', color='white',
+          bbox=dict(boxstyle='round,pad=0.15', fc='black', ec='none', alpha=0.55))
 
 # ─────────────────────────────── Panel (d): fidelity bar chart
 J_DWs_d  = [11, 7, 5]
