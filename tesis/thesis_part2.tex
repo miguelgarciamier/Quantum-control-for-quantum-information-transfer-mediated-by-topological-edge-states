@@ -178,7 +178,7 @@ and the domain wall construction. Section~\ref{sec:transfer} describes the
 transfer protocol and presents our reproduction of the main results
 of Ref.~\cite{Zurita2023}. Section~\ref{sec:asymmetric} analyzes the effect of
 asymmetric domain wall placement. Section~\ref{sec:sta} investigates
-STA pulse protocols.
+STA-inspired ramp shaping.
 Section~\ref{sec:cd_protocol} presents a detailed exposition of the hybrid
 analog-digital counterdiabatic protocol. Section~\ref{sec:comparison} provides
 a systematic comparison of the domain wall and counterdiabatic approaches.
@@ -388,8 +388,8 @@ We refer to this scheme as the \emph{static Rabi protocol}: ``static'' because
 the effective couplings $\JLS,\JSR$ are held constant during the transfer phase,
 and ``Rabi'' because the population then undergoes a Rabi-like oscillation
 $\ketL \to \ketS \to \ketR$. This naming distinguishes it from the
-time-modulated (``dynamic'') pulse sequences considered in Secs.~\ref{sec:sta}
-and~\ref{sec:ctap}.
+time-modulated (``dynamic'') pulse sequences considered in
+Sec.~\ref{sec:ctap}.
 
 The standard pulse shape (Eq.~(11) of Ref.~\cite{Zurita2023}) is
 \begin{equation}
@@ -834,7 +834,7 @@ gap encountered during the ramp.
   \label{fig:tprep}
 \end{figure*}
 
-\subsection{Results: asymmetric chains with STA}
+\subsection{Results: asymmetric chains with ramp shaping}
 \label{sec:sta_asymmetric}
 
 As a controlled negative test, we ask whether ramp shaping can compensate for
@@ -862,7 +862,7 @@ configurations ($L = 21$, $j_{\mathrm{DW}} = 11, 7, 5$).
 \begin{figure*}[!t]
   \centering
   \includegraphics[width=\textwidth]{fig11_combined_study.pdf}
-  \caption{Combined effect of asymmetry and STA pulses ($L = 21$).
+  \caption{Combined effect of asymmetry and ramp-shaping pulses ($L = 21$).
   \textbf{(a)} Optimal protocol time $\ttr^{\mathrm{opt}}$ and peak fidelity for
   every combination of wall position ($j_{\mathrm{DW}} = 11, 7, 5$) and pulse
   profile (standard $\sin^2$, Ramp-shaping ($\alpha = 2$), Global $\sin^2$ ramp).
@@ -1112,8 +1112,8 @@ wall-mediated transfer as the primary mechanism while adding CD corrections
 to suppress the residual nonadiabatic excitations during the preparation
 and readout ramps. This ``best of both worlds'' strategy would leverage
 topological protection for the transfer phase while using CD driving for
-the time-critical ramp phases---precisely the regime where the STA protocols
-of Sec.~\ref{sec:sta} were shown to provide only marginal improvements.
+the time-critical ramp phases---precisely the regime where the ramp-shaping
+variants of Sec.~\ref{sec:sta} were shown to provide only marginal improvements.
 
 % ============================================================================
 \section{CTAP: dynamic control beyond the static Rabi regime}
@@ -1236,8 +1236,10 @@ analogous to Eq.~(7) of Ref.~\cite{Greentree2004}:
   \JLS(t) &= J_{\max}^L \exp\!\left[
     -\frac{(t - t_L)^2}{2\sigma^2}\right], \label{eq:ctap_jls}
 \end{align}
-where $t_R < t_L$ (the right pulse fires first) and $t_L - t_R = \sigma$
-(the pulse separation equals the standard deviation for optimal adiabaticity).
+where $t_R < t_L$ (the right pulse fires first) and the pulse separation
+$t_L - t_R$ is a tunable parameter of order $\sigma$, chosen per configuration
+to satisfy the adiabaticity condition~(\ref{eq:adiabaticity}); the specific
+values used in each figure are listed in Sec.~\ref{sec:ctap_implementation}.
 In the SSH model, $\JSR(t)$ is controlled by varying $v_R(t)$ in the right
 domain, and $\JLS(t)$ is controlled by $v_L(t)$ in the left domain, both
 independently.
@@ -1467,7 +1469,7 @@ requires a protocol duration $T\gtrsim J_{\min}^{-1}$ that grows exponentially
 with the longer (bottleneck) domain: $T$ increases from $\approx2.6\times10^{4}$
 at $j_{\rm DW}=11$ to $\approx6.1\times10^{4}$ at $j_{\rm DW}=5$. This
 exponential cost is intrinsic to a single domain wall and is exactly what the
-multi-domain construction of Sec.~\ref{sec:ctap_twodw} removes.
+multi-domain construction of Sec.~\ref{sec:multidomain} removes.
 
 \begin{table}[t]
 \caption{Full-chain CTAP on the $L=21$ SSH Hamiltonian~(1) for the three
@@ -1749,7 +1751,7 @@ deferred to future work.
 
 % ============================================================================
 \subsection{Numerical implementation}
-\label{sec:ctap_numerics}
+\label{sec:ctap_implementation}
 
 \textbf{Effective couplings by projection.}
 $\JLS(t)$ and $\JSR(t)$ [Eqs.~(\ref{eq:ctap_jsr})--(\ref{eq:ctap_jls})] are
@@ -1778,21 +1780,28 @@ $N_{\mathrm{real}}=200$ disorder realizations
 (\texttt{paso4\_fig\_data.py}).
 
 \textbf{CTAP pulse parameters and time integration.}
-All Gaussian pulses [Eqs.~(\ref{eq:ctap_jsr})--(\ref{eq:ctap_jls})] share
-$\sigma=0.18\,T$, but the two main scripts differ in the pulse centers:
-the full-chain figure (\texttt{fig4\_fullchain\_ctap.py},
-\texttt{pulse\_params()}) sets $t_R = \tfrac{1}{2}T - \sigma$ and
-$t_L = \tfrac{1}{2}T + \sigma$, giving $t_L - t_R = 2\sigma$; the effective
-three-level comparison (\texttt{ctap\_asymmetric.py}) uses $t_R = T/3$ and
-$t_L = 2T/3$, giving $t_L - t_R = T/3 \approx 1.85\,\sigma$.
-In both cases $t_R < t_L$, enforcing the counter-intuitive ordering.
-The total protocol time is set by $T = \tau_{\mathrm{ad}}/J_{\mathrm{bott}}$
-with $\tau_{\mathrm{ad}}=180$ and $J_{\mathrm{bott}}=\min(J_{\max}^L,J_{\max}^R)$
-(the bottleneck effective coupling at $v = v_{\max}=0.5$), guaranteeing that
-the adiabaticity condition [Eq.~(\ref{eq:adiabaticity})] is satisfied.
-Full-chain dynamics are integrated with \texttt{scipy.integrate.solve\_ivp}
-(RK45, $\mathrm{rtol}=10^{-6}$, $\mathrm{atol}=10^{-8}$, 400 output points);
-effective three-level dynamics use DOP853 ($\mathrm{rtol}=10^{-11}$,
+The Gaussian pulse parameters [Eqs.~(\ref{eq:ctap_jsr})--(\ref{eq:ctap_jls})]
+differ by figure:
+\begin{itemize}
+  \item \emph{Figs.~\ref{fig:ctap_pulses_dynamics} (demo, effective three-level,
+    $T=300$)}: $\sigma=0.18\,T$, $t_R=T/3$, $t_L=2T/3$,
+    $t_L-t_R=T/3\approx1.85\,\sigma$ (\texttt{ctap\_figures.py}).
+  \item \emph{Figs.~\ref{fig:ctap_comparison}--\ref{fig:ctap_asymmetry}
+    (asymmetry sweep, effective three-level)}: same $\sigma=0.18\,T$,
+    $t_R=T/3$, $t_L=2T/3$; $T=1500$ for bare CTAP and $T=600$ for
+    CD-assisted (\texttt{ctap\_asymmetric.py}).
+  \item \emph{Table~\ref{tab:fullchain} / Fig.~\ref{fig:fullchain}
+    (full-chain, $L=21$)}: form~(a) for $j_{\rm DW}=11,7$: $\sigma=0.15\,T$,
+    $t_R=0.40\,T$, $t_L=0.60\,T$ ($t_L-t_R=0.20\,T$); form~(b) for
+    $j_{\rm DW}=5$: $\sigma=0.18\,T$, $t_R=0.32\,T$, $t_L=0.68\,T$
+    ($t_L-t_R=0.36\,T$).
+    $T=\tau_{\mathrm{ad}}/J_{\mathrm{bott}}$ with $\tau_{\mathrm{ad}}
+    \in\{180,300,450\}$ (minimum $\tau_{\mathrm{ad}}$ satisfying $f>0.995$
+    and $P_{\mathcal{S}}^{\max}<0.02$) (\texttt{paso3d\_final.py}).
+\end{itemize}
+All full-chain dynamics are integrated with \texttt{scipy.integrate.solve\_ivp}
+(RK45, $\mathrm{rtol}=10^{-6}$, $\mathrm{atol}=10^{-8}$); effective
+three-level dynamics use DOP853 ($\mathrm{rtol}=10^{-11}$,
 $\mathrm{atol}=10^{-13}$, $\Delta t_{\max}=T/4000$).
 
 % ============================================================================

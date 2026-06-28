@@ -890,15 +890,15 @@ def main():
             'func': v_pulse_standard, 'kwargs': {'t_prep': 5.0},
             'color': '#88CCEE', 'ls': '-'
         },
-        'STA α=2 (t_prep=10)': {
+        'Ramp-shaping (α=2, t_prep=10)': {
             'func': v_pulse_sta, 'kwargs': {'t_prep': 10.0, 'alpha': 2.0},
             'color': '#EE7733', 'ls': '--'
         },
-        'STA α=3 (t_prep=10)': {
+        'Ramp-shaping (α=3, t_prep=10)': {
             'func': v_pulse_sta, 'kwargs': {'t_prep': 10.0, 'alpha': 3.0},
             'color': '#CC3311', 'ls': '--'
         },
-        'STA global sin²': {
+        'Global sin² ramp': {
             'func': v_pulse_optimal_sta, 'kwargs': {},
             'color': '#009988', 'ls': '-.'
         },
@@ -964,7 +964,7 @@ def main():
     # (c) and (d): Heatmaps for best standard and best STA
     # Pick best standard and best STA
     best_std_name = 'Standard (sin², t_prep=15)'
-    best_sta_name = 'STA global sin²'
+    best_sta_name = 'Global sin² ramp'
 
     std_res = sta_results[best_std_name]
     sta_res = sta_results[best_sta_name]
@@ -1040,9 +1040,9 @@ def main():
     ax6a.plot(t_prep_range, fid_vs_tprep_std, '-', color='#0077BB', lw=2,
               label='Standard (sin²)')
     ax6a.plot(t_prep_range, fid_vs_tprep_sta2, '--', color='#EE7733', lw=2,
-              label='STA $\\alpha=2$')
+              label='Ramp-shaping ($\\alpha=2$)')
     ax6a.plot(t_prep_range, fid_vs_tprep_sta3, '--', color='#CC3311', lw=2,
-              label='STA $\\alpha=3$')
+              label='Ramp-shaping ($\\alpha=3$)')
     ax6a.axhline(y=0.995, color='gray', ls='--', lw=1, alpha=0.7)
     ax6a.axvline(x=8, color='lightgray', ls=':', lw=1, alpha=0.7)
     ax6a.text(8.5, 0.1, '$\\tau \\sim 8$ (adiabatic\nscale)', fontsize=8,
@@ -1106,11 +1106,11 @@ def main():
             'func': v_pulse_standard, 'kwargs': {'t_prep': 15.0},
             'color': '#0077BB', 'ls': '-', 'marker': 'o'
         },
-        'STA α=2 (t_prep=10)': {
+        'Ramp-shaping (α=2, t_prep=10)': {
             'func': v_pulse_sta, 'kwargs': {'t_prep': 10.0, 'alpha': 2.0},
             'color': '#EE7733', 'ls': '--', 'marker': 's'
         },
-        'STA global sin²': {
+        'Global sin² ramp': {
             'func': v_pulse_optimal_sta, 'kwargs': {},
             'color': '#009988', 'ls': '-.', 'marker': '^'
         },
