@@ -1,0 +1,237 @@
+%==============================================================
+%  Póster A0 vertical — CTAP en cadenas SSH  (v3)
+%  Compilar:  pdflatex poster_v3.tex
+%==============================================================
+\documentclass[final]{beamer}
+\usepackage[size=a0,orientation=portrait,scale=1.40]{beamerposter}
+\usetheme{default}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{helvet}\renewcommand{\familydefault}{\sfdefault}
+\usepackage{graphicx}
+\usepackage{amsmath,amssymb,bm}
+\usepackage{braket}
+\usepackage{qrcode}
+\usepackage{booktabs}
+\usepackage[most]{tcolorbox}
+
+\graphicspath{{figures/}}
+
+\definecolor{navy}{HTML}{12395F}
+\definecolor{amber}{HTML}{F2A93B}
+\definecolor{coral}{HTML}{D85A30}
+\definecolor{tealc}{HTML}{1D9E75}
+\definecolor{ptblue}{HTML}{2F7FC9}
+\definecolor{darktext}{HTML}{2B2B29}
+\definecolor{captiongray}{HTML}{6A6A6A}
+\definecolor{bodybg}{HTML}{F6F5F2}
+
+\setbeamertemplate{navigation symbols}{}
+\setbeamercolor{titlebar}{fg=white,bg=navy}
+\setbeamercolor{banner}{fg=darktext,bg=amber}
+\setbeamercolor{footer}{fg=white,bg=navy}
+
+% --- Tarjeta redondeada estilo Inkscape ---
+\newtcolorbox{pblock}[2]{%
+  enhanced, breakable=false, arc=7mm, boxrule=0.9mm,
+  colframe=#1, colback=bodybg, colbacktitle=#1, coltitle=white,
+  fonttitle=\large\bfseries, title={#2},
+  left=6mm,right=6mm,top=3mm,bottom=3.5mm,
+  toptitle=2.5mm,bottomtitle=2.5mm, before skip=0pt, after skip=0pt}
+
+\linespread{1.04}\selectfont
+\setlength{\abovedisplayskip}{10pt}\setlength{\belowdisplayskip}{10pt}
+\setlength{\abovedisplayshortskip}{6pt}\setlength{\belowdisplayshortskip}{6pt}
+\newcommand{\figcap}[1]{\par\vspace{0.2cm}{\small\itshape\color{captiongray}#1}}
+\newcommand{\blockgap}{\vspace{0.45cm}}
+
+\newlength{\colheight}
+\setlength{\colheight}{\dimexpr\textheight-414pt\relax}
+
+\begin{document}
+\begin{frame}[t]
+
+%==================== CABECERA + LOGO ====================
+\begin{beamercolorbox}[wd=\textwidth,sep=18pt,rounded=true]{titlebar}
+  \begin{minipage}[c]{0.15\textwidth}\centering
+    \includegraphics[height=4.4cm]{logo.jpg}% <-- tu logo aquí
+  \end{minipage}\hfill
+  \begin{minipage}[c]{0.68\textwidth}\centering
+    {\fontsize{44}{54}\selectfont\bfseries Quantum control for quantum information transfer\\ mediated by topological edge states}\\[8pt]
+    {\fontsize{27}{33}\selectfont Miguel García-Mier García \;\textbullet\; MSc in Quantum Technologies \;\textbullet\; UIMP \;\textbullet\; Supervisors: Gloria Platero \& Yue Ban}
+  \end{minipage}\hfill
+  \begin{minipage}[c]{0.15\textwidth}\end{minipage}
+\end{beamercolorbox}
+
+\vspace{0.4cm}
+
+\begin{beamercolorbox}[wd=\textwidth,sep=12pt,center,rounded=true]{banner}
+  {\fontsize{34}{42}\selectfont\bfseries Beyond the static Rabi limit: dark-state CTAP for asymmetry-resilient transfer}
+\end{beamercolorbox}
+
+\vspace{0.6cm}
+
+%==================== COLUMNAS ====================
+\begin{columns}[t,onlytextwidth]
+
+%---------------- COLUMNA 1 (coral) ----------------
+\setbeamertemplate{itemize item}{\color{coral}\textbullet}
+\begin{column}{0.32\textwidth}
+
+  \begin{pblock}{coral}{1 · SSH model \& domain walls}
+    The SSH chain has alternating hoppings $v$ (intracell) and $w$ (intercell).
+    For $v<w$ it is a 1D topological insulator ($\nu=1$) with exponentially
+    localized zero-energy edge states protected by \textbf{chiral symmetry};
+    bulk gap $\Delta = 2|w-v|$, localization length $\xi=-1/\ln(v/w)$.
+
+    \smallskip
+    A \textbf{domain wall} hosts three protected states near $E=0$ —
+    $\ket{L},\ket{S},\ket{R}$ — an effective three-site chain:
+    \[ H_\mathrm{eff}=J_{LS}\ket{S}\!\bra{L}+J_{SR}\ket{R}\!\bra{S}+\mathrm{H.c.} \]
+    \centering\includegraphics[width=0.90\linewidth]{fig2_domain_wall_states.pdf}
+    \figcap{\textbf{Fig.~1} — three protected states $\ket{L},\ket{S},\ket{R}$ in a two-domain SSH chain.}
+  \end{pblock}
+  \blockgap
+
+  \begin{pblock}{coral}{2 · Symmetric transfer works}
+    An adiabatic ramp of $v(t)$ drives $\ket{L}\!\to\!\ket{S}\!\to\!\ket{R}$;
+    fidelity $f=|\!\braket{L\!-\!1|\psi(t_\mathrm{tr})}\!|^2$. The transfer time
+    scales exponentially with the domain length,
+    \[ t_\mathrm{tr}\sim\frac{\pi}{\sqrt{2}\,J}\sim\Big(\tfrac{w}{v}\Big)^{\ell/2}. \]
+    Symmetric chain ($L=11,\ \ell=4$): $f=0.999$ at $t_\mathrm{tr}=45$
+    (analytic $45.6$).
+    \centering\includegraphics[width=0.90\linewidth]{fig4_fidelity_scan.pdf}
+    \figcap{\textbf{Fig.~2} — transfer fidelity vs $t_\mathrm{tr}$; first peak $f=0.999$.}
+  \end{pblock}
+  \blockgap
+
+  \begin{pblock}{coral}{3 · Off-centre walls break Rabi}
+    Couplings scale exponentially, $J_{LS}/J_{SR}\sim(w/v)^{(\ell_2-\ell_1)/2}$,
+    and a three-site chain is capped by
+    \[ f_{\max}=\frac{4J_1^2J_2^2}{(J_1^2+J_2^2)^2}. \]
+    Fidelity collapses off-centre: $0.637\!\to\!0.061\!\to\!0.004$.
+    Shortcut-to-adiabaticity pulses do \emph{not} help — the bottleneck is the
+    coupling ratio in the transfer phase, fixed by geometry.
+    \centering\includegraphics[width=\linewidth]{fig7_fidelity_comparison.pdf}
+    \figcap{\textbf{Fig.~3} — peak transfer fidelity vs wall position; collapses off-centre ($0.637\!\to\!0.061\!\to\!0.004$).}
+  \end{pblock}
+
+\end{column}
+
+%---------------- COLUMNA 2 (teal) ----------------
+\setbeamertemplate{itemize item}{\color{tealc}\textbullet}
+\begin{column}{0.32\textwidth}
+
+  \begin{pblock}{tealc}{4 · It's the protocol, not topology}
+    The collapse is \textbf{not} a failure of topological protection: the edge
+    states stay gapped at every wall position. Give the left and right domains
+    \textbf{independent} controls $v_L(t),v_R(t)$. The effective Hamiltonian
+    always has a zero-energy \textbf{dark state} with no soliton component:
+    \begin{gather*}
+      \ket{D_0(t)}=\cos\Theta(t)\ket{L}-\sin\Theta(t)\ket{R},\\[3pt]
+      \tan\Theta=J_{LS}/J_{SR}.
+    \end{gather*}
+    Adiabaticity, $\sqrt{J_{LS}^2+J_{SR}^2}\gg|\dot\Theta|$, is met by long
+    enough pulses — \emph{independently of the asymmetry}.
+  \end{pblock}
+  \blockgap
+
+  \begin{pblock}{tealc}{5 · CTAP dark-state passage}
+    Sweeping $\Theta:0\!\to\!\pi/2$ transfers $\ket{L}\!\to\!-\ket{R}$ without
+    ever populating $\ket{S}$. Counter-intuitive ordering: $J_{SR}$ fires
+    \emph{before} $J_{LS}$. A counterdiabatic term $H^{\mathrm{eff}}_{\mathrm{CD}}\!\propto\!\dot\Theta(\ket{L}\!\bra{R}\!-\!\ket{R}\!\bra{L})$ reaches the same fidelity in arbitrarily short time.
+    \centering\includegraphics[width=\linewidth]{fig13_ctap_pulses.pdf}
+    \figcap{\textbf{Fig.~4} — counter-intuitive ordering: $J_{SR}$ (Stokes) before $J_{LS}$ (pump).}
+  \end{pblock}
+  \blockgap
+
+  \begin{pblock}{tealc}{6 · Full-chain validation ($L=21$)}
+    \centering
+    \begin{tabular}{cccc}
+      \toprule
+      $j_\mathrm{DW}$ & Rabi & \textbf{CTAP} & leakage\\
+      \midrule
+      11 & 0.637 & \textbf{0.9998} & ${<}10^{-7}$\\
+      7  & 0.061 & \textbf{0.9999} & ${<}10^{-7}$\\
+      5  & 0.004 & \textbf{0.9995} & ${<}10^{-7}$\\
+      \bottomrule
+    \end{tabular}
+    \par\medskip\raggedright
+    The $3{\times}3$ reduction is exact to ${<}0.025\%$. The only residual
+    infidelity is a removable ceiling $f\le\cos^2\Theta_0$ — not a topological
+    bound. Asymmetry is paid in \textbf{time, not fidelity}.
+    \centering\includegraphics[width=\linewidth]{fig14_ctap_dynamics.pdf}
+    \figcap{\textbf{Fig.~5} — dark-state transfer: $P_L\!\to\!P_R$ with $P_S\approx0$ ($f=0.99996$).}
+  \end{pblock}
+
+\end{column}
+
+%---------------- COLUMNA 3 (azul) ----------------
+\setbeamertemplate{itemize item}{\color{ptblue}\textbullet}
+\begin{column}{0.32\textwidth}
+
+  \begin{pblock}{ptblue}{7 · Collective CTAP speed-up}
+    Single-wall CTAP is slow ($T$ grows exp.\ with the longest domain).
+    Subdividing into $D$ domains shrinks the bottleneck segment
+    ($\ell_s\simeq L/D$, $J_\mathrm{bott}\sim(v/w)^{\ell_s/2}$): up to
+    $\boldsymbol{\times 13134}$ at $D=4$. A single collective sequence drives
+    the $D=4$ chain ($L=45$) with $F=0.998$, NN couplings only.
+    \centering\includegraphics[width=\linewidth]{fig_multidomain_speedup.pdf}
+    \figcap{\textbf{Fig.~6} — speed-up vs $D$ and collective five-state transfer ($F=0.998$).}
+  \end{pblock}
+  \blockgap
+
+  \begin{pblock}{ptblue}{8 · Chiral symmetry \& robustness}
+    Off-diagonal disorder respects chiral symmetry: the zero mode stays pinned
+    at $E=0$ to $\sim10^{-16}$ and CTAP fidelity stays flat at $\approx0.99$.
+    On-site disorder and NNN hoppings break it
+    ($\langle|E_0|\rangle\approx0.95\,\kappa$); on-site disorder drives
+    $f\to0.30$ at $\sigma=0.20$. CTAP (NN) \textbf{inherits} the protection;
+    the CD protocol (NNN) \textbf{forfeits} it. CTAP is also ${\sim}8\times$
+    more tolerant to wall misplacement.
+    \centering\includegraphics[width=\linewidth]{fig_robustness_chiral.pdf}
+    \figcap{\textbf{Fig.~7} — zero-mode energy and CTAP fidelity under disorder.}
+  \end{pblock}
+  \blockgap
+
+  \begin{pblock}{ptblue}{9 · Conclusions}
+    \begin{itemize}
+      \item Domain-wall transfer reproduced: $f=0.999$ (symmetric).
+      \item Static Rabi fails off-centre — a protocol artifact, not a topological limit.
+      \item CTAP recovers $f>0.999$ at any wall position; leakage $<10^{-7}$.
+      \item Collective multidomain CTAP: $F=0.998$, ${>}4$ orders speed-up.
+      \item \textbf{The control protocol — not topology alone — decides robustness.}
+      \item Two-wall transfer needs straddling CTAP (even-parity constraint).
+    \end{itemize}
+  \end{pblock}
+  \blockgap
+
+  \begin{pblock}{ptblue}{10 · Outlook}
+    \begin{itemize}
+      \item Straddling CTAP (SCTAP) for two-domain-wall chains.
+      \item Hybrid domain-wall\,+\,CD driving for the time-critical ramps.
+      \item Platforms: superconducting qubits, cold atoms, quantum dots.
+    \end{itemize}
+  \end{pblock}
+
+\end{column}
+\end{columns}
+
+\vspace{0.25cm}
+
+%==================== PIE ====================
+\begin{beamercolorbox}[wd=\textwidth,sep=16pt,rounded=true]{footer}
+  \begin{minipage}[c]{0.80\textwidth}
+    {\small\textbf{References}\quad
+    [9] Zurita, Creffield, Platero, \emph{Quantum} \textbf{7}, 1043 (2023).\quad
+    [13] Romero, Chen, Platero, Ban, \emph{Phys.\ Rev.\ Applied} \textbf{21}, 034033 (2024).\quad
+    [14] Greentree \emph{et al.}, \emph{Phys.\ Rev.\ B} \textbf{70}, 235317 (2004).\quad
+    [6] Su, Schrieffer, Heeger, \emph{PRL} \textbf{42}, 1698 (1979).}
+  \end{minipage}\hfill
+  \begin{minipage}[c]{0.17\textwidth}\centering
+    \colorbox{white}{\color{black}\qrcode[height=2.8cm]{https://github.com/miguelgarciamier/Quantum-control-for-quantum-information-transfer-mediated-by-topological-edge-states}}\\[4pt]{\small Github Repository}
+  \end{minipage}
+\end{beamercolorbox}
+
+\end{frame}
+\end{document}

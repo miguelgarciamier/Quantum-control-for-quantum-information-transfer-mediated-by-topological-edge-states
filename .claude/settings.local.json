@@ -38,7 +38,9 @@
       "Bash(python -m fase_2_domain_wall_asimetrico.fig_robustness_chiral)",
       "Bash(python -m fase_2_domain_wall_asimetrico.fig4_fullchain_ctap)",
       "Bash(python -m fase_2_domain_wall_asimetrico.fig16_ctap_asymmetry_new)",
-      "Bash(python -m fase_2_domain_wall_asimetrico.fig15_wc_ctap)"
+      "Bash(python -m fase_2_domain_wall_asimetrico.fig15_wc_ctap)",
+      "Bash(pdflatex -interaction=nonstopmode thesis_part2.tex)",
+      "Bash(git *)"
     ]
   }
 }
