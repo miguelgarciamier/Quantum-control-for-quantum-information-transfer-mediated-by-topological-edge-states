@@ -39,6 +39,18 @@
 
 \graphicspath{{figures/}}
 
+% --- Float placement tuning (avoid figures stranded alone on a page) ---
+\renewcommand{\topfraction}{0.92}
+\renewcommand{\bottomfraction}{0.85}
+\renewcommand{\textfraction}{0.08}
+\renewcommand{\floatpagefraction}{0.80}
+\renewcommand{\dbltopfraction}{0.92}
+\renewcommand{\dblfloatpagefraction}{0.80}
+\setcounter{topnumber}{3}
+\setcounter{bottomnumber}{2}
+\setcounter{totalnumber}{5}
+\setcounter{dbltopnumber}{3}
+
 % Custom commands
 \newcommand{\hop}[1]{t_{#1}}
 \newcommand{\ttr}{t_{\mathrm{tr}}}
@@ -72,8 +84,10 @@ achieving fidelities $f > 0.999$ for symmetric two-domain configurations with
 $L = 11$ sites. We investigate the effect of asymmetric domain wall placement,
 demonstrating that the fidelity is constrained by the exponential
 sensitivity of the effective couplings to the domain lengths---a limitation of
-the static Rabi protocol rather than of topological protection itself.
-We further explore shortcut-to-adiabaticity (STA) pulse protocols and find that
+the static Rabi transfer protocol of Ref.~\cite{Zurita2023} rather than of topological protection itself.
+We further explore shortcut-to-adiabaticity (STA)-inspired ramp shaping---pulse
+profiles designed to suppress diabatic excitations and emulate adiabatic
+evolution in finite time---and find that
 no pulse optimization can overcome the coupling asymmetry that governs the
 transfer phase.
 Second, we present an extensive analysis of a hybrid analog-digital protocol
@@ -139,8 +153,8 @@ questions:
     reproduced numerically, and what are the optimal parameters?
   \item How does the transfer fidelity degrade when the domain wall is displaced
     from the chain center, breaking the symmetry between the two domains?
-  \item Can shortcut-to-adiabaticity (STA) pulse
-    protocols~\cite{Demirplak2003, Berry2009, GueryOdelin2019} improve the
+  \item Can shortcut-to-adiabaticity (STA)-inspired ramp shaping (pulse-profile
+    optimization of the preparation/readout ramps)~\cite{Demirplak2003, Berry2009, GueryOdelin2019} improve the
     transfer performance, particularly in asymmetric configurations?
 \end{enumerate}
 
@@ -229,7 +243,7 @@ $v = w$. For a chain with an odd number of sites ($L = 11$), a zero-energy edge
 state appears in the topological phase, manifesting the bulk-boundary
 correspondence~\cite{Prodan2016}.
 
-\begin{figure*}[t]
+\begin{figure*}[!t]
   \centering
   \includegraphics[width=\textwidth]{fig1_dimer_spectrum.pdf}
   \caption{Energy spectrum of the SSH dimer chain as a function of the hopping
@@ -297,7 +311,7 @@ where $r = v/w$ is the decay ratio, and $\ell_1$, $\ell_2$ are the lengths
 resides on a single sublattice and decays exponentially away from its localization
 center with characteristic length $\xi = -1/\ln r$.
 
-\begin{figure*}[t]
+\begin{figure*}[!t]
   \centering
   \includegraphics[width=\textwidth]{fig2_domain_wall_states.pdf}
   \caption{Topologically protected states in a two-domain SSH chain ($L = 23$,
@@ -370,6 +384,13 @@ consists of three phases:
     localized state $\ket{L-1}$.
 \end{enumerate}
 
+We refer to this scheme as the \emph{static Rabi protocol}: ``static'' because
+the effective couplings $\JLS,\JSR$ are held constant during the transfer phase,
+and ``Rabi'' because the population then undergoes a Rabi-like oscillation
+$\ketL \to \ketS \to \ketR$. This naming distinguishes it from the
+time-modulated (``dynamic'') pulse sequences considered in Secs.~\ref{sec:sta}
+and~\ref{sec:ctap}.
+
 The standard pulse shape (Eq.~(11) of Ref.~\cite{Zurita2023}) is
 \begin{equation}
   v(t) =
@@ -424,7 +445,7 @@ The initial state $\ket{0}$ is clearly seen to evolve through the three
 protected states: population flows from the left edge to the domain wall and
 then to the right edge, achieving a final fidelity $f = 0.999$.
 
-\begin{figure}[t]
+\begin{figure}[H]
   \centering
   \includegraphics[width=\columnwidth]{fig3_transfer_protocol.pdf}
   \caption{Transfer protocol dynamics for the symmetric two-domain SSH chain
@@ -438,11 +459,11 @@ Figure~\ref{fig:fidelity_scan} presents the fidelity as a function of
 $\ttr$, showing Rabi-like oscillations with the first maximum at
 $\ttr \approx 45$, in excellent agreement with the theoretical prediction
 $\ttr \approx 45.6$ from Eq.~(\ref{eq:ttr_analytical}) and the value
-reported in Ref.~\cite{Zurita2023}. The peak fidelity $f = 0.999$ exceeds
-the threshold $f_0 = 0.995$ commonly cited for fault-tolerant quantum error
-correction~\cite{Knill2005}.
+reported in Ref.~\cite{Zurita2023}. The peak fidelity $f = 0.999$ exceeds $f_0 = 0.995$, which we adopt throughout
+as a stringent high-fidelity benchmark, motivated by values often discussed in
+the context of fault-tolerant quantum error correction~\cite{Knill2005}.
 
-\begin{figure}[t]
+\begin{figure}[H]
   \centering
   \includegraphics[width=\columnwidth]{fig4_fidelity_scan.pdf}
   \caption{Transfer fidelity as a function of the total protocol time $\ttr$
@@ -514,7 +535,7 @@ the left edge, $\ketL$ becomes increasingly compressed into a shorter domain
 a longer domain. The state $\ketS$ develops an asymmetric envelope, decaying
 faster into the shorter domain.
 
-\begin{figure*}[t]
+\begin{figure*}[!t]
   \centering
   \includegraphics[width=\textwidth]{fig5_asymmetric_wall_states.pdf}
   \caption{Spatial profiles of the three protected states $\ketL$, $\ketS$,
@@ -551,7 +572,7 @@ predicted by Eq.~(\ref{eq:coupling_ratio}):
   \end{ruledtabular}
 \end{table}
 
-\begin{figure*}[t]
+\begin{figure*}[!t]
   \centering
   \includegraphics[width=\textwidth]{fig8_effective_coupling.pdf}
   \caption{Effective couplings $\JLS$ (left--soliton) and $\JSR$
@@ -601,7 +622,7 @@ scan over $\ttr \in [30, 600]$.
   \end{ruledtabular}
 \end{table}
 
-\begin{figure*}[t]
+\begin{figure*}[!t]
   \centering
   \includegraphics[width=\textwidth]{fig6_asymmetric_transfer.pdf}
   \caption{Transfer dynamics for the three asymmetric domain wall configurations
@@ -630,7 +651,7 @@ fidelity-vs-$\ttr$ curves for all three wall positions. The oscillation
 frequencies and amplitudes differ markedly, reflecting the distinct
 effective coupling landscapes.
 
-\begin{figure*}[t]
+\begin{figure*}[!t]
   \centering
   \includegraphics[width=\textwidth]{fig7_fidelity_comparison.pdf}
   \caption{Transfer fidelity for the three domain wall positions in the
@@ -661,7 +682,7 @@ that the fidelity profile is perfectly symmetric about the chain center
     $j_{\mathrm{DW}} = 3$.
 \end{itemize}
 
-\begin{figure*}[t]
+\begin{figure*}[!t]
   \centering
   \includegraphics[width=\textwidth]{fig12_systematic_wall_position.pdf}
   \caption{Maximum transfer fidelity (left panel) and optimal transfer time
@@ -708,16 +729,22 @@ STA strategies through pulse shape optimization.
 \subsection{Pulse profiles}
 \label{sec:pulses}
 
+The variants below are \emph{STA-inspired ramp-shaping} strategies---pulse-profile
+optimizations of the preparation and readout ramps---rather than exact STA
+protocols. As such they act only on the ramp phases and, as we show below, cannot
+overcome the coupling-asymmetry bound, since they do not dynamically control the
+ratio $\JLS(t)/\JSR(t)$ that governs the transfer phase.
+
 We compare four pulse profiles for the ramp phases (Fig.~\ref{fig:sta_pulses}):
 
 \begin{enumerate}
   \item \textbf{Standard $\sin^2$} [Eq.~(\ref{eq:pulse})]: The reference
     protocol from Ref.~\cite{Zurita2023}.
-  \item \textbf{STA-$\alpha$}: A modified ramp $v(t) = v_{\mathrm{tr}}
+  \item \textbf{Ramp-shaping ($\alpha$)}: A modified ramp $v(t) = v_{\mathrm{tr}}
     \sin^{2\alpha}\!\bigl(\Omega t\bigr)$ with $\alpha > 1$. The higher
     exponent produces a steeper ramp that spends less time in the
     intermediate-$v$ region where the gap is smaller. We test $\alpha = 2$ and $\alpha = 3$.
-  \item \textbf{STA-global $\sin^2$}: A single smooth profile over the entire
+  \item \textbf{Global $\sin^2$ ramp}: A single smooth profile over the entire
     protocol:
     \begin{equation}
       v(t) = v_{\mathrm{tr}} \sin^2\!\left(\frac{\pi t}{\ttr}\right),
@@ -746,15 +773,15 @@ performance of each pulse profile on the symmetric chain ($L = 11$, $\ell = 4$).
     Standard $\sin^2$       & 15 & 45  & 0.9994 \\
     Standard $\sin^2$       & 10 & 89  & 0.9928 \\
     Standard $\sin^2$       & 5  & 33  & 0.9290 \\
-    STA $\alpha = 2$        & 10 & 41  & 0.9706 \\
-    STA $\alpha = 3$        & 10 & 43  & 0.9398 \\
-    STA-global $\sin^2$     & -- & 75  & 0.99995 \\
+    Ramp-shaping ($\alpha = 2$) & 10 & 41  & 0.9706 \\
+    Ramp-shaping ($\alpha = 3$) & 10 & 43  & 0.9398 \\
+    Global $\sin^2$ ramp    & -- & 75  & 0.99995 \\
     Linear                  & 15 & 97  & 0.9924 \\
   \end{tabular}
   \end{ruledtabular}
 \end{table}
 
-\begin{figure*}[t]
+\begin{figure*}[!t]
   \centering
   \includegraphics[width=\textwidth]{fig9_sta_pulse_comparison.pdf}
   \caption{Comparison of the pulse profiles for the symmetric chain
@@ -762,11 +789,11 @@ performance of each pulse profile on the symmetric chain ($L = 11$, $\ell = 4$).
   \textbf{(b)} the resulting fidelity $f$ vs.~$\ttr$ for all profiles (shared
   legend); dots mark each optimum. The standard $\sin^2$ pulse with
   $\tprep = 15$ (solid blue) gives the best time--fidelity trade-off
-  ($f = 0.9994$ at $\ttr = 45$), whereas the STA-global $\sin^2$ (green
+  ($f = 0.9994$ at $\ttr = 45$), whereas the Global $\sin^2$ ramp (green
   dash-dot) reaches the highest absolute fidelity ($f = 0.99995$) at the cost of
   $\ttr = 75$. \textbf{(c)},\textbf{(d)} Site-resolved occupation
   $\langle n_j\rangle$ vs.~time for the standard $\sin^2$ ($\ttr = 45$) and the
-  STA-global $\sin^2$ ($\ttr = 75$) protocols, respectively.}
+  Global $\sin^2$ ramp ($\ttr = 75$) protocols, respectively.}
   \label{fig:sta_pulses}
 \end{figure*}
 
@@ -775,10 +802,10 @@ The key findings are:
   \item The standard $\sin^2$ pulse with $\tprep = 15$ provides the optimal
     balance between speed and fidelity, achieving $f = 0.9994$ at
     $\ttr = 45$---reproducing the result of Ref.~\cite{Zurita2023}.
-  \item The STA-global $\sin^2$ pulse achieves the highest absolute fidelity
+  \item The Global $\sin^2$ ramp achieves the highest absolute fidelity
     ($f = 0.99995$) but at the cost of a 67\% longer protocol time
     ($\ttr = 75$ vs.~45).
-  \item The STA-$\alpha$ pulses with reduced $\tprep = 10$ \emph{do not}
+  \item The Ramp-shaping ($\alpha$) pulses with reduced $\tprep = 10$ \emph{do not}
     improve upon the standard protocol. The steeper ramp increases diabatic
     excitations rather than suppressing them, as the system spends insufficient
     time adjusting to the changing Hamiltonian.
@@ -791,14 +818,14 @@ The key findings are:
 \label{sec:tprep}
 
 Figure~\ref{fig:tprep} shows the dependence of the optimal fidelity on the
-preparation time $\tprep$ for the standard and STA-$\alpha$ pulses. The
+preparation time $\tprep$ for the standard and Ramp-shaping ($\alpha$) pulses. The
 fidelity follows a characteristic sigmoid: for $\tprep \ll \tau$ the ramp is
 too fast and diabatic transitions dominate, while for $\tprep \gtrsim \tau$ the
 fidelity saturates near its maximum. The crossover occurs at
 $\tprep \sim 2/\Delta_{\min}$, where $\Delta_{\min}$ is the minimum spectral
 gap encountered during the ramp.
 
-\begin{figure*}[t]
+\begin{figure*}[!t]
   \centering
   \includegraphics[width=\textwidth]{fig10_tprep_dependence.pdf}
   \caption{Optimal transfer fidelity as a function of preparation time $\tprep$
@@ -810,19 +837,20 @@ gap encountered during the ramp.
 \subsection{Results: asymmetric chains with STA}
 \label{sec:sta_asymmetric}
 
-A natural question is whether STA protocols can compensate for the fidelity
-degradation caused by asymmetric domain wall placement. We test the standard,
-STA-$\alpha = 2$, and STA-global $\sin^2$ pulses on the three asymmetric
+As a controlled negative test, we ask whether ramp shaping can compensate for
+the fidelity degradation caused by asymmetric domain-wall placement. We test the standard,
+Ramp-shaping ($\alpha = 2$), and Global $\sin^2$ ramp on the three asymmetric
 configurations ($L = 21$, $j_{\mathrm{DW}} = 11, 7, 5$).
 
 \begin{table}[b]
   \caption{Pulse comparison for asymmetric configurations ($L = 21$). No pulse
-  protocol significantly improves the fidelity, confirming that the limitation
-  is topological.}
+  protocol significantly improves the fidelity. This confirms that the
+  limitation is not due to diabatic ramp excitations, but to the coupling
+  asymmetry in the static Rabi transfer phase.}
   \label{tab:sta_asym}
   \begin{ruledtabular}
   \begin{tabular}{lccc}
-    $j_{\mathrm{DW}}$ & Standard & STA $\alpha = 2$ & STA-global \\
+    $j_{\mathrm{DW}}$ & Standard & Ramp-shaping ($\alpha=2$) & Global $\sin^2$ \\
     \colrule
     11 (quasi-center)  & 0.637 & 0.610 & 0.609 \\
     7  (one-third)     & 0.061 & 0.060 & 0.047 \\
@@ -831,16 +859,16 @@ configurations ($L = 21$, $j_{\mathrm{DW}} = 11, 7, 5$).
   \end{ruledtabular}
 \end{table}
 
-\begin{figure*}[t]
+\begin{figure*}[!t]
   \centering
   \includegraphics[width=\textwidth]{fig11_combined_study.pdf}
   \caption{Combined effect of asymmetry and STA pulses ($L = 21$).
   \textbf{(a)} Optimal protocol time $\ttr^{\mathrm{opt}}$ and peak fidelity for
   every combination of wall position ($j_{\mathrm{DW}} = 11, 7, 5$) and pulse
-  profile (standard $\sin^2$, STA $\alpha = 2$, STA-global $\sin^2$).
+  profile (standard $\sin^2$, Ramp-shaping ($\alpha = 2$), Global $\sin^2$ ramp).
   \textbf{(b)},\textbf{(c)} Fidelity vs.~$\ttr$ for the three pulse profiles at
   the quasi-centre ($j_{\mathrm{DW}} = 11$, peak $f \approx 0.64$) and at a
-  strongly asymmetric position ($j_{\mathrm{DW}} = 7$), respectively. At every
+  strongly asymmetric position ($j_{\mathrm{DW}} = 5$), respectively. At every
   position the three pulse variants are essentially indistinguishable and none
   approaches $f_0 = 0.995$: pulse shaping acts only on the ramps and cannot
   overcome the coupling asymmetry that governs the transfer phase.}
@@ -873,7 +901,7 @@ bare Hamiltonian $H_0(t)$ is supplemented with an approximate counterdiabatic (C
 from the adiabatic gauge potential via the variational method of Sels and Polkovnikov~\cite{Sels2017}.
 
 The essential point for the present work is the structure of this CD correction. To first order
-it consists of next-to-nearest-neighbor (NNN) hoppings between sites of the \emph{same} sublattice.
+it consists of next-to-nearest-neighbor (NNN) hoppings between sites of the \emph{same} sublattice. Related schemes that accelerate and stabilize SSH edge-state transfer with engineered NNN couplings have also been explored~\cite{DAngelis2020}.
 Since the zero-energy eigenstate has support only on sublattice $A$, the relevant term reduces to
 \begin{equation}
 H_{\mathrm{cd}} = -i\sum_{j=1}^{N-1}\kappa_{2j+1,2j-1}\, c_{2j+1}^\dagger c_{2j-1} + \mathrm{H.c.},
@@ -1189,7 +1217,7 @@ transfers the population from $\ketL$ to $-\ketR$ with perfect fidelity,
 The practical implementation of the dark-state transfer follows the counter-
 intuitive pulse ordering introduced by A.~D.~Greentree \textit{et al.}~\cite{Greentree2004}
 and originally developed in the context of optical STIRAP (Stimulated Raman
-Adiabatic Passage)~\cite{GueryOdelin2019}. The counter-intuitive aspect is
+Adiabatic Passage)~\cite{Vitanov2017, GueryOdelin2019}. The counter-intuitive aspect is
 that the \emph{right-domain} coupling $\JSR(t)$ must be switched on
 \emph{before} the left-domain coupling $\JLS(t)$---the opposite of the
 intuitive ordering.
@@ -1230,7 +1258,7 @@ reads~\cite{Greentree2004}
 which can always be satisfied by making the pulses sufficiently long, regardless
 of the coupling asymmetry.
 
-\begin{figure*}[t]
+\begin{figure*}[!t]
   \centering
   \includegraphics[width=0.48\textwidth]{fig13_ctap_pulses.pdf}%
   \hfill
@@ -1323,7 +1351,7 @@ protocol in the presence of coupling asymmetry:
     with the flexibility of dynamic control.
 \end{enumerate}
 
-\begin{figure}[t]
+\begin{figure}[H]
   \centering
   \includegraphics[width=\columnwidth]{fig15_ctap_comparison.pdf}
   \caption{Transfer fidelity versus domain-wall position $j_{\mathrm{DW}}$ for
@@ -1336,12 +1364,11 @@ protocol in the presence of coupling asymmetry:
   holds, and coincide because the counterdiabatic term changes the transfer
   \emph{time}, not the fidelity. Shaded bands ($j_{\mathrm{DW}}\in\{1,3,17,19\}$,
   $\rho\gtrsim10^2$) mark where the weaker coupling closes the protected gap and
-  the three-level model no longer represents the chain. Dotted line: fault-tolerance
-  threshold $f_0=0.995$.}
+  the three-level model no longer represents the chain. Dotted line: high-fidelity
+  benchmark $f_0=0.995$.}
   \label{fig:ctap_comparison}
 \end{figure}
 
-\clearpage
 \subsection{Numerical verification and the physical limit}
 \label{sec:ctap_numerics}
 
@@ -1383,7 +1410,7 @@ mechanism itself---breaks down. CTAP thus removes the asymmetry bottleneck of
 the static Rabi protocol across the entire experimentally relevant range; it
 cannot manufacture coupling where the geometry forbids it.
 
-\begin{figure}[t]
+\begin{figure}[H]
   \centering
   \includegraphics[width=\columnwidth]{fig16_ctap_asymmetry.pdf}
   \caption{Transfer fidelity versus the peak-coupling ratio
@@ -1416,7 +1443,7 @@ $\sigma=0.18\,T$, $t_L-t_R=0.36\,T$ for $j_{\rm DW}=5$].
 
 The outcome is summarized in Table~\ref{tab:fullchain} and
 Fig.~\ref{fig:fullchain}. At every wall position the full-chain CTAP fidelity
-exceeds the fault-tolerance threshold $f_0=0.995$, recovering essentially
+exceeds the high-fidelity benchmark $f_0=0.995$, recovering essentially
 perfect transfer precisely where the static Rabi protocol is useless:
 $f=0.9998$ at $j_{\rm DW}=11$ (against the Rabi optimum $0.637$), $f=0.9999$ at
 $j_{\rm DW}=7$ (against $0.061$), and $f=0.9995$ at $j_{\rm DW}=5$ (against
@@ -1460,7 +1487,7 @@ $j_{\rm DW}$ & $(\ell_1,\ell_2)$ & $\rho$ & $f_{\rm Rabi}$ & $f_{\rm CTAP}$ & bu
 \end{ruledtabular}
 \end{table}
 
-\begin{figure*}[t]
+\begin{figure*}[!t]
 \centering
 \includegraphics[width=\textwidth]{figures/fig_fullchain_ctap.pdf}
 \caption{Validation of CTAP on the full $L=21$ SSH Hamiltonian~(1).
@@ -1482,7 +1509,7 @@ $j_{\rm DW}$ & $(\ell_1,\ell_2)$ & $\rho$ & $f_{\rm Rabi}$ & $f_{\rm CTAP}$ & bu
   the static Rabi optimum (Rabi), the effective three-level CTAP
   ($\mathrm{CTAP}_{\rm eff}$) and the full-chain CTAP ($\mathrm{CTAP}_{\rm full}$).
   The full-chain values reproduce the effective model to better than $0.025\%$
-  and clear the fault-tolerance threshold $f_0=0.995$ (dashed) at every position,
+  and clear the high-fidelity benchmark $f_0=0.995$ (dashed) at every position,
   whereas the Rabi fidelity collapses away from the centre. Annotated transfer
   times ($T\approx2.56\times10^{4},\,3.07\times10^{4},\,6.14\times10^{4}$) grow
   exponentially with the bottleneck domain.}
@@ -1561,7 +1588,7 @@ number of effective sites ($D+1=5$). Even-site configurations admit no single
 isolated dark state and require the straddling generalization analyzed in
 Sec.~\ref{sec:ctap_twodw}.
 
-\begin{figure*}[t]
+\begin{figure*}[!t]
 \centering
 \includegraphics[width=\textwidth]{figures/fig_multidomain_speedup.pdf}
 \caption{Multi-domain acceleration of CTAP. (a) Speed-up $T_1/T_D$ of the
@@ -1631,7 +1658,7 @@ CTAP, not its achievable fidelity, so a positional error that is fatal to the
 static Rabi protocol merely detunes CTAP. This ``geometric'' robustness is
 independent of the symmetry-protection mechanism above.
 
-\begin{figure*}[t]
+\begin{figure*}[!t]
 \centering
 \includegraphics[width=\textwidth]{figures/fig_robustness_chiral.pdf}
 \caption{Chiral symmetry and disorder robustness. (a) Mean zero-mode energy
@@ -1721,115 +1748,153 @@ verification of the $X \ll 1$ condition for different chain geometries, is
 deferred to future work.
 
 % ============================================================================
+\subsection{Numerical implementation}
+\label{sec:ctap_numerics}
+
+\textbf{Effective couplings by projection.}
+$\JLS(t)$ and $\JSR(t)$ [Eqs.~(\ref{eq:ctap_jsr})--(\ref{eq:ctap_jls})] are
+computed at each time step by \texttt{\_effective\_couplings()} in
+\texttt{ctap\_full\_chain.py}: the three eigenstates of $H(t)$ with the
+smallest $|E|$ are identified via \texttt{np.argsort($|E|$)[:3]} (no explicit
+energy cutoff; the threshold $|E|<0.1$ appears only in the unit-test counter,
+not in the production routines), labeled $\ketL,\ketS,\ketR$ by the position
+of their probability-density maximum, rotated to the maximally localized
+(Wannier) basis by diagonalizing the position operator restricted to the
+three-dimensional subspace, and $\JLS,\JSR$ are read off as the off-diagonal
+elements of the full Hamiltonian projected onto that localized basis.
+
+\textbf{Bulk leakage.}
+At every time step \texttt{metrics()} projects $|\psi(t)\rangle$ onto the
+instantaneous protected triplet and computes
+$1-(P_{\mathcal{L}}+P_{\mathcal{S}}+P_{\mathcal{R}})$; figures report the
+\emph{maximum} of this quantity over the full trajectory (\texttt{lk.max()}
+in \texttt{fig4\_fullchain\_ctap.py}, line 86).
+
+\textbf{Disorder averaging.}
+The spectral-pinning panel [Fig.~\ref{fig:robustness}(a)] averages over
+$N_{\mathrm{real}}=200$ disorder realizations
+(\texttt{paso4\_chiral\_spectral.py}); the transfer-fidelity panel
+[Fig.~\ref{fig:robustness}(b)] uses $N_{\mathrm{real}}=40$ realizations
+(\texttt{paso4\_fig\_data.py}).
+
+\textbf{CTAP pulse parameters and time integration.}
+All Gaussian pulses [Eqs.~(\ref{eq:ctap_jsr})--(\ref{eq:ctap_jls})] share
+$\sigma=0.18\,T$, but the two main scripts differ in the pulse centers:
+the full-chain figure (\texttt{fig4\_fullchain\_ctap.py},
+\texttt{pulse\_params()}) sets $t_R = \tfrac{1}{2}T - \sigma$ and
+$t_L = \tfrac{1}{2}T + \sigma$, giving $t_L - t_R = 2\sigma$; the effective
+three-level comparison (\texttt{ctap\_asymmetric.py}) uses $t_R = T/3$ and
+$t_L = 2T/3$, giving $t_L - t_R = T/3 \approx 1.85\,\sigma$.
+In both cases $t_R < t_L$, enforcing the counter-intuitive ordering.
+The total protocol time is set by $T = \tau_{\mathrm{ad}}/J_{\mathrm{bott}}$
+with $\tau_{\mathrm{ad}}=180$ and $J_{\mathrm{bott}}=\min(J_{\max}^L,J_{\max}^R)$
+(the bottleneck effective coupling at $v = v_{\max}=0.5$), guaranteeing that
+the adiabaticity condition [Eq.~(\ref{eq:adiabaticity})] is satisfied.
+Full-chain dynamics are integrated with \texttt{scipy.integrate.solve\_ivp}
+(RK45, $\mathrm{rtol}=10^{-6}$, $\mathrm{atol}=10^{-8}$, 400 output points);
+effective three-level dynamics use DOP853 ($\mathrm{rtol}=10^{-11}$,
+$\mathrm{atol}=10^{-13}$, $\Delta t_{\max}=T/4000$).
+
+% ============================================================================
 \section{Discussion and conclusions}
 \label{sec:conclusions}
 
-We have presented a detailed study of quantum state transfer in
-SSH chains, comparing two distinct paradigms: domain wall-mediated transfer
-following J.~Zurita \textit{et al.}~\cite{Zurita2023} and hybrid analog-digital
+We have presented a detailed study of quantum state transfer in SSH chains,
+comparing two distinct paradigms: domain wall-mediated transfer following
+J.~Zurita \textit{et al.}~\cite{Zurita2023} and hybrid analog-digital
 counterdiabatic driving following S.~V.~Romero \textit{et al.}~\cite{Romero2024},
 and proposing CTAP as the path beyond the limitations of the static Rabi regime.
+For the symmetric two-domain configuration ($L = 11$, $N = 2$, $\ell = 4$), we
+faithfully reproduce the results of Ref.~\cite{Zurita2023}: the optimal transfer
+time $\ttr = 45$ agrees with the analytical prediction $\ttr \approx 45.6$ and
+the fidelity $f = 0.999$ exceeds the high-fidelity benchmark $f_0 = 0.995$,
+providing a validated numerical platform for the subsequent analysis.
+Our five main conclusions are:
 
-Our main results can be summarized as follows:
+\textbf{1.~Static Rabi transfer fails under coupling asymmetry.}
+Displacing the domain wall from the chain center generates an exponentially
+large coupling ratio $J_1/J_2 \sim (w/v)^{|\ell_1 - \ell_2|/2}$, which bounds
+the static Rabi fidelity by $f_{\max} = 4J_1^2 J_2^2/(J_1^2 + J_2^2)^2$.
+A single unit-cell displacement in $L = 21$ reduces the fidelity from
+$\sim\!1$ to $0.637$; larger displacements make the transfer negligible.
+This is \emph{not a topological constraint}: the three edge states
+($\ketL$, $\ketS$, $\ketR$) remain exponentially localized and well-separated
+from the bulk at all configurations studied. The limitation is an artifact of
+the static Rabi protocol, which couples both domains through a single hopping
+parameter $v(t)$ and thus cannot independently tune $\JLS$ and $\JSR$.
 
-\textbf{1.~Faithful reproduction of the topological transfer protocol.}
-For the symmetric configuration ($L = 11$, $N = 2$, $\ell = 4$), we reproduce
-the results of Ref.~\cite{Zurita2023} with high precision: the optimal transfer
-time $\ttr = 45$ agrees with the analytical prediction $\ttr \approx 45.6$, and
-the fidelity $f = 0.999$ exceeds the fault-tolerance threshold.
+\textbf{2.~Ramp shaping cannot overcome the coupling-asymmetry bound.}
+STA-inspired ramp shaping (Global $\sin^2$ ramp, modified-exponent
+Ramp-shaping ($\alpha$), and linear ramps) provides marginal improvements
+in the symmetric case---the Global $\sin^2$ ramp achieves $f = 0.99995$---but
+is completely ineffective against coupling asymmetry: no ramp variant reduces
+the infidelity by more than statistical noise at any asymmetric wall position.
+Ramp shaping acts only on the preparation and readout phases; the transfer
+phase is governed by the fixed effective couplings $\JLS$ and $\JSR$ set by
+the domain geometry [Eq.~(\ref{eq:coupling_ratio})], which no envelope choice
+can alter.
 
-\textbf{2.~Exponential sensitivity to domain wall position.}
-Moving the domain wall away from the chain center degrades the fidelity
-according to the fundamental bound
-$f_{\max} = 4J_1^2 J_2^2/(J_1^2 + J_2^2)^2$. The coupling ratio
-$J_1/J_2 \sim (w/v)^{|\ell_1 - \ell_2|/2}$ grows exponentially with the
-displacement, making the fidelity exquisitely sensitive to the wall position.
-For a single unit-cell displacement in $L = 21$, the fidelity drops from
-${\sim}\,1$ to $0.637$; for larger displacements, the transfer becomes negligible.
+\textbf{3.~CTAP exploits the topological dark state to bypass the asymmetry.}
+Introducing independent controls $v_L(t)$ and $v_R(t)$ for the two domains
+replaces the static Rabi oscillation with adiabatic evolution along the
+zero-energy dark state $\ket{D_0(t)} = \cos\Theta(t)\,\ketL -
+\sin\Theta(t)\,\ketR$---a consequence of chiral symmetry that holds
+regardless of the coupling ratio.
+Full-chain integration of the $L=21$ SSH chain with the counter-intuitive
+Gaussian pulse sequence recovers $f > 0.999$ at every wall position where the
+Rabi fidelity collapses to $\lesssim10^{-2}$, with bulk leakage below
+$10^{-7}$ and an effective three-level reduction accurate to better than
+$0.025\%$; the residual infidelity is a removable pulse boundary-condition
+effect ($f \leq \cos^2\Theta_0$), not a fundamental limit, and the only
+genuine bound ($\rho \gtrsim 10^2$) arises from geometric gap closing.
+% REVISAR Miguel: absorber vs mantener (punto 7 original)
+The effective counterdiabatic correction
+$\mathcal{H}_{\mathrm{CD}}^{\mathrm{eff}} = i\hbar\dot{\Theta}
+(\ketL\bra{\mathcal{R}} - \ketR\bra{\mathcal{L}})$, acting on the
+three-dimensional protected subspace, enables perfect transfer in arbitrarily
+short times and is far more tractable than full-chain CD optimization.
 
-\textbf{3.~Static Rabi protocol cannot overcome the coupling asymmetry.}
-Shortcut-to-adiabaticity pulse modifications provide marginal improvements in
-the symmetric case (the global $\sin^2$ achieves $f = 0.99995$) but are
-completely ineffective against the coupling asymmetry in the transfer phase.
-This establishes that the fidelity degradation in asymmetric configurations
-is \emph{not a topological constraint} but an artifact of the static Rabi
-protocol. The topological edge states are fully intact; only the chosen
-transfer strategy is inadequate.
-
-\textbf{4.~Counterdiabatic driving as an alternative paradigm.}
-The hybrid analog-digital protocol of Ref.~\cite{Romero2024} circumvents
-the structural sensitivity of the domain wall approach by operating on a
-uniform SSH chain with time-dependent NNN hoppings as counterdiabatic
-corrections. In the nonadiabatic regime ($T = \pi/\Omega$, a $100\times$
-speed-up over the adiabatic protocol), the CD approach achieves fidelities
-above 99\% for short chains (5--9 sites) and approximately 90\% for 15 sites
-when CD strengths are constrained to the same order as $t_0$.
-
-\textbf{5.~Complementarity of the two paradigms.}
-The domain wall and CD approaches are complementary: the former excels in
-platforms with precise structural control and nearest-neighbor-only couplings,
-while the latter is preferable for uniform chains with tunable NNN interactions
-and stringent time constraints.
-
-\textbf{6.~CTAP resolves the asymmetry problem via the topological dark state.}
-By introducing independent time-dependent controls for the left and right
-domains, the static Rabi limitation is overcome: the effective three-level
-Hamiltonian always possesses a zero-energy dark state $|D_0(t)\rangle =
-\cos\Theta(t)|L\rangle - \sin\Theta(t)|R\rangle$---a direct consequence of chiral
-symmetry---that mediates $|L\rangle\to|R\rangle$ transfer without populating the
-soliton state. Integrating the full $L=21$ chain, the counter-intuitive pulse
-sequence recovers $f>0.999$ at wall positions where the Rabi fidelity collapses
-to $\lesssim10^{-2}$, with bulk leakage below $10^{-7}$ and an effective
-three-level reduction accurate to better than $0.025\%$. The only residual
-infidelity is a removable pulse boundary-condition effect, $f\le\cos^2\Theta_0$;
-the sole genuine limit ($\rho\gtrsim10^2$) is geometric---the protected gap
-closing---not a failure of the protocol.
-
-\textbf{7.~CD driving on the effective three-level system accelerates CTAP.}
-The counterdiabatic correction to the three-level effective Hamiltonian
-takes the form $\mathcal{H}_{\mathrm{CD}}^{\mathrm{eff}} = i\hbar\dot{\Theta}
-(\ketL\bra{\mathcal{R}} - \ketR\bra{\mathcal{L}})$. Adding this term
-enables perfect population transfer in arbitrarily short times, combining the
-asymmetry resilience of CTAP with the speed of STA protocols. Since
-$\mathcal{H}_{\mathrm{CD}}^{\mathrm{eff}}$ acts on a three-dimensional subspace,
-the variational optimization is far more tractable than for the full $L$-site
-chain.
-
-\textbf{8.~Multi-domain construction gives exponential acceleration with a
-collective dark state.} Subdividing the chain into $D$ domains at fixed total
-length shrinks the bottleneck segment and reduces the transfer time by more than
-four orders of magnitude ($\sim\!1.3\times10^4$ at $D=4$). A single
-counter-intuitive collective pulse sequence transfers across the resulting
-four-domain chain with fidelity $F=0.998$, keeping the inner solitons dark and
+\textbf{4.~Multi-domain subdivision gives exponential acceleration with a
+collective dark state.}
+Subdividing the chain into $D$ domains at fixed total length shrinks the
+bottleneck segment and reduces the transfer time by more than four orders
+of magnitude ($\sim\!1.3\times10^4$ at $D = 4$).
+A single counter-intuitive collective pulse sequence achieves $F = 0.998$
+across the four-domain chain, keeping the inner soliton states dark and
 using nearest-neighbour couplings only---so the speed-up is obtained without
-sacrificing chiral symmetry.
+sacrificing the chiral symmetry that underlies topological protection.
 
-\textbf{9.~Chiral symmetry, not topology alone, governs robustness.} Chiral
-symmetry pins the edge states at $E=0$: off-diagonal (hopping) disorder leaves
-the zero mode at machine precision and the CTAP fidelity flat at $\approx0.99$,
-whereas on-site disorder and next-nearest-neighbour hoppings break the symmetry
-and detach the mode ($\langle|E_0|\rangle\approx0.95\,\kappa$ for NNN), degrading
-the transfer. Because CTAP uses only nearest-neighbour couplings it inherits this
-protection, while the NNN-based CD protocol forfeits it: the control protocol,
-not the topological phase by itself, determines whether the transfer is robust.
-CTAP is also $\sim\!8\times$ more tolerant to domain-wall misplacement than the
-static Rabi protocol.
+\textbf{5.~Chiral symmetry, not topology alone, governs disorder robustness.}
+Chiral symmetry pins the zero-energy edge states exactly at $E = 0$:
+off-diagonal (hopping) disorder leaves the zero mode at machine precision and
+the CTAP fidelity flat at $\langle\mathcal{F}\rangle \approx 0.99$, whereas
+on-site disorder and next-nearest-neighbour hoppings break the symmetry and
+linearly detach the mode ($\langle|E_0|\rangle \approx 0.95\,\kappa$ for NNN
+coupling $\kappa$), degrading the transfer.
+Because CTAP uses only nearest-neighbour couplings it fully inherits this
+chiral protection, while the NNN-based CD protocol of Ref.~\cite{Romero2024}
+sacrifices it to gain speed: the control protocol, not the topological phase
+alone, determines whether transfer is robust.
+CTAP is also $\sim\!8\times$ more tolerant to domain-wall misplacement than
+the static Rabi protocol.
 
-\textbf{10.~Even-state parity constraint limits two-domain-wall CTAP.}
-For chains with two domain walls, the four-dimensional protected subspace
-precludes a simple CTAP protocol due to the absence of an isolated
-zero-energy eigenstate for even numbers of effective sites. The Straddling
-CTAP (SCTAP) scheme of Ref.~\cite{Greentree2004} provides a route forward,
-requiring a persistent coupling between the two inner soliton states and
-counter-intuitive outer pulses.
-
-These findings provide a comprehensive picture of the state of the art in
-topological quantum state transfer via SSH chains. The exponential speed-up
-predicted for multi-domain ($N > 2$) chains~\cite{Zurita2023}, the variational
-optimization strategies for CD driving~\cite{Romero2024, Hegade2021}, the CTAP
-framework for asymmetry-resilient transfer~\cite{Greentree2004}, and the
-possibility of hybrid domain-wall/CD protocols offer multiple avenues for future
-investigation and experimental implementation across superconducting qubit,
+% REVISAR Miguel: absorber vs mantener (puntos 4 y 5 originales)
+The CD protocol of Ref.~\cite{Romero2024}---achieving fidelities above $99\%$
+for chains up to nine sites and $\sim\!90\%$ for fifteen sites at a
+$100\times$ speed-up over the adiabatic protocol---constitutes a complementary
+paradigm suited to uniform chains with tuneable NNN interactions and stringent
+time constraints, at the cost of the chiral protection highlighted in
+conclusion~5.
+% REVISAR Miguel: absorber vs mantener (punto 10 original)
+For chains with two domain walls, the even-state parity constraint precludes
+a straightforward single-dark-state CTAP protocol; the Straddling-CTAP scheme
+of Ref.~\cite{Greentree2004}, combining a persistent inter-soliton coupling
+with counter-intuitive outer pulses, offers a route forward whose optimisation
+and experimental verification we leave for future work.
+Together, these results demonstrate that topological quantum state transfer
+can be made simultaneously fast, asymmetry-resilient, and disorder-robust by
+choosing control protocols that respect the chiral symmetry of the underlying
+lattice---a design principle applicable across superconducting qubit,
 cold-atom, and quantum dot platforms.
 
 % ============================================================================
