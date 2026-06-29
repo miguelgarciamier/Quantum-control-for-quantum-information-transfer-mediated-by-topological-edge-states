@@ -42,7 +42,8 @@
       "Bash(pdflatex -interaction=nonstopmode thesis_part2.tex)",
       "Bash(git *)",
       "Bash(python *)",
-      "Bash(PYTHONIOENCODING=utf-8 python run_sta_figs.py)"
+      "Bash(PYTHONIOENCODING=utf-8 python run_sta_figs.py)",
+      "Bash(grep *)"
     ]
   }
 }
