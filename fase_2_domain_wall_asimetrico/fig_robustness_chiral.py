@@ -12,7 +12,9 @@ from thesis_style import apply_thesis_style, panel_label, COLORS, FULL_W
 
 apply_thesis_style()
 
-HERE = os.path.dirname(os.path.abspath(__file__))
+HERE        = os.path.dirname(os.path.abspath(__file__))
+FIGURES_DIR = os.path.normpath(os.path.join(HERE, '..', 'tesis', 'figures'))
+os.makedirs(FIGURES_DIR, exist_ok=True)
 
 # ── Data ──────────────────────────────────────────────────────────────────────
 sp = pd.read_csv(os.path.join(HERE, 'paso4_chiral_spectral.csv'))
@@ -85,7 +87,7 @@ panel_label(ax_a, '(a)', dy=0.08)   # extra dy to clear top x-label
 sig_f = off['sigma'].values
 
 ax_b.axhline(0.995, color='#888888', lw=0.7, ls=':', zorder=0,
-             label=r'$\mathcal{F}_0=0.995$')
+             label=r'$f_0=0.995$')
 
 kw = dict(capsize=2.5, capthick=0.6, lw=0.9, ms=4.5,
           markerfacecolor='white', markeredgewidth=1.0, elinewidth=0.7)
@@ -101,7 +103,7 @@ ax_b.errorbar(sig_f, nnn['mean_F'].values, yerr=nnn['std_F'].values,
               label=r'NNN off-diag  ($\kappa\!=\!J/3$)', **kw)
 
 ax_b.set_xlabel(r'Disorder $\sigma$')
-ax_b.set_ylabel(r'$\langle \mathcal{F} \rangle$')
+ax_b.set_ylabel(r'$\langle f \rangle$')
 ax_b.set_xlim(-0.01, 0.22)
 ax_b.set_ylim(-0.06, 1.09)
 ax_b.set_xticks([0, 0.05, 0.10, 0.20])
@@ -112,6 +114,6 @@ ax_b.legend(loc='lower left', fontsize=6.5,
 panel_label(ax_b, '(b)')
 
 # ── Save ──────────────────────────────────────────────────────────────────────
-out = os.path.join(HERE, 'fig_robustness_chiral.pdf')
+out = os.path.join(FIGURES_DIR, 'fig_robustness_chiral.pdf')
 fig.savefig(out)
 print(f"Saved: {out}")
