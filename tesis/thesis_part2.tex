@@ -1786,10 +1786,20 @@ differ by figure:
   \item \emph{Figs.~\ref{fig:ctap_pulses_dynamics} (demo, effective three-level,
     $T=300$)}: $\sigma=0.18\,T$, $t_R=T/3$, $t_L=2T/3$,
     $t_L-t_R=T/3\approx1.85\,\sigma$ (\texttt{ctap\_figures.py}).
-  \item \emph{Figs.~\ref{fig:ctap_comparison}--\ref{fig:ctap_asymmetry}
-    (asymmetry sweep, effective three-level)}: same $\sigma=0.18\,T$,
-    $t_R=T/3$, $t_L=2T/3$; $T=1500$ for bare CTAP and $T=600$ for
-    CD-assisted (\texttt{ctap\_asymmetric.py}).
+  \item \emph{Fig.~\ref{fig:ctap_comparison} ($f$ vs.\ $j_{\rm DW}$,
+    effective three-level, \texttt{fig15\_wc\_ctap.py})}: well-conditioned
+    (WC) pulse, $\sigma=0.12\,T$, $t_R=T/4$, $t_L=3T/4$ (separation
+    $T/2$); bare CTAP $T=800\rho$ (scales with coupling ratio per
+    position), CD-assisted $T=600$ fixed.
+  \item \emph{Fig.~\ref{fig:ctap_asymmetry} ($f$ vs.\ $\rho$,
+    \texttt{fig16\_ctap\_asymmetry\_new.py})}: two pulse variants.
+    Original pulse ($\sigma=0.18\,T$, $t_R=T/3$, $t_L=2T/3$, $T=400\rho$)
+    as comparison curve tracking $\cos^2\Theta_0(\rho)$.  WC pulse
+    ($\sigma=0.12\,T$, $t_R=T/4$, $t_L=3T/4$, $T=50000$ fixed) confirming
+    $f\approx1$ across all $\rho$.
+    % Verificado: leyenda fig16 ya dice T=400rho (T_orig(rho)=400*rho en script);
+    % la cifra T=1500 que aparecía antes venía de ctap_asymmetric.py (helper)
+    % y no correspondía a estas figuras.
   \item \emph{Table~\ref{tab:fullchain} / Fig.~\ref{fig:fullchain}
     (full-chain, $L=21$)}: form~(a) for $j_{\rm DW}=11,7$: $\sigma=0.15\,T$,
     $t_R=0.40\,T$, $t_L=0.60\,T$ ($t_L-t_R=0.20\,T$); form~(b) for
