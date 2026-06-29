@@ -4,7 +4,7 @@ fig16_ctap_asymmetry_new.py  --  Redesign of fig16: proof of the f ≤ cos²Θ�
 
 Three elements:
   1. Analytic ceiling  cos²Θ₀(ρ)  from original pulse evaluated at t=0.
-  2. Bare CTAP, original pulse (σ=0.18T, tR=T/3 first, tL=2T/3), T_ORIG=1500.
+  2. Bare CTAP, original pulse (σ=0.18T, tR=T/3 first, tL=2T/3), T_orig=400*rho.
      Should embrace the ceiling for all ρ.
   3. WC CTAP: tR=T/4, tL=3T/4, σ=0.12T, T_WC=50000.
      Should stay ≈1 for all ρ.

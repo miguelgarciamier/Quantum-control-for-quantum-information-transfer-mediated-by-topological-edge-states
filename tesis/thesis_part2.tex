@@ -555,7 +555,8 @@ faster into the shorter domain.
 The effective couplings $\JLS$ and $\JSR$ are computed numerically by
 projecting the full Hamiltonian onto the protected subspace. The results
 (Fig.~\ref{fig:coupling_asymmetry}) confirm the exponential scaling
-predicted by Eq.~(\ref{eq:coupling_ratio}):
+predicted by Eq.~(\ref{eq:coupling_ratio}), with the numerical values
+listed in Table~\ref{tab:couplings}.
 
 \begin{table}[b]
   \caption{Effective couplings for the three domain wall positions ($L = 21$,
@@ -681,6 +682,12 @@ that the fidelity profile is perfectly symmetric about the chain center
     dropping to $f = 0.22$ at $j_{\mathrm{DW}} = 5$ and $f = 0.014$ at
     $j_{\mathrm{DW}} = 3$.
 \end{itemize}
+The slightly lower centered value for $L=11$ ($f=0.96$) relative to the
+optimized reproduction of Sec.~\ref{sec:results_symmetric} ($f=0.999$)
+reflects the coarser $\Delta t_{\mathrm{tr}}=10$ scan grid used here: the
+true optimum near $t_{\mathrm{tr}}\approx 45$ falls midway between grid
+points, so the scan reads $f$ at $t_{\mathrm{tr}}\in\{40,50\}$ rather
+than at the exact peak.
 
 \begin{figure*}[!t]
   \centering
@@ -1866,7 +1873,6 @@ $10^{-7}$ and an effective three-level reduction accurate to better than
 $0.025\%$; the residual infidelity is a removable pulse boundary-condition
 effect ($f \leq \cos^2\Theta_0$), not a fundamental limit, and the only
 genuine bound ($\rho \gtrsim 10^2$) arises from geometric gap closing.
-% REVISAR Miguel: absorber vs mantener (punto 7 original)
 The effective counterdiabatic correction
 $\mathcal{H}_{\mathrm{CD}}^{\mathrm{eff}} = i\hbar\dot{\Theta}
 (\ketL\bra{\mathcal{R}} - \ketR\bra{\mathcal{L}})$, acting on the
@@ -1897,14 +1903,12 @@ alone, determines whether transfer is robust.
 CTAP is also $\sim\!8\times$ more tolerant to domain-wall misplacement than
 the static Rabi protocol.
 
-% REVISAR Miguel: absorber vs mantener (puntos 4 y 5 originales)
 The CD protocol of Ref.~\cite{Romero2024}---achieving fidelities above $99\%$
 for chains up to nine sites and $\sim\!90\%$ for fifteen sites at a
 $100\times$ speed-up over the adiabatic protocol---constitutes a complementary
 paradigm suited to uniform chains with tuneable NNN interactions and stringent
 time constraints, at the cost of the chiral protection highlighted in
 conclusion~5.
-% REVISAR Miguel: absorber vs mantener (punto 10 original)
 For chains with two domain walls, the even-state parity constraint precludes
 a straightforward single-dark-state CTAP protocol; the Straddling-CTAP scheme
 of Ref.~\cite{Greentree2004}, combining a persistent inter-soliton coupling
