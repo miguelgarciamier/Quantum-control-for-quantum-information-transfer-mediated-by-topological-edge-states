@@ -115,10 +115,11 @@
 % 2. ÍNDICE Y CONFIGURACIÓN DE PÁGINAS
 % ============================================================================
 \clearpage
-\pagenumbering{roman} % Números romanos para el índice (i, ii, iii...)
+%\pagenumbering{roman} % Números romanos para el índice (i, ii, iii...)
 
 \onecolumngrid % Una sola columna para que el índice ocupe todo el ancho
 \tableofcontents
+\thispagestyle{empty}
 \clearpage
 \twocolumngrid % Restauramos las dos columnas para el documento
 
@@ -138,9 +139,6 @@
 }
 
 % Añadimos a las tutoras también en la cabecera del artículo (ajusta la afiliación si hace falta)
-\author{Supervisors: Gloria Platero \& Yue Ban}
-\affiliation{Instituto de Ciencia de Materiales de Madrid (ICMM-CSIC)}
-
 \author{Supervisors: Gloria Platero \& Yue Ban}
 \affiliation{Instituto de Ciencia de Materiales de Madrid (ICMM-CSIC)}
 
@@ -165,7 +163,7 @@ Second, we present an extensive analysis of a hybrid analog-digital protocol
 for nonadiabatic edge-state transfer, where the SSH Hamiltonian is supplemented
 with approximate counterdiabatic interactions derived from adiabatic gauge
 potentials and optimized via variational quantum circuits.
-Third, motivated by the CTAP (Coherent Tunnelling Adiabatic Passage) formalism,
+Third, motivated by the CTAP (Coherent Tunneling Adiabatic Passage) formalism,
 we replace the static Rabi protocol by a dynamic counter-intuitive pulse sequence
 that exploits the topological dark state of the effective three-level
 Hamiltonian. Numerical integration of the full $L=21$ chain recovers fidelities
@@ -173,7 +171,7 @@ $f>0.999$ at wall positions where the Rabi protocol collapses, with bulk leakage
 below $10^{-7}$ and an effective three-level reduction that is quantitatively
 exact; the residual infidelity is a removable pulse boundary-condition effect,
 not a topological bound. A collective version of the protocol transfers across a
-multi-domain chain with fidelity $0.998$ while shortening the transfer time by
+multi-domain chain with fidelity $F=0.998$ while shortening the transfer time by
 more than four orders of magnitude. Crucially, because CTAP uses only
 nearest-neighbor couplings it inherits the chiral protection that pins the edge
 states against off-diagonal disorder, whereas the next-nearest-neighbor driving
@@ -704,7 +702,7 @@ scan over $\ttr \in [30, 600]$.
   (Table~\ref{tab:asym_fidelity}). Each panel shows the shaded ramp $v(t)$ (left
   axis) and the occupations of the three localized sites---site $0$ ($\ketL$),
   the domain wall ($\ketS$) and site $L-1$ ($\ketR$) (right axis). As the wall
-  moves off-centre, the coupling asymmetry $\JLS \neq \JSR$ caps the population
+  moves off-center, the coupling asymmetry $\JLS \neq \JSR$ caps the population
   that can be swapped into $\ketR$: the transfer is essentially complete in (a)
   but increasingly incomplete in (b) and (c), where the excitation remains
   trapped in $\ketL$ and $\ketS$.}
@@ -728,11 +726,11 @@ effective coupling landscapes.
   \includegraphics[width=\textwidth]{fig7_fidelity_comparison.pdf}
   \caption{Transfer fidelity for the three domain wall positions in the
   $L = 21$ chain. \textbf{(a)} Fidelity $f$ vs.~the protocol time $\ttr$ for the
-  quasi-centre ($\sim 1/2$), one-third ($\sim 1/3$) and one-quarter ($\sim 1/4$)
+  quasi-center ($\sim 1/2$), one-third ($\sim 1/3$) and one-quarter ($\sim 1/4$)
   wall positions; dots mark the first maximum. \textbf{(b)} The corresponding
   peak fidelity (left axis, bars) and optimal $\ttr$ (right axis) for
   $j_{\mathrm{DW}} = 11, 7, 5$. The first fidelity maximum decreases
-  exponentially with the displacement from the centre, consistent with the
+  exponentially with the displacement from the center, consistent with the
   coupling asymmetry of Eq.~(\ref{eq:coupling_ratio}).}
   \label{fig:fidelity_comparison}
 \end{figure*}
@@ -945,7 +943,7 @@ configurations ($L = 21$, $j_{\mathrm{DW}} = 11, 7, 5$).
   every combination of wall position ($j_{\mathrm{DW}} = 11, 7, 5$) and pulse
   profile (standard $\sin^2$, Ramp-shaping ($\alpha = 2$), Global $\sin^2$ ramp).
   \textbf{(b)},\textbf{(c)} Fidelity vs.~$\ttr$ for the three pulse profiles at
-  the quasi-centre ($j_{\mathrm{DW}} = 11$, peak $f \approx 0.64$) and at a
+  the quasi-center ($j_{\mathrm{DW}} = 11$, peak $f \approx 0.64$) and at a
   strongly asymmetric position ($j_{\mathrm{DW}} = 5$), respectively. At every
   position the three pulse variants are essentially indistinguishable and none
   approaches $f_0 = 0.995$: pulse shaping acts only on the ramps and cannot
@@ -983,6 +981,7 @@ it consists of next-nearest-neighbor (NNN) hoppings between sites of the \emph{s
 Since the zero-energy eigenstate has support only on sublattice $A$, the relevant term reduces to
 \begin{equation}
 H_{\mathrm{cd}} = -i\sum_{j=1}^{N-1}\kappa_{2j+1,2j-1}\, c_{2j+1}^\dagger c_{2j-1} + \mathrm{H.c.},
+\label{eq:cd_nnn}
 \end{equation}
 with the couplings $\kappa$ optimized variationally. \emph{These NNN hoppings break the chiral
 (sublattice) symmetry of the SSH model}---precisely the symmetry that pins the edge states at
@@ -1206,7 +1205,7 @@ remain perfectly well-defined and well-separated from the bulk in all
 configurations studied. What fails is the specific \emph{transfer protocol}---a
 static Rabi oscillation scheme that requires equal couplings $\JLS = \JSR$.
 
-In this section we show, following the CTAP (Coherent Tunnelling Adiabatic
+In this section we show, following the CTAP (Coherent Tunneling Adiabatic
 Passage) framework of A.~D.~Greentree, J.~H.~Cole, A.~R.~Hamilton, and
 L.~C.~L.~Hollenberg~\cite{Greentree2004}, that high-fidelity transfer in
 asymmetric SSH domain wall systems can be recovered by switching from the
@@ -1437,7 +1436,7 @@ protocol in the presence of coupling asymmetry:
   \caption{Transfer fidelity versus domain-wall position $j_{\mathrm{DW}}$ for
   $L=21$ ($v=0.5$, $w=1.0$), from numerical integration of the effective
   three-level Hamiltonian~(21). The static Rabi protocol (red) peaks at
-  $f\approx0.64$ near the quasi-centre and collapses to $f\lesssim0.004$ for
+  $f\approx0.64$ near the quasi-center and collapses to $f\lesssim0.004$ for
   $j_{\mathrm{DW}}\le5$. With well-conditioned pulses [Eqs.~(25)--(26); peaks at
   $T/4$ and $3T/4$, $\sigma=0.12T$], bare CTAP (blue) and CD-assisted CTAP (teal)
   both sustain $f\gtrsim0.99$ at every position where the three-level description
@@ -1590,7 +1589,7 @@ $j_{\rm DW}$ & $(\ell_1,\ell_2)$ & $\rho$ & $f_{\rm Rabi}$ & $f_{\rm CTAP}$ & bu
   ($\mathrm{CTAP}_{\rm eff}$) and the full-chain CTAP ($\mathrm{CTAP}_{\rm full}$).
   The full-chain values reproduce the effective model to better than $0.025\%$
   and clear the high-fidelity benchmark $f_0=0.995$ (dashed) at every position,
-  whereas the Rabi fidelity collapses away from the centre. Annotated transfer
+  whereas the Rabi fidelity collapses away from the center. Annotated transfer
   times ($T\approx2.56\times10^{4},\,3.07\times10^{4},\,6.14\times10^{4}$) grow
   exponentially with the bottleneck domain.}
 \label{fig:fullchain}
@@ -1701,7 +1700,7 @@ disorder---which preserves chiral symmetry---leaves the mode pinned at $E=0$ to
 machine precision ($\sim\!10^{-16}$) for all disorder strengths. On-site disorder
 and NNN hoppings, which both break chiral symmetry, instead detach the mode
 immediately; the NNN term does so linearly, $\langle|E_0|\rangle\approx
-0.95\,\kappa$. The pinning is thus a sharp, symmetry-selective effect: only
+0.95\,\kappa$.\footnote{The next-nearest-neighbor (NNN) perturbation used in Fig.~\ref{fig:robustness} is a \emph{real} hopping between same-sublattice sites, taken as a representative member of the chiral-symmetry-breaking class. The counterdiabatic term of Eq.~(\ref{eq:cd_nnn}) is the imaginary, sublattice-$A$ instance of the same class; the linear detachment of the zero mode is qualitatively identical in both cases, while the slope $\langle|E_0|\rangle\approx0.95\,\kappa$ quoted here is specific to the real perturbation.} The pinning is thus a sharp, symmetry-selective effect: only
 perturbations that respect chiral symmetry preserve the zero mode.
 
 This spectral pinning carries directly over to the transfer
