@@ -64,21 +64,82 @@
 \begin{document}
 
 % ============================================================================
-\title{\texorpdfstring{%
+% 1. PORTADA PERSONALIZADA (TITLEPAGE)
+% ============================================================================
+\begin{titlepage}
+  \centering
+  \vspace*{0.5cm}
+  
+  % Logos superiores
   \begin{minipage}{\textwidth}
     \centering
-    \includegraphics[height=1.2cm]{logo.jpg}\hfill
-    \includegraphics[height=1cm]{Logotipo_del_CSIC.pdf}
-  \end{minipage}\\[1.2em]%
-  }{}%
-  Quantum control for quantum information transfer mediated by topological edge states%
-}
+    \includegraphics[height=1.7cm]{logo.jpg}\hfill
+    \includegraphics[height=1.7cm]{Logotipo_del_CSIC.pdf}
+  \end{minipage}\\[3.5cm]
+\vspace{3.5cm}
 
-\author{Miguel García-Mier García}
-%\email{100013532@alumnos.uimp.es}
+  % Bloque central: Logo del máster + Nombre del Máster
+  \begin{minipage}{0.8\textwidth}
+    \centering
+    % LOGO DEL MÁSTER (Ajusta el ancho y el nombre del archivo)
+    \begin{minipage}{\textwidth}
+        \centering
+        \includegraphics[width=\linewidth]{master_logo.png} 
+    \end{minipage}%
+    \hspace{0.5cm}%
+  \end{minipage}
+
+  \vspace{1.5cm}
+  
+  % Año académico
+  {\large Academic year: 2025 - 2026 \par}
+  
+  \vspace{1.5cm}
+
+  % Título
+  \vspace{0.3cm}
+  {\LARGE\bfseries Quantum control for quantum information transfer mediated by topological edge states \par}
+  
+  \vspace{2.5cm}
+
+  % Autor y Directores
+  {\large Author: Miguel Garc\'ia-Mier Garc\'ia \par}
+  \vspace{0.2cm}
+  {\large Supervisors: Prof. Gloria Platero \& Dr. Yue Ban \par}
+  
+  \vfill
+  
+\end{titlepage}
+
+% ============================================================================
+% 2. ÍNDICE Y CONFIGURACIÓN DE PÁGINAS
+% ============================================================================
+\clearpage
+\pagenumbering{roman} % Números romanos para el índice (i, ii, iii...)
+
+\onecolumngrid % Una sola columna para que el índice ocupe todo el ancho
+\tableofcontents
+\clearpage
+\twocolumngrid % Restauramos las dos columnas para el documento
+
+\pagenumbering{arabic} % Reiniciamos la numeración en 1 para la introducción
+% ============================================================================
+
+
+% ============================================================================
+% 3. CABECERA TIPO "PAPER" DE LA APS (METADATOS Y ABSTRACT)
+% ============================================================================
+% Título en texto plano (esto arregla el error de hyperref)
+\title{Quantum control for quantum information transfer mediated by topological edge states}
+
+\author{Miguel Garc\'ia-Mier Garc\'ia}
 \affiliation{%
   MSc in Quantum Technologies, Universidad Internacional Men\'endez Pelayo, Spain
 }
+
+% Añadimos a las tutoras también en la cabecera del artículo (ajusta la afiliación si hace falta)
+\author{Supervisors: Gloria Platero \& Yue Ban}
+\affiliation{Instituto de Ciencia de Materiales de Madrid (ICMM-CSIC)}
 
 \author{Supervisors: Gloria Platero \& Yue Ban}
 \affiliation{Instituto de Ciencia de Materiales de Madrid (ICMM-CSIC)}
