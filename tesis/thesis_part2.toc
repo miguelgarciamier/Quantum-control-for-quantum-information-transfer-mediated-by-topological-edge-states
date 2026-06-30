@@ -1,5 +1,5 @@
 \tocdepth@munge 
-\contentsline {section}{\numberline {}Contents}{ii}{section*.1}%
+\contentsline {section}{\numberline {}Contents}{2}{section*.1}%
 \tocdepth@restore 
 \contentsline {title}{Quantum control for quantum information transfer mediated by topological edge states}{1}{section*.3}%
 \contentsline {abstract}{Abstract}{1}{section*.2}%

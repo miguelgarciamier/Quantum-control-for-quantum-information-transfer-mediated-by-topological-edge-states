@@ -1832,65 +1832,66 @@ deferred to future work.
 \label{sec:ctap_implementation}
 
 \textbf{Effective couplings by projection.}
-$\JLS(t)$ and $\JSR(t)$ [Eqs.~(\ref{eq:ctap_jsr})--(\ref{eq:ctap_jls})] are
-computed at each time step by \texttt{\_effective\_couplings()} in
-\texttt{ctap\_full\_chain.py}: the three eigenstates of $H(t)$ with the
-smallest $|E|$ are identified via \texttt{np.argsort($|E|$)[:3]} (no explicit
-energy cutoff; the threshold $|E|<0.1$ appears only in the unit-test counter,
-not in the production routines), labeled $\ketL,\ketS,\ketR$ by the position
-of their probability-density maximum, rotated to the maximally localized
-(Wannier) basis by diagonalizing the position operator restricted to the
-three-dimensional subspace, and $\JLS,\JSR$ are read off as the off-diagonal
-elements of the full Hamiltonian projected onto that localized basis.
+The instantaneous couplings $\JLS(t)$ and $\JSR(t)$
+[Eqs.~(\ref{eq:ctap_jsr})--(\ref{eq:ctap_jls})] are extracted from the full
+Hamiltonian at every time step. We diagonalize $H(t)$, sort the eigenstates by
+$|E|$ and retain the three of smallest energy---selected by magnitude rather
+than by a fixed energy cutoff, so that the procedure stays valid even as the
+protected gap narrows. These three states are labeled $\ketL,\ketS,\ketR$
+according to the position of their probability-density maximum and rotated to
+the maximally localized (Wannier) basis by diagonalizing the position operator
+restricted to the three-dimensional protected subspace. The couplings $\JLS$
+and $\JSR$ are then read off as the off-diagonal elements of $H(t)$ projected
+onto this localized basis.
 
 \textbf{Bulk leakage.}
-At every time step \texttt{metrics()} projects $|\psi(t)\rangle$ onto the
-instantaneous protected triplet and computes
-$1-(P_{\mathcal{L}}+P_{\mathcal{S}}+P_{\mathcal{R}})$; figures report the
-\emph{maximum} of this quantity over the full trajectory (\texttt{lk.max()}
-in \texttt{fig4\_fullchain\_ctap.py}, line 86).
+At every time step we project $|\psi(t)\rangle$ onto the instantaneous protected
+triplet and evaluate
+$1-(P_{\mathcal{L}}+P_{\mathcal{S}}+P_{\mathcal{R}})$. The leakage quoted in the
+figures and in Table~\ref{tab:fullchain} is the \emph{maximum} of this quantity
+over the full trajectory.
 
 \textbf{Disorder averaging.}
-The spectral-pinning panel [Fig.~\ref{fig:robustness}(a)] averages over
-$N_{\mathrm{real}}=200$ disorder realizations
-(\texttt{paso4\_chiral\_spectral.py}); the transfer-fidelity panel
-[Fig.~\ref{fig:robustness}(b)] uses $N_{\mathrm{real}}=40$ realizations
-(\texttt{paso4\_fig\_data.py}).
+The spectral-pinning data [Fig.~\ref{fig:robustness}(a)] are averaged over
+$N_{\mathrm{real}}=200$ disorder realizations; the disorder-averaged transfer
+fidelity [Fig.~\ref{fig:robustness}(b)] uses $N_{\mathrm{real}}=40$
+realizations.
 
-\textbf{CTAP pulse parameters and time integration.}
+\textbf{CTAP pulse parameters.}
 The Gaussian pulse parameters [Eqs.~(\ref{eq:ctap_jsr})--(\ref{eq:ctap_jls})]
-differ by figure:
+vary between figures:
 \begin{itemize}
-  \item \emph{Figs.~\ref{fig:ctap_pulses_dynamics} (demo, effective three-level,
-    $T=300$)}: $\sigma=0.18\,T$, $t_R=T/3$, $t_L=2T/3$,
-    $t_L-t_R=T/3\approx1.85\,\sigma$ (\texttt{ctap\_figures.py}).
+  \item \emph{Fig.~\ref{fig:ctap_pulses_dynamics} (effective three-level demo,
+    $T=300$)}: $\sigma=0.18\,T$, $t_R=T/3$, $t_L=2T/3$
+    ($t_L-t_R=T/3\approx1.85\,\sigma$).
   \item \emph{Fig.~\ref{fig:ctap_comparison} ($f$ vs.\ $j_{\rm DW}$,
-    effective three-level, \texttt{fig15\_wc\_ctap.py})}: well-conditioned
-    (WC) pulse, $\sigma=0.12\,T$, $t_R=T/4$, $t_L=3T/4$ (separation
-    $T/2$); bare CTAP $T=800\rho$ (scales with coupling ratio per
-    position), CD-assisted $T=600$ fixed.
-  \item \emph{Fig.~\ref{fig:ctap_asymmetry} ($f$ vs.\ $\rho$,
-    \texttt{fig16\_ctap\_asymmetry\_new.py})}: two pulse variants.
-    Original pulse ($\sigma=0.18\,T$, $t_R=T/3$, $t_L=2T/3$, $T=400\rho$)
-    as comparison curve tracking $\cos^2\Theta_0(\rho)$.  WC pulse
-    ($\sigma=0.12\,T$, $t_R=T/4$, $t_L=3T/4$, $T=50000$ fixed) confirming
-    $f\approx1$ across all $\rho$.
-    % Verificado: leyenda fig16 ya dice T=400rho (T_orig(rho)=400*rho en script);
-    % la cifra T=1500 que aparecía antes venía de ctap_asymmetric.py (helper)
-    % y no correspondía a estas figuras.
-  \item \emph{Table~\ref{tab:fullchain} / Fig.~\ref{fig:fullchain}
-    (full-chain, $L=21$)}: form~(a) for $j_{\rm DW}=11,7$: $\sigma=0.15\,T$,
-    $t_R=0.40\,T$, $t_L=0.60\,T$ ($t_L-t_R=0.20\,T$); form~(b) for
-    $j_{\rm DW}=5$: $\sigma=0.18\,T$, $t_R=0.32\,T$, $t_L=0.68\,T$
-    ($t_L-t_R=0.36\,T$).
-    $T=\tau_{\mathrm{ad}}/J_{\mathrm{bott}}$ with $\tau_{\mathrm{ad}}
-    \in\{180,300,450\}$ (minimum $\tau_{\mathrm{ad}}$ satisfying $f>0.995$
-    and $P_{\mathcal{S}}^{\max}<0.02$) (\texttt{paso3d\_final.py}).
+    effective three-level)}: well-conditioned (WC) pulse, $\sigma=0.12\,T$,
+    $t_R=T/4$, $t_L=3T/4$ (separation $T/2$); bare CTAP with $T=800\rho$
+    (scaling with the coupling ratio at each position) and CD-assisted CTAP at
+    fixed $T=600$.
+  \item \emph{Fig.~\ref{fig:ctap_asymmetry} ($f$ vs.\ $\rho$)}: two variants.
+    The original pulse ($\sigma=0.18\,T$, $t_R=T/3$, $t_L=2T/3$, $T=400\rho$) is
+    shown as the comparison curve tracking $\cos^2\Theta_0(\rho)$; the WC pulse
+    ($\sigma=0.12\,T$, $t_R=T/4$, $t_L=3T/4$, fixed $T=5\times10^{4}$) confirms
+    $f\approx1$ across the whole range of $\rho$.
+  \item \emph{Table~\ref{tab:fullchain} / Fig.~\ref{fig:fullchain} (full chain,
+    $L=21$)}: for $j_{\rm DW}=11,7$, $\sigma=0.15\,T$, $t_R=0.40\,T$,
+    $t_L=0.60\,T$ ($t_L-t_R=0.20\,T$); for $j_{\rm DW}=5$, $\sigma=0.18\,T$,
+    $t_R=0.32\,T$, $t_L=0.68\,T$ ($t_L-t_R=0.36\,T$). The protocol duration is
+    fixed by $T=\tau_{\mathrm{ad}}/J_{\mathrm{bott}}$ with
+    $\tau_{\mathrm{ad}}\in\{180,300,450\}$, the smallest adiabatic margin for
+    which $f>0.995$ and $P_{\mathcal{S}}^{\max}<0.02$.
 \end{itemize}
-All full-chain dynamics are integrated with \texttt{scipy.integrate.solve\_ivp}
-(RK45, $\mathrm{rtol}=10^{-6}$, $\mathrm{atol}=10^{-8}$); effective
-three-level dynamics use DOP853 ($\mathrm{rtol}=10^{-11}$,
-$\mathrm{atol}=10^{-13}$, $\Delta t_{\max}=T/4000$).
+
+\textbf{Time integration.}
+The full-chain dynamics are integrated with an adaptive Runge--Kutta scheme
+(RK45, $\mathrm{rtol}=10^{-6}$, $\mathrm{atol}=10^{-8}$); the effective
+three-level dynamics, which demand higher accuracy, use an eighth-order
+Runge--Kutta integrator (DOP853, $\mathrm{rtol}=10^{-11}$,
+$\mathrm{atol}=10^{-13}$, maximum step $\Delta t_{\max}=T/4000$). The complete
+set of scripts that reproduce every figure and table, together with the
+generated data, is openly available in the public repository accompanying this
+work.\footnote{\url{https://github.com/miguelgarciamier/Quantum-control-for-quantum-information-transfer-mediated-by-topological-edge-states}}
 
 % ============================================================================
 \section{Discussion and conclusions}
