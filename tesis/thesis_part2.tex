@@ -1005,7 +1005,7 @@ must increase proportionally.
 The operation time is fixed at $T = \pi/\Omega$ (nonadiabatic regime), which
 does \emph{not} scale with the chain length. However, the fidelity degrades
 for longer chains: the approximate CD correction (NNN hoppings only)
-becomes less accurate as the chain length increases, since higher-order NCs---which
+becomes less accurate as the chain length increases, since higher-order CD corrections---which
 introduce increasingly long-range hoppings---are needed but are truncated.
 With the equal-hopping ansatz and the constraint
 $\|H_{\mathrm{cd}}\| \sim \|H_0\|$, the fidelity drops to ${\sim}\,90\%$
@@ -1259,7 +1259,7 @@ The adiabaticity condition $|E_\pm - E_0| \gg |\langle \dot{D}_0 | D_\pm \rangle
 reads~\cite{Greentree2004}
 \begin{equation}
   \sqrt{\JLS^2 + \JSR^2} \gg
-  \frac{|\dot{\Theta}|}{ 1}
+  |\dot{\Theta}|
   = \frac{|\JSR\dot{\JLS} - \JLS\dot{\JSR}|}{\JLS^2 + \JSR^2},
   \label{eq:adiabaticity}
 \end{equation}
@@ -1317,7 +1317,7 @@ microscopic SSH chain, this would correspond to engineering a long-range
 hopping between site $0$ and site $L - 1$ that is purely imaginary---a
 challenging but not impossible requirement in platforms with gauge-field
 control (e.g., via Floquet engineering or synthetic dimensions). Alternatively,
-the CD term can be approximated using local operators via the variational NC
+the CD term can be approximated using local operators via the variational CD
 approach of Sec.~\ref{sec:cd_protocol}, applied now to the effective rather
 than the full Hamiltonian.
 
